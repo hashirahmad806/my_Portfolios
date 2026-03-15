@@ -1,0 +1,222 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Google Fonts fallback ─────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@300;400;500;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ── CSS Custom Properties ─────────────────── */
+:root {
+  --obsidian:   #080810;
+  --void:       #0c0c18;
+  --surface:    #11111f;
+  --surface2:   #16162a;
+  --border:     rgba(255,255,255,0.06);
+  --border2:    rgba(255,255,255,0.1);
+  --gold:       #c9a84c;
+  --gold2:      #e8c97a;
+  --amber:      #f5a623;
+  --text:       #e8e8f0;
+  --text2:      #9090a8;
+  --text3:      #5a5a72;
+  --emerald:    #00e5a0;
+  --cyan:       #00d4ff;
+  --radius:     16px;
+  --ease:       cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ── Reset ─────────────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Cabinet Grotesk', sans-serif;
+  background: var(--obsidian);
+  color: var(--text);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── Noise overlay ─────────────────────────── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity: 0.4;
+}
+
+/* ── Scrollbar ─────────────────────────────── */
+::-webkit-scrollbar        { width: 3px; }
+::-webkit-scrollbar-track  { background: var(--void); }
+::-webkit-scrollbar-thumb  { background: var(--gold); border-radius: 2px; }
+
+/* ── Selection ─────────────────────────────── */
+::selection { background: rgba(201,168,76,0.25); color: var(--gold2); }
+
+/* ── Custom Cursor ─────────────────────────── */
+.cursor-dot {
+  position: fixed; top: 0; left: 0; z-index: 9999;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--gold); pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s, background 0.3s;
+}
+.cursor-ring {
+  position: fixed; top: 0; left: 0; z-index: 9998;
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1.5px solid rgba(201,168,76,0.5);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s, border-color 0.3s;
+}
+.cursor-dot.hovered  { width: 12px; height: 12px; }
+.cursor-ring.hovered { width: 52px; height: 52px; border-color: rgba(201,168,76,0.85); }
+
+/* ── Typography utilities ──────────────────── */
+.font-clash  { font-family: 'Clash Display', 'Cabinet Grotesk', sans-serif; }
+.font-serif  { font-family: 'Instrument Serif', serif; }
+.font-mono   { font-family: 'JetBrains Mono', monospace; }
+.font-cabinet{ font-family: 'Cabinet Grotesk', sans-serif; }
+
+/* ── Reusable components ───────────────────── */
+.section-label {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 500;
+  color: var(--gold); letter-spacing: 0.25em;
+  text-transform: uppercase; margin-bottom: 20px;
+}
+.section-label::before {
+  content: ''; display: block; width: 32px; height: 1px; background: var(--gold);
+}
+
+.section-title {
+  font-family: 'Clash Display', 'Cabinet Grotesk', sans-serif;
+  font-size: clamp(38px, 5vw, 62px);
+  font-weight: 600; line-height: 1.05;
+  letter-spacing: -0.03em; color: white;
+}
+.section-title em {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic; color: var(--gold);
+  font-weight: 400;
+}
+
+/* ── Glass card ────────────────────────────── */
+.glass {
+  background: rgba(17,17,31,0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+/* ── Buttons ───────────────────────────────── */
+.btn-gold {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 32px; border-radius: 100px;
+  background: var(--gold);
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-size: 14px; font-weight: 700;
+  color: var(--obsidian); text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: all 0.35s var(--ease);
+  border: none; cursor: pointer;
+  position: relative; overflow: hidden;
+}
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(201,168,76,0.35);
+  background: var(--gold2);
+}
+
+.btn-outline {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 28px; border-radius: 100px;
+  border: 1px solid var(--border2);
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-size: 14px; font-weight: 600;
+  color: var(--text); text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: all 0.35s var(--ease);
+  background: rgba(255,255,255,0.03);
+  cursor: pointer;
+}
+.btn-outline:hover {
+  border-color: rgba(201,168,76,0.4);
+  color: var(--gold);
+  background: rgba(201,168,76,0.05);
+  transform: translateY(-2px);
+}
+
+/* ── Tag chip ──────────────────────────────── */
+.chip {
+  padding: 6px 14px; border-radius: 100px;
+  border: 1px solid var(--border);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.06em;
+  color: var(--text2);
+  background: rgba(255,255,255,0.02);
+  transition: all 0.3s;
+}
+.chip:hover { border-color: rgba(201,168,76,0.3); color: var(--gold); }
+
+/* ── Form inputs ───────────────────────────── */
+.form-input, .form-textarea {
+  width: 100%; padding: 14px 18px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-size: 15px; color: var(--text);
+  outline: none; resize: none;
+  transition: all 0.3s var(--ease);
+}
+.form-input:focus, .form-textarea:focus {
+  border-color: rgba(201,168,76,0.4);
+  background: var(--surface2);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.07);
+}
+.form-input::placeholder, .form-textarea::placeholder { color: var(--text3); }
+
+/* ── Skill bar ─────────────────────────────── */
+.skill-bar-track {
+  height: 3px; border-radius: 2px;
+  background: rgba(255,255,255,0.06); overflow: hidden;
+}
+.skill-bar-fill {
+  height: 100%; border-radius: 2px; width: 0;
+  transition: width 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Card hover ────────────────────────────── */
+.card-hover {
+  transition: all 0.35s var(--ease);
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  border-color: rgba(201,168,76,0.2) !important;
+}
+
+/* ── Gold accent bar on card ───────────────── */
+.accent-bar::after {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 3px; height: 0;
+  background: var(--gold); border-radius: 0 0 3px 3px;
+  transition: height 0.5s var(--ease);
+}
+.accent-bar:hover::after { height: 100%; }
+
+/* ── Page transition ───────────────────────── */
+.page-enter { opacity: 0; transform: translateY(20px); }
+.page-enter-active { opacity: 1; transform: translateY(0); transition: all 0.5s var(--ease); }
+
+/* ── Orb backgrounds ───────────────────────── */
+.orb {
+  position: absolute; border-radius: 50%;
+  filter: blur(100px); pointer-events: none;
+}

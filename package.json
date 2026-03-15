@@ -1,0 +1,14 @@
+{
+  "name": "hashir-portfolio-mern",
+  "version": "1.0.0",
+  "description": "Hashir Ahmad — Premium MERN Stack Portfolio",
+  "scripts": {
+    "install:all": "cd frontend && npm install && cd ../backend && npm install",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend":  "cd backend  && npm run dev",
+    "build":        "cd frontend && npm run build",
+    "start":        "cd backend  && npm start"
+  },
+  "author": "Hashir Ahmad",
+  "license": "MIT"
+}
