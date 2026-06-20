@@ -51,6 +51,7 @@ app.get('/api/health', (req, res) => res.json({
 // ── API Routes ────────────────────────────────────────────
 app.use('/api/contact',  require('./routes/contact'))
 app.use('/api/projects', require('./routes/projects'))
+app.use('/api/download', require('./routes/download'))
 
 // ── Serve React build in production ───────────────────────
 if (process.env.NODE_ENV === 'production') {

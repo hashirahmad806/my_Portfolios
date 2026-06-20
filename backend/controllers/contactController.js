@@ -1,4 +1,5 @@
 const Contact = require('../models/Contact')
+const sendEmail = require('../utils/sendEmail')
 
 // @desc  Save new contact message
 // @route POST /api/contact
@@ -11,6 +12,24 @@ exports.createMessage = async (req, res, next) => {
 
     const contact = await Contact.create({ name, email, message, ipAddress })
     console.log(`📬  New message from ${name} <${email}>`)
+
+    try {
+      // Notify the site owner
+      await sendEmail({
+        email: process.env.RECEIVER_EMAIL,
+        subject: `New Contact Message from ${name}`,
+        message: `You have a new message from your portfolio.\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}\n\nIP Address: ${ipAddress}`
+      })
+      
+      // Auto-reply to the sender
+      await sendEmail({
+        email: email,
+        subject: `Thank you for contacting me, ${name}!`,
+        message: `Hi ${name},\n\nThank you for reaching out. I have received your message and will get back to you as soon as possible.\n\nBest regards,\nHashir Ahmad`
+      })
+    } catch (emailErr) {
+      console.error('Error sending email:', emailErr)
+    }
 
     res.status(201).json({
       success: true,

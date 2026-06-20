@@ -82,9 +82,9 @@ export default function Navbar() {
             </button>
 
             {/* Hire Me CTA */}
-            <a
-              href="mailto:hashirahmad806@gmail.com"
-              className="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold tracking-wide transition-all duration-300"
+            <Link
+              to="contact" smooth offset={-80}
+              className="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold tracking-wide transition-all duration-300 cursor-pointer"
               style={{
                 fontFamily: "'Cabinet Grotesk',sans-serif",
                 border: '1px solid rgba(201,168,76,0.35)',
@@ -95,7 +95,7 @@ export default function Navbar() {
               onMouseLeave={e => { e.currentTarget.style.background = 'rgba(201,168,76,0.04)'; e.currentTarget.style.color = '#c9a84c' }}
             >
               Hire Me
-            </a>
+            </Link>
 
             {/* Mobile menu */}
             <button

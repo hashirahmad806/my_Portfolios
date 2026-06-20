@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { Link }   from 'react-scroll'
 import { TypeAnimation } from 'react-type-animation'
-import { FiGithub, FiLinkedin, FiArrowDown } from 'react-icons/fi'
+import { FiGithub, FiLinkedin, FiArrowDown, FiDownload } from 'react-icons/fi'
 import hashirPhoto from '../../assets/hashir.jpg'
 
 const stagger = {
@@ -110,6 +110,22 @@ export default function Hero() {
                   Contact Me
                 </motion.button>
               </Link>
+              <motion.a
+                href="/CV.pdf" download="Hashir_Ahmad_CV.pdf"
+                whileHover={{ y: -2, borderColor: 'rgba(201,168,76,.4)', color: gold }}
+                className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm tracking-wide"
+                style={{ border: '1px solid rgba(255,255,255,0.1)', color: muted, background: 'transparent', fontFamily: "'Cabinet Grotesk',sans-serif", cursor: 'pointer', textDecoration: 'none' }}
+              >
+                <FiDownload size={15} /> CV
+              </motion.a>
+              <motion.a
+                href="/internship Certificate  (1).png" download="Hashir_Ahmad_Certificate.png"
+                whileHover={{ y: -2, borderColor: 'rgba(201,168,76,.4)', color: gold }}
+                className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm tracking-wide"
+                style={{ border: '1px solid rgba(255,255,255,0.1)', color: muted, background: 'transparent', fontFamily: "'Cabinet Grotesk',sans-serif", cursor: 'pointer', textDecoration: 'none' }}
+              >
+                <FiDownload size={15} /> Certificate
+              </motion.a>
             </motion.div>
 
             {/* Socials */}
