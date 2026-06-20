@@ -49,14 +49,17 @@ export default function Contact() {
     }
     setLoading(true)
     try {
-      await contactAPI.send(form)
+      await contactAPI.send({ name: form.name.trim(), email: form.email.trim(), message: form.message.trim() })
       setSent(true)
       setForm({ name: '', email: '', message: '' })
       toast.success("Message sent! I'll be in touch soon 🚀")
-    } catch {
-      // Fallback to mailto
-      const mailto = `mailto:hashirahmad806@gmail.com?subject=Portfolio%20Contact&body=Name:%20${encodeURIComponent(form.name)}%0AEmail:%20${encodeURIComponent(form.email)}%0A%0A${encodeURIComponent(form.message)}`
-      window.location.href = mailto
+    } catch (err) {
+      const msg =
+        err?.response?.data?.message ||
+        (err?.response?.status === 429 ? 'Too many messages. Please try again later.' :
+        err?.response?.status >= 500 ? 'Server error. Please try again.' :
+        'Failed to send message. Please email me directly.')
+      toast.error(msg)
     } finally {
       setLoading(false)
     }

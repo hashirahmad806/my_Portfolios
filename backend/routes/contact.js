@@ -13,15 +13,18 @@ const limiter = rateLimit({
 })
 
 const validate = [
-  body('name').trim().notEmpty().isLength({ min: 2, max: 100 }),
-  body('email').trim().isEmail().normalizeEmail(),
-  body('message').trim().notEmpty().isLength({ min: 10, max: 2000 }),
+  body('name').trim().notEmpty().withMessage('Name is required').isLength({ min: 2, max: 100 }).withMessage('Name must be at least 2 characters'),
+  body('email').trim().isEmail().withMessage('Please enter a valid email address'),
+  body('message').trim().notEmpty().withMessage('Message is required').isLength({ min: 10, max: 2000 }).withMessage('Message must be at least 10 characters'),
 ]
 
 const checkValidation = (req, res, next) => {
   const errors = validationResult(req)
-  if (!errors.isEmpty())
-    return res.status(400).json({ success: false, message: errors.array()[0].msg })
+  if (!errors.isEmpty()) {
+    const msg = errors.array()[0].msg
+    console.log('❌ Validation failed:', errors.array())
+    return res.status(400).json({ success: false, message: msg })
+  }
   next()
 }
 

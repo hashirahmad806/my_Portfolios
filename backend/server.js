@@ -15,11 +15,14 @@ const app = express()
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }))
 
 // ── CORS ─────────────────────────────────────────────────
+const rawFrontend = (process.env.FRONTEND_URL || '').replace(/\/$/, '')
 const allowed = [
-  process.env.FRONTEND_URL || 'http://localhost:5173',
+  rawFrontend,
   'http://localhost:5173',
   'http://localhost:4173',
-]
+  'https://my-portfolios-sandy.vercel.app',
+].filter(Boolean)
+
 app.use(cors({
   origin: (origin, cb) => (!origin || allowed.includes(origin) ? cb(null, true) : cb(new Error('CORS blocked'))),
   credentials: true,
