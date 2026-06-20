@@ -21,7 +21,7 @@ export default function Loader() {
         <motion.div
           key="loader"
           className="fixed inset-0 z-[10000] flex flex-col items-center justify-center gap-8"
-          style={{ background: '#080810' }}
+          style={{ background: 'var(--obsidian)' }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6, ease: 'easeInOut' }}
         >
@@ -40,7 +40,7 @@ export default function Loader() {
                   <stop offset="100%" stopColor="#f5a623" />
                 </linearGradient>
               </defs>
-              <circle cx="48" cy="48" r="44" stroke="rgba(255,255,255,0.05)" strokeWidth="1.5" fill="none" />
+              <circle cx="48" cy="48" r="44" stroke="var(--border)" strokeWidth="1.5" fill="none" />
               <circle cx="48" cy="48" r="44" stroke="url(#lg)" strokeWidth="2" fill="none"
                 strokeDasharray="276" strokeDashoffset="200" strokeLinecap="round" />
             </motion.svg>
@@ -64,8 +64,8 @@ export default function Loader() {
             className="text-center"
           >
             <div
-              className="text-2xl font-bold tracking-tight text-white mb-1"
-              style={{ fontFamily: "'Clash Display','Syne',sans-serif" }}
+              className="text-2xl font-bold tracking-tight mb-1"
+              style={{ fontFamily: "'Clash Display','Syne',sans-serif", color: 'var(--text)' }}
             >
               Hashir Ahmad
             </div>
@@ -75,7 +75,7 @@ export default function Loader() {
           </motion.div>
 
           {/* Progress bar */}
-          <div className="w-52 h-[2px] rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
+          <div className="w-52 h-[2px] rounded-full overflow-hidden" style={{ background: 'var(--border)' }}>
             <motion.div
               className="h-full rounded-full"
               style={{ background: 'linear-gradient(90deg,#c9a84c,#f5a623)' }}
@@ -88,7 +88,7 @@ export default function Loader() {
           {/* Status text */}
           <div
             className="text-xs tracking-[0.15em] uppercase"
-            style={{ color: '#5a5a72', fontFamily: 'JetBrains Mono,monospace' }}
+            style={{ color: 'var(--text3)', fontFamily: 'JetBrains Mono,monospace' }}
           >
             {msgs[msg]}
           </div>

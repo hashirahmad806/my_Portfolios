@@ -20,7 +20,7 @@ export default function Hero() {
       {/* Grid bg */}
       <div style={{
         position: 'absolute', inset: 0, zIndex: 0,
-        backgroundImage: 'linear-gradient(rgba(255,255,255,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.022) 1px,transparent 1px)',
+        backgroundImage: 'linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px)',
         backgroundSize: '80px 80px',
         maskImage: 'radial-gradient(ellipse 75% 55% at 50% 50%, black 0%, transparent 100%)',
         WebkitMaskImage: 'radial-gradient(ellipse 75% 55% at 50% 50%, black 0%, transparent 100%)',
@@ -57,14 +57,14 @@ export default function Hero() {
               variants={stagger.item}
               style={{ fontFamily: "'Clash Display','Syne',sans-serif", fontSize: 'clamp(52px,6.5vw,88px)', fontWeight: 700, lineHeight: 0.95, letterSpacing: '-0.04em', marginBottom: 20 }}
             >
-              <span style={{ color: 'white', display: 'block' }}>Hashir</span>
+              <span style={{ color: 'var(--text)', display: 'block' }}>Hashir</span>
               <span style={{ fontFamily: "'Instrument Serif',serif", fontStyle: 'italic', fontWeight: 400, color: gold, display: 'block', fontSize: '1.05em' }}>Ahmad</span>
-              <span style={{ color: '#3a3a55', display: 'block' }}>builds the web.</span>
+              <span style={{ color: 'var(--text3)', display: 'block' }}>builds the web.</span>
             </motion.h1>
 
             {/* Type animation */}
             <motion.div variants={stagger.item} className="flex items-center gap-3 mb-5" style={{ height: 36 }}>
-              <span style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 14, color: muted }}>
+              <span style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 14, color: 'var(--text2)' }}>
                 &gt;&nbsp;
                 <TypeAnimation
                   sequence={['React.js Developer', 2000, 'Node.js Engineer', 2000, 'Full Stack MERN', 2000, 'MongoDB Architect', 2000, 'API Builder', 2000]}
@@ -76,8 +76,8 @@ export default function Hero() {
             </motion.div>
 
             {/* Bio */}
-            <motion.p variants={stagger.item} style={{ fontSize: 16, lineHeight: 1.8, color: muted, maxWidth: 520, marginBottom: 44 }}>
-              I craft <strong style={{ color: 'white' }}>scalable, modern web applications</strong> using the MERN stack —
+            <motion.p variants={stagger.item} style={{ fontSize: 16, lineHeight: 1.8, color: 'var(--text2)', maxWidth: 520, marginBottom: 44 }}>
+              I craft <strong style={{ color: 'var(--text)' }}>scalable, modern web applications</strong> using the MERN stack —
               blending pixel-perfect React UIs with robust Node.js & Express backends,
               powered by MongoDB. Every project is built to perform, scale, and impress.
             </motion.p>
@@ -97,7 +97,7 @@ export default function Hero() {
                 href="https://github.com/hashirahmad806" target="_blank" rel="noopener noreferrer"
                 whileHover={{ y: -2 }}
                 className="flex items-center gap-2.5 px-6 py-3 rounded-full font-semibold text-sm tracking-wide"
-                style={{ border: '1px solid rgba(255,255,255,0.1)', color: muted, background: 'rgba(255,255,255,0.02)', fontFamily: "'Cabinet Grotesk',sans-serif", textDecoration: 'none' }}
+                style={{ border: '1px solid var(--border)', color: 'var(--text2)', background: 'var(--surface2)', fontFamily: "'Cabinet Grotesk',sans-serif", textDecoration: 'none' }}
               >
                 <FiGithub size={15} /> GitHub
               </motion.a>
@@ -105,7 +105,7 @@ export default function Hero() {
                 <motion.button
                   whileHover={{ y: -2, borderColor: 'rgba(201,168,76,.4)', color: gold }}
                   className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm tracking-wide"
-                  style={{ border: '1px solid rgba(255,255,255,0.1)', color: muted, background: 'transparent', fontFamily: "'Cabinet Grotesk',sans-serif", cursor: 'pointer' }}
+                  style={{ border: '1px solid var(--border)', color: 'var(--text2)', background: 'transparent', fontFamily: "'Cabinet Grotesk',sans-serif", cursor: 'pointer' }}
                 >
                   Contact Me
                 </motion.button>
@@ -114,7 +114,7 @@ export default function Hero() {
                 href="/CV.pdf" download="Hashir_Ahmad_CV.pdf"
                 whileHover={{ y: -2, borderColor: 'rgba(201,168,76,.4)', color: gold }}
                 className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm tracking-wide"
-                style={{ border: '1px solid rgba(255,255,255,0.1)', color: muted, background: 'transparent', fontFamily: "'Cabinet Grotesk',sans-serif", cursor: 'pointer', textDecoration: 'none' }}
+                style={{ border: '1px solid var(--border)', color: 'var(--text2)', background: 'transparent', fontFamily: "'Cabinet Grotesk',sans-serif", cursor: 'pointer', textDecoration: 'none' }}
               >
                 <FiDownload size={15} /> CV
               </motion.a>
@@ -122,7 +122,7 @@ export default function Hero() {
                 href="/internship Certificate  (1).png" download="Hashir_Ahmad_Certificate.png"
                 whileHover={{ y: -2, borderColor: 'rgba(201,168,76,.4)', color: gold }}
                 className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm tracking-wide"
-                style={{ border: '1px solid rgba(255,255,255,0.1)', color: muted, background: 'transparent', fontFamily: "'Cabinet Grotesk',sans-serif", cursor: 'pointer', textDecoration: 'none' }}
+                style={{ border: '1px solid var(--border)', color: 'var(--text2)', background: 'transparent', fontFamily: "'Cabinet Grotesk',sans-serif", cursor: 'pointer', textDecoration: 'none' }}
               >
                 <FiDownload size={15} /> Certificate
               </motion.a>
@@ -130,8 +130,8 @@ export default function Hero() {
 
             {/* Socials */}
             <motion.div variants={stagger.item} className="flex items-center gap-4">
-              <span style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 10, color: muted2, letterSpacing: '0.2em', textTransform: 'uppercase' }}>Find me</span>
-              <div style={{ width: 28, height: 1, background: 'rgba(255,255,255,0.1)' }} />
+              <span style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 10, color: 'var(--text3)', letterSpacing: '0.2em', textTransform: 'uppercase' }}>Find me</span>
+              <div style={{ width: 28, height: 1, background: 'var(--border)' }} />
               {[
                 { href: 'https://github.com/hashirahmad806',                         Icon: FiGithub   },
                 { href: 'https://www.linkedin.com/in/hashir-ahmad-25639031b', Icon: FiLinkedin },
@@ -140,7 +140,7 @@ export default function Hero() {
                   key={href} href={href} target="_blank" rel="noopener noreferrer"
                   whileHover={{ y: -2, borderColor: 'rgba(201,168,76,.4)', color: gold }}
                   className="w-10 h-10 rounded-xl flex items-center justify-center"
-                  style={{ border: '1px solid rgba(255,255,255,0.06)', color: muted, background: 'rgba(255,255,255,0.02)', textDecoration: 'none', transition: 'all .2s' }}
+                  style={{ border: '1px solid var(--border)', color: 'var(--text2)', background: 'var(--surface2)', textDecoration: 'none', transition: 'all .2s' }}
                 >
                   <Icon size={16} />
                 </motion.a>
@@ -162,7 +162,7 @@ export default function Hero() {
               }} />
               <div style={{
                 position: 'absolute', top: 14, left: 14, right: -14, bottom: -14,
-                border: '1px solid rgba(255,255,255,0.04)', borderRadius: 28,
+                border: '1px solid var(--border)', borderRadius: 28,
               }} />
 
               {/* Photo */}
@@ -185,15 +185,15 @@ export default function Hero() {
                 transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
                 style={{
                   position: 'absolute', top: 28, left: -40, zIndex: 2,
-                  background: 'rgba(8,8,22,0.92)', backdropFilter: 'blur(16px)',
-                  border: '1px solid rgba(255,255,255,0.1)', borderRadius: 14,
+                  background: 'var(--glass-bg)', backdropFilter: 'blur(16px)',
+                  border: '1px solid var(--border)', borderRadius: 14,
                   padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10,
                 }}
               >
                 <span style={{ fontSize: 22 }}>⚡</span>
                 <div>
-                  <div style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 15, fontWeight: 700, color: 'white', lineHeight: 1 }}>MERN</div>
-                  <div style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 10, color: muted2, marginTop: 2 }}>Full Stack</div>
+                  <div style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 15, fontWeight: 700, color: 'var(--text)', lineHeight: 1 }}>MERN</div>
+                  <div style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 10, color: 'var(--text3)', marginTop: 2 }}>Full Stack</div>
                 </div>
               </motion.div>
 
@@ -203,15 +203,15 @@ export default function Hero() {
                 transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1.8 }}
                 style={{
                   position: 'absolute', bottom: 48, right: -36, zIndex: 2,
-                  background: 'rgba(8,8,22,0.92)', backdropFilter: 'blur(16px)',
-                  border: '1px solid rgba(255,255,255,0.1)', borderRadius: 14,
+                  background: 'var(--glass-bg)', backdropFilter: 'blur(16px)',
+                  border: '1px solid var(--border)', borderRadius: 14,
                   padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10,
                 }}
               >
                 <span style={{ fontSize: 22 }}>🚀</span>
                 <div>
-                  <div style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 15, fontWeight: 700, color: 'white', lineHeight: 1 }}>10+</div>
-                  <div style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 10, color: muted2, marginTop: 2 }}>Projects</div>
+                  <div style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 15, fontWeight: 700, color: 'var(--text)', lineHeight: 1 }}>10+</div>
+                  <div style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 10, color: 'var(--text3)', marginTop: 2 }}>Projects</div>
                 </div>
               </motion.div>
 
@@ -222,10 +222,10 @@ export default function Hero() {
               }}>
                 {[['10+','Projects'],['2+','Years'],['4','Core Tech']].map(([n,l]) => (
                   <div key={l} style={{ textAlign: 'center' }}>
-                    <div style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 28, fontWeight: 700, color: 'white', lineHeight: 1 }}>
+                    <div style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 28, fontWeight: 700, color: 'var(--text)', lineHeight: 1 }}>
                       {n.replace('+','')}<span style={{ color: gold }}>+</span>
                     </div>
-                    <div style={{ fontFamily: "'Cabinet Grotesk',sans-serif", fontSize: 11, color: muted2, marginTop: 3 }}>{l}</div>
+                    <div style={{ fontFamily: "'Cabinet Grotesk',sans-serif", fontSize: 11, color: 'var(--text3)', marginTop: 3 }}>{l}</div>
                   </div>
                 ))}
               </div>
@@ -240,9 +240,9 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ delay: 1.8 }}
         >
-          <span style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 10, color: muted2, letterSpacing: '0.2em', textTransform: 'uppercase' }}>scroll</span>
+          <span style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 10, color: 'var(--text3)', letterSpacing: '0.2em', textTransform: 'uppercase' }}>scroll</span>
           <motion.div animate={{ y: [0,6,0] }} transition={{ duration: 1.4, repeat: Infinity }}>
-            <FiArrowDown size={13} style={{ color: muted2 }} />
+            <FiArrowDown size={13} style={{ color: 'var(--text3)' }} />
           </motion.div>
         </motion.div>
       </div>

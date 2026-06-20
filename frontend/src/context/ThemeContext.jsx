@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useEffect } from 'react'
 const Ctx = createContext()
 
 export function ThemeProvider({ children }) {
-  const [dark, setDark] = useState(true)
+  const [dark, setDark] = useState(false)
 
   useEffect(() => {
     const stored = localStorage.getItem('ha-theme')

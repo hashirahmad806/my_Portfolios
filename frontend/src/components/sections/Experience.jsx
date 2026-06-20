@@ -38,8 +38,8 @@ function ExpCard({ e, idx }) {
       ref={ref}
       style={{
         padding: '32px 28px', borderRadius: 20,
-        border: '1px solid rgba(255,255,255,0.06)',
-        background: '#11111f', position: 'relative', overflow: 'hidden',
+        border: '1px solid var(--border)',
+        background: 'var(--surface)', position: 'relative', overflow: 'hidden',
         opacity: visible ? 1 : 0,
         transform: visible ? 'translateY(0)' : 'translateY(28px)',
         transition: `opacity .7s ease ${idx * 0.12}s, transform .7s ease ${idx * 0.12}s, border-color .3s`,
@@ -49,7 +49,7 @@ function ExpCard({ e, idx }) {
         ev.currentTarget.querySelector('.accent-bar').style.height = '100%'
       }}
       onMouseLeave={ev => {
-        ev.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'
+        ev.currentTarget.style.borderColor = 'var(--border)'
         ev.currentTarget.querySelector('.accent-bar').style.height = '0%'
       }}
     >
@@ -63,17 +63,17 @@ function ExpCard({ e, idx }) {
       </div>
 
       {/* Title */}
-      <h3 style={{ fontFamily: "'Clash Display','Syne',sans-serif", fontSize: 19, fontWeight: 600, color: 'white', marginBottom: 14, lineHeight: 1.2 }}>
+      <h3 style={{ fontFamily: "'Clash Display','Syne',sans-serif", fontSize: 19, fontWeight: 600, color: 'var(--text)', marginBottom: 14, lineHeight: 1.2 }}>
         {e.title}
       </h3>
 
       {/* Desc */}
-      <p style={{ fontSize: 13, lineHeight: 1.75, color: muted, marginBottom: 20 }}>{e.desc}</p>
+      <p style={{ fontSize: 13, lineHeight: 1.75, color: 'var(--text2)', marginBottom: 20 }}>{e.desc}</p>
 
       {/* Bullet points */}
       <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 8 }}>
         {e.points.map(pt => (
-          <li key={pt} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 12, color: dim, lineHeight: 1.5 }}>
+          <li key={pt} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 12, color: 'var(--text3)', lineHeight: 1.5 }}>
             <div style={{ width: 5, height: 5, borderRadius: '50%', background: e.color, flexShrink: 0, marginTop: 5 }} />
             {pt}
           </li>
@@ -86,14 +86,14 @@ function ExpCard({ e, idx }) {
 export default function Experience() {
   const { ref, visible } = useScrollReveal()
   return (
-    <section id="experience" style={{ padding: '120px 0', background: '#0c0c18' }}>
+    <section id="experience" style={{ padding: '120px 0', background: 'var(--void)' }}>
       <div className="max-w-6xl mx-auto px-6 md:px-12">
         <div ref={ref} style={{ opacity: visible?1:0, transform: visible?'translateY(0)':'translateY(24px)', transition: 'opacity .7s, transform .7s', marginBottom: 64 }}>
           <div className="flex items-center gap-3 mb-4">
             <div style={{ width: 28, height: 1, background: gold }} />
             <span style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 11, color: gold, letterSpacing: '0.25em', textTransform: 'uppercase' }}>Experience</span>
           </div>
-          <h2 style={{ fontFamily: "'Clash Display','Syne',sans-serif", fontSize: 'clamp(36px,5vw,60px)', fontWeight: 600, lineHeight: 1.05, letterSpacing: '-0.03em', color: 'white' }}>
+          <h2 style={{ fontFamily: "'Clash Display','Syne',sans-serif", fontSize: 'clamp(36px,5vw,60px)', fontWeight: 600, lineHeight: 1.05, letterSpacing: '-0.03em', color: 'var(--text)' }}>
             What I <em style={{ fontFamily: "'Instrument Serif',serif", fontStyle: 'italic', fontWeight: 400, color: gold }}>do best</em>
           </h2>
         </div>

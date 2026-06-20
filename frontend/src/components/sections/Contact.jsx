@@ -18,8 +18,8 @@ const contactInfo = [
 
 const inputStyle = {
   width: '100%', padding: '14px 18px', borderRadius: 12,
-  border: '1px solid rgba(255,255,255,0.07)',
-  background: '#11111f', color: 'white',
+  border: '1px solid var(--border)',
+  background: 'var(--surface)', color: 'var(--text)',
   fontFamily: "'Cabinet Grotesk',sans-serif", fontSize: 15,
   outline: 'none', transition: 'border-color .2s, box-shadow .2s',
 }
@@ -37,7 +37,7 @@ export default function Contact() {
     e.target.style.boxShadow   = '0 0 0 3px rgba(201,168,76,0.07)'
   }
   const onBlur = e => {
-    e.target.style.borderColor = 'rgba(255,255,255,0.07)'
+    e.target.style.borderColor = 'var(--border)'
     e.target.style.boxShadow   = 'none'
   }
 
@@ -66,7 +66,7 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" style={{ padding: '120px 0', background: '#0c0c18' }}>
+    <section id="contact" style={{ padding: '120px 0', background: 'var(--void)' }}>
       <div className="max-w-6xl mx-auto px-6 md:px-12">
 
         {/* Header */}
@@ -75,7 +75,7 @@ export default function Contact() {
             <div style={{ width: 28, height: 1, background: gold }} />
             <span style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 11, color: gold, letterSpacing: '0.25em', textTransform: 'uppercase' }}>Get In Touch</span>
           </div>
-          <h2 style={{ fontFamily: "'Clash Display','Syne',sans-serif", fontSize: 'clamp(36px,5vw,60px)', fontWeight: 600, lineHeight: 1.05, letterSpacing: '-0.03em', color: 'white' }}>
+          <h2 style={{ fontFamily: "'Clash Display','Syne',sans-serif", fontSize: 'clamp(36px,5vw,60px)', fontWeight: 600, lineHeight: 1.05, letterSpacing: '-0.03em', color: 'var(--text)' }}>
             Let's <em style={{ fontFamily: "'Instrument Serif',serif", fontStyle: 'italic', fontWeight: 400, color: gold }}>build together</em>
           </h2>
         </div>
@@ -84,7 +84,7 @@ export default function Contact() {
 
           {/* Left info */}
           <div className="lg:col-span-2">
-            <p style={{ fontSize: 15, lineHeight: 1.8, color: muted, fontStyle: 'italic', fontFamily: "'Instrument Serif',serif", marginBottom: 32 }}>
+            <p style={{ fontSize: 15, lineHeight: 1.8, color: 'var(--text2)', fontStyle: 'italic', fontFamily: "'Instrument Serif',serif", marginBottom: 32 }}>
               Have a project in mind? Looking for a dedicated MERN Stack Developer?
               I'm available for full-time roles, freelance & exciting collaborations.
             </p>
@@ -92,16 +92,16 @@ export default function Contact() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               {contactInfo.map(({ Icon, label, value, href }) => {
                 const inner = (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 18px', borderRadius: 14, border: '1px solid rgba(255,255,255,0.06)', background: '#11111f', transition: 'all .25s' }}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 18px', borderRadius: 14, border: '1px solid var(--border)', background: 'var(--surface)', transition: 'all .25s' }}
                     onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(201,168,76,.25)'; e.currentTarget.style.transform = 'translateX(5px)' }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,.06)'; e.currentTarget.style.transform = 'translateX(0)' }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'translateX(0)' }}
                   >
                     <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(201,168,76,0.08)', border: '1px solid rgba(201,168,76,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                       <Icon size={15} style={{ color: gold }} />
                     </div>
                     <div>
-                      <div style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 10, color: dim, letterSpacing: '0.1em', marginBottom: 2 }}>{label}</div>
-                      <div style={{ fontSize: 13, fontWeight: 500, color: 'white' }}>{value}</div>
+                      <div style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 10, color: 'var(--text3)', letterSpacing: '0.1em', marginBottom: 2 }}>{label}</div>
+                      <div style={{ fontSize: 13, fontWeight: 500, color: 'var(--text)' }}>{value}</div>
                     </div>
                   </div>
                 )
@@ -116,15 +116,15 @@ export default function Contact() {
                   <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#00e5a0', boxShadow: '0 0 8px #00e5a0' }} />
                   <span style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 10, color: '#00e5a0', letterSpacing: '0.1em' }}>Available Now</span>
                 </div>
-                <p style={{ fontSize: 13, color: muted }}>Open to full-time roles, freelance & exciting collaborations.</p>
+                <p style={{ fontSize: 13, color: 'var(--text2)' }}>Open to full-time roles, freelance & exciting collaborations.</p>
               </div>
             </div>
           </div>
 
           {/* Right form */}
           <div className="lg:col-span-3">
-            <div style={{ padding: 36, borderRadius: 24, border: '1px solid rgba(255,255,255,0.06)', background: '#11111f' }}>
-              <h3 style={{ fontFamily: "'Clash Display','Syne',sans-serif", fontSize: 20, fontWeight: 600, color: 'white', marginBottom: 28 }}>
+            <div style={{ padding: 36, borderRadius: 24, border: '1px solid var(--border)', background: 'var(--surface)' }}>
+              <h3 style={{ fontFamily: "'Clash Display','Syne',sans-serif", fontSize: 20, fontWeight: 600, color: 'var(--text)', marginBottom: 28 }}>
                 Send a Message
               </h3>
 
@@ -135,8 +135,8 @@ export default function Contact() {
                   style={{ padding: 32, textAlign: 'center', borderRadius: 16, border: '1px solid rgba(0,229,160,.2)', background: 'rgba(0,229,160,.05)' }}
                 >
                   <div style={{ fontSize: 48, marginBottom: 16 }}>🎉</div>
-                  <div style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 20, fontWeight: 600, color: 'white', marginBottom: 10 }}>Message Sent!</div>
-                  <p style={{ fontSize: 14, color: muted }}>Thanks for reaching out! I'll get back to you as soon as possible.</p>
+                  <div style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 20, fontWeight: 600, color: 'var(--text)', marginBottom: 10 }}>Message Sent!</div>
+                  <p style={{ fontSize: 14, color: 'var(--text2)' }}>Thanks for reaching out! I'll get back to you as soon as possible.</p>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
@@ -145,7 +145,7 @@ export default function Contact() {
                     { id:'email',   label:'Email Address',type:'email', ph:'john@example.com' },
                   ].map(f => (
                     <div key={f.id}>
-                      <label style={{ display:'block', fontFamily:'JetBrains Mono,monospace', fontSize:11, color:dim, letterSpacing:'0.15em', textTransform:'uppercase', marginBottom:8 }}>
+                      <label style={{ display:'block', fontFamily:'JetBrains Mono,monospace', fontSize:11, color:'var(--text3)', letterSpacing:'0.15em', textTransform:'uppercase', marginBottom:8 }}>
                         {f.label}
                       </label>
                       <input
@@ -158,7 +158,7 @@ export default function Contact() {
                   ))}
 
                   <div>
-                    <label style={{ display:'block', fontFamily:'JetBrains Mono,monospace', fontSize:11, color:dim, letterSpacing:'0.15em', textTransform:'uppercase', marginBottom:8 }}>
+                    <label style={{ display:'block', fontFamily:'JetBrains Mono,monospace', fontSize:11, color:'var(--text3)', letterSpacing:'0.15em', textTransform:'uppercase', marginBottom:8 }}>
                       Message
                     </label>
                     <textarea

@@ -5,13 +5,13 @@ const navLinks = ['about','skills','projects','experience','learning','contact']
 
 export default function Footer() {
   return (
-    <footer style={{ borderTop: '1px solid rgba(255,255,255,0.06)', background: '#080810' }} className="relative z-10 py-12">
+    <footer style={{ borderTop: '1px solid var(--border)', background: 'var(--obsidian)' }} className="relative z-10 py-12">
       <div className="max-w-6xl mx-auto px-6 md:px-12">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 flex-wrap">
 
           {/* Brand */}
           <Link to="hero" smooth className="cursor-pointer">
-            <span className="text-lg font-bold text-white" style={{ fontFamily: "'Clash Display','Syne',sans-serif" }}>
+            <span className="text-lg font-bold" style={{ fontFamily: "'Clash Display','Syne',sans-serif", color: 'var(--text)' }}>
               Hashir<span style={{ color: '#c9a84c' }}>.</span>
             </span>
           </Link>
@@ -22,9 +22,9 @@ export default function Footer() {
               <Link
                 key={l} to={l} smooth offset={-80}
                 className="capitalize cursor-pointer transition-colors duration-200"
-                style={{ fontSize: 13, color: '#9090a8', fontFamily: "'Cabinet Grotesk',sans-serif" }}
+                style={{ fontSize: 13, color: 'var(--text2)', fontFamily: "'Cabinet Grotesk',sans-serif" }}
                 onMouseEnter={e => e.currentTarget.style.color = '#c9a84c'}
-                onMouseLeave={e => e.currentTarget.style.color = '#9090a8'}
+                onMouseLeave={e => e.currentTarget.style.color = 'var(--text2)'}
               >
                 {l}
               </Link>
@@ -40,9 +40,9 @@ export default function Footer() {
               <a
                 key={href} href={href} target="_blank" rel="noopener noreferrer"
                 className="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200"
-                style={{ border: '1px solid rgba(255,255,255,0.06)', color: '#9090a8' }}
+                style={{ border: '1px solid var(--border)', color: 'var(--text2)' }}
                 onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(201,168,76,0.35)'; e.currentTarget.style.color = '#c9a84c' }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'; e.currentTarget.style.color = '#9090a8' }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text2)' }}
               >
                 <Icon size={15} />
               </a>
@@ -52,8 +52,8 @@ export default function Footer() {
 
         {/* Bottom */}
         <div className="mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3"
-          style={{ borderTop: '1px solid rgba(255,255,255,0.04)' }}>
-          <p className="flex items-center gap-1.5 text-xs" style={{ color: '#5a5a72', fontFamily: 'JetBrains Mono,monospace' }}>
+          style={{ borderTop: '1px solid var(--border)' }}>
+          <p className="flex items-center gap-1.5 text-xs" style={{ color: 'var(--text3)', fontFamily: 'JetBrains Mono,monospace' }}>
             © {new Date().getFullYear()} Hashir Ahmad
             <FiHeart size={11} style={{ color: '#c9a84c' }} />
             Built with MERN Stack
@@ -63,7 +63,7 @@ export default function Footer() {
               <span
                 key={t}
                 className="px-2.5 py-1 rounded-lg text-[10px] tracking-wide"
-                style={{ fontFamily: 'JetBrains Mono,monospace', border: '1px solid rgba(255,255,255,0.06)', color: '#5a5a72' }}
+                style={{ fontFamily: 'JetBrains Mono,monospace', border: '1px solid var(--border)', color: 'var(--text3)' }}
               >
                 {t}
               </span>

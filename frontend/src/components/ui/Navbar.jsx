@@ -25,7 +25,7 @@ export default function Navbar() {
   }, [])
 
   const navBg = scrolled
-    ? 'rgba(8,8,16,0.88)'
+    ? (dark ? 'rgba(8,8,16,0.88)' : 'rgba(248,249,250,0.88)')
     : 'transparent'
 
   return (
@@ -35,7 +35,7 @@ export default function Navbar() {
         style={{
           background: navBg,
           backdropFilter: scrolled ? 'blur(24px)' : 'none',
-          borderBottom: scrolled ? '1px solid rgba(255,255,255,0.06)' : 'none',
+          borderBottom: scrolled ? '1px solid var(--border)' : 'none',
           transition: 'all 0.4s ease',
           padding: scrolled ? '14px 48px' : '24px 48px',
         }}
@@ -47,8 +47,8 @@ export default function Navbar() {
           {/* Logo */}
           <Link to="hero" smooth spy offset={-80} className="cursor-pointer">
             <span
-              className="text-xl font-bold tracking-tight text-white"
-              style={{ fontFamily: "'Clash Display','Syne',sans-serif" }}
+              className="text-xl font-bold tracking-tight"
+              style={{ fontFamily: "'Clash Display','Syne',sans-serif", color: 'var(--text)' }}
             >
               Hashir<span style={{ color: '#c9a84c' }}>.</span>
             </span>
@@ -62,8 +62,8 @@ export default function Navbar() {
                 to={l.to}
                 smooth spy offset={-80}
                 className="nav-link"
-                style={{ fontFamily: "'Cabinet Grotesk','DM Sans',sans-serif", fontSize: 14, fontWeight: 500, color: '#9090a8', cursor: 'pointer', position: 'relative', transition: 'color .2s' }}
-                activeClass="!text-white"
+                style={{ fontFamily: "'Cabinet Grotesk','DM Sans',sans-serif", fontSize: 14, fontWeight: 500, color: 'var(--text2)', cursor: 'pointer', position: 'relative', transition: 'color .2s' }}
+                activeStyle={{ color: 'var(--text)' }}
               >
                 {l.label}
               </Link>
@@ -76,7 +76,7 @@ export default function Navbar() {
             <button
               onClick={toggle}
               className="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200"
-              style={{ border: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.02)', color: '#9090a8' }}
+              style={{ border: '1px solid var(--border)', background: 'var(--surface2)', color: 'var(--text2)' }}
             >
               {dark ? <FiSun size={15} /> : <FiMoon size={15} />}
             </button>
@@ -100,7 +100,7 @@ export default function Navbar() {
             {/* Mobile menu */}
             <button
               className="md:hidden w-9 h-9 rounded-xl flex items-center justify-center"
-              style={{ border: '1px solid rgba(255,255,255,0.06)', color: '#9090a8' }}
+              style={{ border: '1px solid var(--border)', color: 'var(--text2)' }}
               onClick={() => setMobileOpen(o => !o)}
             >
               {mobileOpen ? <FiX size={17} /> : <FiMenu size={17} />}
@@ -121,7 +121,7 @@ export default function Navbar() {
             />
             <motion.div
               className="fixed top-0 right-0 z-50 h-full flex flex-col py-20 px-10 gap-2"
-              style={{ width: 'min(320px, 85vw)', background: 'rgba(11,11,22,0.97)', backdropFilter: 'blur(24px)', borderLeft: '1px solid rgba(255,255,255,0.06)' }}
+              style={{ width: 'min(320px, 85vw)', background: 'var(--glass-bg)', backdropFilter: 'blur(24px)', borderLeft: '1px solid var(--border)' }}
               initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
             >
@@ -134,8 +134,8 @@ export default function Navbar() {
                 >
                   <Link
                     to={l.to} smooth offset={-80}
-                    className="block py-3 border-b text-2xl font-bold text-white"
-                    style={{ fontFamily: "'Clash Display','Syne',sans-serif", borderColor: 'rgba(255,255,255,0.06)', cursor: 'pointer' }}
+                    className="block py-3 border-b text-2xl font-bold"
+                    style={{ fontFamily: "'Clash Display','Syne',sans-serif", borderColor: 'var(--border)', color: 'var(--text)', cursor: 'pointer' }}
                     onClick={() => setMobileOpen(false)}
                   >
                     {l.label}

@@ -1,12 +1,33 @@
+/* ── Google Fonts fallback ─────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@300;400;500;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ── Google Fonts fallback ─────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@300;400;500;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap');
-
-/* ── CSS Custom Properties ─────────────────── */
 :root {
+  /* Default: Light Mode */
+  --obsidian:   #f8f9fa;
+  --void:       #f1f3f5;
+  --surface:    #ffffff;
+  --surface2:   #e9ecef;
+  --border:     rgba(0,0,0,0.08);
+  --border2:    rgba(0,0,0,0.12);
+  --gold:       #a37d24;
+  --gold2:      #c9a84c;
+  --amber:      #d97706;
+  --text:       #0f172a;
+  --text2:      #475569;
+  --text3:      #64748b;
+  --emerald:    #059669;
+  --cyan:       #0284c7;
+  --glass-bg:   rgba(255,255,255,0.7);
+  --radius:     16px;
+  --ease:       cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+html.dark {
+  /* Dark Mode */
   --obsidian:   #080810;
   --void:       #0c0c18;
   --surface:    #11111f;
@@ -21,8 +42,7 @@
   --text3:      #5a5a72;
   --emerald:    #00e5a0;
   --cyan:       #00d4ff;
-  --radius:     16px;
-  --ease:       cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --glass-bg:   rgba(17,17,31,0.7);
 }
 
 /* ── Reset ─────────────────────────────────── */
@@ -39,6 +59,7 @@ body {
   color: var(--text);
   overflow-x: hidden;
   cursor: none;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 /* ── Noise overlay ─────────────────────────── */
@@ -98,7 +119,7 @@ body::before {
   font-family: 'Clash Display', 'Cabinet Grotesk', sans-serif;
   font-size: clamp(38px, 5vw, 62px);
   font-weight: 600; line-height: 1.05;
-  letter-spacing: -0.03em; color: white;
+  letter-spacing: -0.03em; color: var(--text);
 }
 .section-title em {
   font-family: 'Instrument Serif', serif;
@@ -108,7 +129,7 @@ body::before {
 
 /* ── Glass card ────────────────────────────── */
 .glass {
-  background: rgba(17,17,31,0.7);
+  background: var(--glass-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border);

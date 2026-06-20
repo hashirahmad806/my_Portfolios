@@ -100,8 +100,8 @@ function ProjectCard({ p, i }) {
       whileHover={{ y: -6, borderColor: "rgba(201,168,76,0.25)" }}
       style={{
         borderRadius: 20,
-        border: "1px solid rgba(255,255,255,0.06)",
-        background: "#11111f",
+        border: "1px solid var(--border)",
+        background: "var(--surface)",
         overflow: "hidden",
         cursor: "default",
         opacity: visible ? 1 : 0,
@@ -168,7 +168,7 @@ function ProjectCard({ p, i }) {
             fontFamily: "'Clash Display','Syne',sans-serif",
             fontSize: 18,
             fontWeight: 600,
-            color: "white",
+            color: "var(--text)",
             marginBottom: 10,
             lineHeight: 1.2,
           }}
@@ -179,7 +179,7 @@ function ProjectCard({ p, i }) {
           style={{
             fontSize: 13,
             lineHeight: 1.7,
-            color: dim,
+            color: "var(--text3)",
             marginBottom: 18,
           }}
         >
@@ -204,8 +204,8 @@ function ProjectCard({ p, i }) {
                 fontFamily: "JetBrains Mono,monospace",
                 fontSize: 10,
                 letterSpacing: "0.04em",
-                border: "1px solid rgba(255,255,255,0.06)",
-                color: dim,
+                border: "1px solid var(--border)",
+                color: "var(--text3)",
               }}
             >
               {t}
@@ -233,8 +233,8 @@ function ProjectCard({ p, i }) {
                 fontSize: 12,
                 fontWeight: 600,
                 fontFamily: "'Cabinet Grotesk',sans-serif",
-                border: "1px solid rgba(255,255,255,0.07)",
-                color: "#9090a8",
+                border: "1px solid var(--border)",
+                color: "var(--text2)",
                 textDecoration: "none",
                 transition: "all .2s",
               }}
@@ -243,8 +243,8 @@ function ProjectCard({ p, i }) {
                 e.currentTarget.style.color = gold;
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "rgba(255,255,255,.07)";
-                e.currentTarget.style.color = "#9090a8";
+                e.currentTarget.style.borderColor = "var(--border)";
+                e.currentTarget.style.color = "var(--text2)";
               }}
             >
               <Icon size={12} /> {label}
@@ -312,7 +312,7 @@ export default function Projects() {
               fontWeight: 600,
               lineHeight: 1.05,
               letterSpacing: "-0.03em",
-              color: "white",
+              color: "var(--text)",
             }}
           >
             Featured{" "}
@@ -350,9 +350,9 @@ export default function Projects() {
                 fontFamily: "'Cabinet Grotesk',sans-serif",
                 border:
                   "1px solid " +
-                  (filter === f ? gold : "rgba(255,255,255,.08)"),
+                  (filter === f ? gold : "var(--border)"),
                 background: filter === f ? gold : "transparent",
-                color: filter === f ? "#080810" : "#9090a8",
+                color: filter === f ? "#080810" : "var(--text2)",
                 cursor: "pointer",
                 transition: "all .25s",
                 textTransform: "capitalize",
@@ -399,8 +399,8 @@ export default function Projects() {
               gap: 10,
               padding: "13px 28px",
               borderRadius: 100,
-              border: "1px solid rgba(255,255,255,0.09)",
-              color: "#9090a8",
+              border: "1px solid var(--border)",
+              color: "var(--text2)",
               fontSize: 14,
               fontWeight: 600,
               fontFamily: "'Cabinet Grotesk',sans-serif",
@@ -412,8 +412,8 @@ export default function Projects() {
               e.currentTarget.style.color = gold;
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = "rgba(255,255,255,.09)";
-              e.currentTarget.style.color = "#9090a8";
+              e.currentTarget.style.borderColor = "var(--border)";
+              e.currentTarget.style.color = "var(--text2)";
             }}
           >
             <FiGithub size={16} /> View All on GitHub

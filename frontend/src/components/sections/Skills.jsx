@@ -44,10 +44,10 @@ function SkillBar({ name, pct, color, visible, delay }) {
   return (
     <div style={{ marginBottom: 18 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-        <span style={{ fontSize: 13, fontWeight: 500, color: 'white' }}>{name}</span>
-        <span style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 11, color: dim }}>{pct}%</span>
+        <span style={{ fontSize: 13, fontWeight: 500, color: 'var(--text)' }}>{name}</span>
+        <span style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 11, color: 'var(--text3)' }}>{pct}%</span>
       </div>
-      <div style={{ height: 3, borderRadius: 2, background: 'rgba(255,255,255,0.06)', overflow: 'hidden' }}>
+      <div style={{ height: 3, borderRadius: 2, background: 'var(--border)', overflow: 'hidden' }}>
         <div style={{
           height: '100%', borderRadius: 2,
           background: `linear-gradient(90deg, ${color}, ${color}88)`,
@@ -66,14 +66,14 @@ function GroupCard({ g, idx }) {
       ref={ref}
       style={{
         padding: '32px 28px', borderRadius: 20,
-        border: '1px solid rgba(255,255,255,0.06)',
-        background: '#11111f',
+        border: '1px solid var(--border)',
+        background: 'var(--surface)',
         opacity: visible ? 1 : 0,
         transform: visible ? 'translateY(0)' : 'translateY(28px)',
         transition: `opacity .7s ease ${idx * 0.1}s, transform .7s ease ${idx * 0.1}s, border-color .3s`,
       }}
       onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(201,168,76,.2)'}
-      onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,.06)'}
+      onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
         <div style={{ width: 38, height: 38, borderRadius: 10, background: 'rgba(201,168,76,0.08)', border: '1px solid rgba(201,168,76,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>
@@ -92,7 +92,7 @@ export default function Skills() {
   const { ref: hRef, visible: hVisible } = useScrollReveal()
 
   return (
-    <section id="skills" style={{ padding: '120px 0', background: '#0c0c18' }}>
+    <section id="skills" style={{ padding: '120px 0', background: 'var(--void)' }}>
       <div className="max-w-6xl mx-auto px-6 md:px-12">
 
         {/* Header */}
@@ -110,11 +110,11 @@ export default function Skills() {
               <div style={{ width: 28, height: 1, background: gold }} />
               <span style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 11, color: gold, letterSpacing: '0.25em', textTransform: 'uppercase' }}>Technical Skills</span>
             </div>
-            <h2 style={{ fontFamily: "'Clash Display','Syne',sans-serif", fontSize: 'clamp(36px,5vw,60px)', fontWeight: 600, lineHeight: 1.05, letterSpacing: '-0.03em', color: 'white' }}>
+            <h2 style={{ fontFamily: "'Clash Display','Syne',sans-serif", fontSize: 'clamp(36px,5vw,60px)', fontWeight: 600, lineHeight: 1.05, letterSpacing: '-0.03em', color: 'var(--text)' }}>
               My <em style={{ fontFamily: "'Instrument Serif',serif", fontStyle: 'italic', fontWeight: 400, color: gold }}>toolkit</em>
             </h2>
           </div>
-          <p style={{ maxWidth: 320, fontSize: 14, lineHeight: 1.75, color: dim }}>
+          <p style={{ maxWidth: 320, fontSize: 14, lineHeight: 1.75, color: 'var(--text3)' }}>
             Technologies I use daily to build production-grade full-stack applications.
           </p>
         </div>
@@ -137,8 +137,8 @@ export default function Skills() {
               style={{
                 padding: '7px 14px', borderRadius: 8, fontSize: 11,
                 fontFamily: 'JetBrains Mono,monospace', letterSpacing: '0.05em',
-                border: '1px solid rgba(255,255,255,0.06)',
-                color: dim, background: 'rgba(255,255,255,0.02)',
+                border: '1px solid var(--border)',
+                color: 'var(--text3)', background: 'var(--surface2)',
               }}
             >
               {t}

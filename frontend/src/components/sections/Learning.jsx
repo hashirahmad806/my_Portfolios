@@ -20,14 +20,14 @@ function LearnItem({ item, idx, visible }) {
       style={{
         display: 'flex', alignItems: 'center', gap: 18,
         padding: '18px 22px', borderRadius: 16,
-        border: '1px solid rgba(255,255,255,0.06)',
-        background: '#11111f',
+        border: '1px solid var(--border)',
+        background: 'var(--surface)',
         opacity: visible ? 1 : 0,
         transform: visible ? 'translateX(0)' : 'translateX(-20px)',
         transition: `opacity .6s ease ${idx * 0.09}s, transform .6s ease ${idx * 0.09}s, border-color .3s`,
       }}
       onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(201,168,76,.2)'; e.currentTarget.style.transform = 'translateX(6px)' }}
-      onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,.06)'; e.currentTarget.style.transform = 'translateX(0)' }}
+      onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'translateX(0)' }}
     >
       {/* Icon */}
       <div style={{ width: 42, height: 42, flexShrink: 0, borderRadius: 12, background: `${item.color}14`, border: `1px solid ${item.color}20`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20 }}>
@@ -36,8 +36,8 @@ function LearnItem({ item, idx, visible }) {
 
       {/* Info */}
       <div style={{ flex: 1 }}>
-        <div style={{ fontFamily: "'Clash Display','Syne',sans-serif", fontSize: 14, fontWeight: 600, color: 'white', marginBottom: 3 }}>{item.name}</div>
-        <div style={{ fontSize: 12, color: dim }}>{item.sub}</div>
+        <div style={{ fontFamily: "'Clash Display','Syne',sans-serif", fontSize: 14, fontWeight: 600, color: 'var(--text)', marginBottom: 3 }}>{item.name}</div>
+        <div style={{ fontSize: 12, color: 'var(--text3)' }}>{item.sub}</div>
       </div>
 
       {/* Progress */}
@@ -45,7 +45,7 @@ function LearnItem({ item, idx, visible }) {
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 5 }}>
           <span style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 11, color: item.color }}>{item.pct}%</span>
         </div>
-        <div style={{ height: 2, borderRadius: 2, background: 'rgba(255,255,255,0.06)', overflow: 'hidden' }}>
+        <div style={{ height: 2, borderRadius: 2, background: 'var(--border)', overflow: 'hidden' }}>
           <div style={{ height: '100%', background: `linear-gradient(90deg,${item.color},${item.color}88)`, borderRadius: 2, width: visible ? `${item.pct}%` : '0%', transition: `width 1.2s ease ${idx * 0.09 + 0.3}s` }} />
         </div>
       </div>
@@ -67,7 +67,7 @@ export default function Learning() {
             <div style={{ width: 28, height: 1, background: gold }} />
             <span style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 11, color: gold, letterSpacing: '0.25em', textTransform: 'uppercase' }}>Growing</span>
           </div>
-          <h2 style={{ fontFamily: "'Clash Display','Syne',sans-serif", fontSize: 'clamp(36px,5vw,60px)', fontWeight: 600, lineHeight: 1.05, letterSpacing: '-0.03em', color: 'white' }}>
+          <h2 style={{ fontFamily: "'Clash Display','Syne',sans-serif", fontSize: 'clamp(36px,5vw,60px)', fontWeight: 600, lineHeight: 1.05, letterSpacing: '-0.03em', color: 'var(--text)' }}>
             Currently <em style={{ fontFamily: "'Instrument Serif',serif", fontStyle: 'italic', fontWeight: 400, color: gold }}>learning</em>
           </h2>
         </div>
@@ -75,10 +75,10 @@ export default function Learning() {
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Vision card */}
           <div>
-            <div style={{ padding: 40, borderRadius: 24, border: '1px solid rgba(255,255,255,0.06)', background: '#11111f', position: 'relative', overflow: 'hidden', marginBottom: 20 }}>
+            <div style={{ padding: 40, borderRadius: 24, border: '1px solid var(--border)', background: 'var(--surface)', position: 'relative', overflow: 'hidden', marginBottom: 20 }}>
               <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at top right, rgba(201,168,76,0.07), transparent 60%)', pointerEvents: 'none' }} />
               <div style={{ position: 'relative', zIndex: 1 }}>
-                <div style={{ fontFamily: "'Instrument Serif',serif", fontStyle: 'italic', fontSize: 22, color: 'white', lineHeight: 1.5, marginBottom: 24 }}>
+                <div style={{ fontFamily: "'Instrument Serif',serif", fontStyle: 'italic', fontSize: 22, color: 'var(--text)', lineHeight: 1.5, marginBottom: 24 }}>
                   <span style={{ display: 'block', color: gold, fontSize: 44, lineHeight: 0.6, marginBottom: 18 }}>"</span>
                   The future of web is intelligent — and I'm building towards it.
                 </div>
@@ -93,9 +93,9 @@ export default function Learning() {
             {/* Stats row */}
             <div style={{ display: 'flex', gap: 16 }}>
               {[['🐍','Python','In Progress'],['🤖','AI/ML','Learning'],['⚡','AI+MERN','Building']].map(([emoji,name,status]) => (
-                <div key={name} style={{ flex: 1, padding: '16px 14px', borderRadius: 14, border: '1px solid rgba(255,255,255,0.06)', background: '#11111f', textAlign: 'center' }}>
+                <div key={name} style={{ flex: 1, padding: '16px 14px', borderRadius: 14, border: '1px solid var(--border)', background: 'var(--surface)', textAlign: 'center' }}>
                   <div style={{ fontSize: 22, marginBottom: 8 }}>{emoji}</div>
-                  <div style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 13, fontWeight: 600, color: 'white', marginBottom: 3 }}>{name}</div>
+                  <div style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 13, fontWeight: 600, color: 'var(--text)', marginBottom: 3 }}>{name}</div>
                   <div style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 9, color: gold, letterSpacing: '0.1em' }}>{status}</div>
                 </div>
               ))}
