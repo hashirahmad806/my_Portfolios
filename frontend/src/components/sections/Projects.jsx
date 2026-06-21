@@ -42,10 +42,10 @@ const FALLBACK = [
   },
   {
     _id: "3",
-    title: "Doctor Appointment Website",
+    title: "Lumina Academic Assistant",
     category: "fullstack",
     description:
-      "AI Student Assistant is an intelligent, full-stack educational companion designed to empower students. Seamlessly integrated with high-performance LLMs via Groq, it offers multimodal capabilities to chat, analyze study resources, and solve problems from uploaded images in real-time.",
+      "Lumina Academic Assistant is an intelligent, full-stack educational companion designed to empower students. Seamlessly integrated with high-performance LLMs via Groq, it offers multimodal capabilities to chat, analyze study resources, and solve problems from uploaded images in real-time.",
     tech: [
       "React.js",
       "Tailwind CSS",
