@@ -45,12 +45,21 @@ const FALLBACK = [
     title: "Doctor Appointment Website",
     category: "fullstack",
     description:
-      "A comprehensive healthcare platform enabling patients to schedule, manage & track appointments. Features real-time availability, doctor profiles, and a clean booking flow.",
-    tech: ["React.js", "Material UI", "Node.js", "Express", "MongoDB"],
+      "AI Student Assistant is an intelligent, full-stack educational companion designed to empower students. Seamlessly integrated with high-performance LLMs via Groq, it offers multimodal capabilities to chat, analyze study resources, and solve problems from uploaded images in real-time.",
+    tech: [
+      "React.js",
+      "Tailwind CSS",
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "Groq",
+      "Lenis",
+      "Gsap",
+    ],
     emoji: "🏥",
     gradient: "linear-gradient(135deg,#667eea,#764ba2)",
-    githubUrl: "https://github.com/hashirahmad806",
-    liveUrl: "#",
+    githubUrl: "https://github.com/hashirahmad806/Web_Projectect_Ai_Assistant",
+    liveUrl: "https://web-projectect-ai-assistant-x8xz.vercel.app/",
   },
   {
     _id: "4",
@@ -78,15 +87,15 @@ const FALLBACK = [
   },
   {
     _id: "6",
-    title: "E-Commerce Platform",
+    title: "BrewManager Pro",
     category: "fullstack",
     description:
-      "Full-featured online store with product catalog, cart management, order tracking & user authentication with a seamless checkout experience.",
+      "BrewManager Pro  as  Cafe Management Application A modern, highly aesthetic dine-in order and management application built using the MERN stack (MongoDB, Express, React, Node.js). It features fluid animations, smooth scrolling, and responsive styling.",
     tech: ["React.js", "Tailwind CSS", "Node.js", "Express", "MongoDB"],
     emoji: "🛒",
     gradient: "linear-gradient(135deg,#43e97b,#38f9d7)",
     githubUrl: "https://github.com/hashirahmad806",
-    liveUrl: "#",
+    liveUrl: "https://cafe-management-do4l.vercel.app/",
   },
 ];
 
@@ -116,38 +125,38 @@ function ProjectCard({ p, i }) {
         <span style={{ fontSize: 56, position: 'relative', zIndex: 1 }}>{p.emoji}</span>
       </div> */}
 
-     {/* Visual header */}
-<div
-  style={{
-    height: 170,
-    position: "relative",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    overflow: "hidden"
-  }}
->
-  <div
-    style={{
-      position: "absolute",
-      inset: 0,
-      background: p.gradient,
-      opacity: 0.18
-    }}
-  />
+      {/* Visual header */}
+      <div
+        style={{
+          height: 170,
+          position: "relative",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          overflow: "hidden",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: p.gradient,
+            opacity: 0.18,
+          }}
+        />
 
-  <img
-    src={`https://api.microlink.io/?url=${p.liveUrl}&screenshot=true&meta=false&embed=screenshot.url`}
-    alt={p.title}
-    style={{
-      width: "100%",
-      height: "100%",
-      objectFit: "cover",
-      position: "relative",
-      zIndex: 1
-    }}
-  />
-</div>
+        <img
+          src={`https://api.microlink.io/?url=${p.liveUrl}&screenshot=true&meta=false&embed=screenshot.url`}
+          alt={p.title}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            position: "relative",
+            zIndex: 1,
+          }}
+        />
+      </div>
 
       {/* Body */}
       <div style={{ padding: "24px" }}>
@@ -348,9 +357,7 @@ export default function Projects() {
                 fontSize: 13,
                 fontWeight: 600,
                 fontFamily: "'Cabinet Grotesk',sans-serif",
-                border:
-                  "1px solid " +
-                  (filter === f ? gold : "var(--border)"),
+                border: "1px solid " + (filter === f ? gold : "var(--border)"),
                 background: filter === f ? gold : "transparent",
                 color: filter === f ? "#080810" : "var(--text2)",
                 cursor: "pointer",
