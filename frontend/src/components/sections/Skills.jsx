@@ -123,8 +123,8 @@ export default function Skills() {
   const { ref: hRef, visible: hVis } = useScrollReveal()
 
   return (
-    <section id="skills" className="bg-[#131314] text-[#e5e2e3] py-20 relative overflow-hidden">
-      <main className="max-w-container-max mx-auto px-margin-mobile lg:px-gutter">
+    <section id="skills" className="text-[#e5e2e3] py-20 relative overflow-hidden" style={{ background: '#131314' }}>
+      <main className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
         
         {/* Header */}
         <div ref={hRef} className="mb-16" style={{

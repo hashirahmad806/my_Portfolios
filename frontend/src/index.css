@@ -34,22 +34,22 @@
 }
 
 html.dark {
-  /* Dark Mode */
-  --obsidian:   #080810;
-  --void:       #0c0c18;
-  --surface:    #11111f;
-  --surface2:   #16162a;
-  --border:     rgba(255,255,255,0.06);
-  --border2:    rgba(255,255,255,0.1);
-  --gold:       #c9a84c;
-  --gold2:      #e8c97a;
-  --amber:      #f5a623;
-  --text:       #e8e8f0;
-  --text2:      #9090a8;
-  --text3:      #787898;
-  --emerald:    #00e5a0;
+  /* Dark Mode — unified with Aurelian Studio #131314 palette */
+  --obsidian:   #0e0e0f;
+  --void:       #131314;
+  --surface:    #141416;
+  --surface2:   #201f20;
+  --border:     rgba(255,255,255,0.08);
+  --border2:    rgba(255,255,255,0.12);
+  --gold:       #ffdca1;
+  --gold2:      #ffba20;
+  --amber:      #ffb800;
+  --text:       #e5e2e3;
+  --text2:      #d5c4ab;
+  --text3:      #9e8f78;
+  --emerald:    #00E5A0;
   --cyan:       #00d4ff;
-  --glass-bg:   rgba(17,17,31,0.7);
+  --glass-bg:   rgba(20,20,22,0.7);
   --card-shadow: 0 2px 8px rgba(0,0,0,0.4), 0 8px 28px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.05);
   --card-shadow-hover: 0 6px 20px rgba(0,0,0,0.55), 0 18px 48px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.07);
 }

@@ -244,8 +244,8 @@ export default function Certifications() {
   const { ref: hRef, visible: hVis } = useScrollReveal()
 
   return (
-    <section id="certifications" className="bg-[#131314] text-[#e5e2e3] pb-24 pt-12 overflow-hidden">
-      <main className="max-w-container-max mx-auto px-margin-mobile md:px-gutter">
+    <section id="certifications" className="text-[#e5e2e3] pb-24 pt-12 overflow-hidden" style={{ background: '#131314' }}>
+      <main className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Header Section */}
         <header ref={hRef} className="mb-16" style={{
           opacity: hVis ? 1 : 0,
