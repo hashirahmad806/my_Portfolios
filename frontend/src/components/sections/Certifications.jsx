@@ -34,7 +34,7 @@ function CertCard({ cert, idx, className, style }) {
   const handleMouseLeave = (e) => {
     const card = e.currentTarget
     card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)'
-    card.style.borderColor = 'rgba(255, 255, 255, 0.08)'
+    card.style.borderColor = ''
     card.style.boxShadow = 'none'
   }
 
@@ -68,7 +68,7 @@ function CertCard({ cert, idx, className, style }) {
       >
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none"></div>
         <div className="flex-shrink-0">
-          <div className="bg-[#1a1a1c] p-6 rounded-2xl border border-border-glass w-24 h-24 flex items-center justify-center">
+          <div className="icon-tray p-6 w-24 h-24 flex items-center justify-center">
             <img className="w-16 h-16 object-contain" src={logoUrl} alt={cert.title} />
           </div>
         </div>
@@ -205,7 +205,7 @@ function CertCard({ cert, idx, className, style }) {
     >
       <div className="absolute top-0 right-0 w-32 h-32 bg-accent-glow blur-[60px] opacity-20 -mr-16 -mt-16 pointer-events-none"></div>
       <div className="flex justify-between items-start mb-6">
-        <div className="bg-[#1a1a1c] p-4 rounded-2xl border border-border-glass">
+        <div className="icon-tray p-4">
           <img className="w-10 h-10 object-contain" src={logoUrl} alt={cert.title} />
         </div>
         <span className="text-label-mono text-[10px] bg-surface-variant/30 px-2 py-1 rounded border border-border-glass text-on-surface-variant uppercase">{cert.date}</span>
@@ -244,7 +244,7 @@ export default function Certifications() {
   const { ref: hRef, visible: hVis } = useScrollReveal()
 
   return (
-    <section id="certifications" className="text-[#e5e2e3] pb-24 pt-12 overflow-hidden" style={{ background: '#131314' }}>
+    <section id="certifications" className="pb-24 pt-12 overflow-hidden" style={{ background: 'var(--void)', color: 'var(--text)' }}>
       <main className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Header Section */}
         <header ref={hRef} className="mb-16" style={{

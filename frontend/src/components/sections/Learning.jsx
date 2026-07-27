@@ -17,7 +17,7 @@ function ProgressCard({ item, visible }) {
   return (
     <div className="glass-panel rounded-xl p-5 flex flex-col gap-4">
       <div className="flex justify-between items-start">
-        <div className="p-2.5 bg-[#ffdca1]/10 rounded-lg text-[#ffdca1]">
+        <div className="p-2.5 rounded-lg" style={{ background: 'rgba(var(--gold-rgb, 138,100,25), 0.12)', color: 'var(--gold)' }}>
           <span
             className="material-symbols-outlined text-2xl"
             style={{ fontVariationSettings: "'FILL' 1" }}
@@ -25,10 +25,10 @@ function ProgressCard({ item, visible }) {
             {item.icon}
           </span>
         </div>
-        <span className="text-white font-label-mono text-lg">{item.pct}%</span>
+        <span className="font-label-mono text-lg" style={{ color: 'var(--gold)' }}>{item.pct}%</span>
       </div>
       <div className="flex flex-col gap-2">
-        <h3 className="text-white font-headline text-base font-semibold">{item.name}</h3>
+        <h3 className="font-headline text-base font-semibold" style={{ color: 'var(--text)' }}>{item.name}</h3>
         <div className="glow-meter-bg">
           <div
             className="glow-meter-fill"
@@ -52,8 +52,8 @@ export default function Learning() {
   return (
     <section
       id="learning"
-      className="text-[#e5e2e3] py-20 relative overflow-hidden"
-      style={{ background: '#131314' }}
+      className="py-20 relative overflow-hidden"
+      style={{ background: 'var(--void)', color: 'var(--text)' }}
     >
       {/* Atmospheric glow */}
       <div className="absolute top-0 right-0 -z-10 w-72 h-72 opacity-15 blur-[100px] pointer-events-none">
@@ -71,16 +71,16 @@ export default function Learning() {
       >
         {/* ── Header ── */}
         <div className="mb-10">
-          <span className="inline-flex items-center gap-2 font-label-mono text-xs text-[#e6c364] uppercase tracking-widest mb-3">
-            <span className="w-6 h-px bg-[#e6c364]" />
+          <span className="inline-flex items-center gap-2 font-label-mono text-xs uppercase tracking-widest mb-3" style={{ color: 'var(--gold)' }}>
+            <span className="w-6 h-px" style={{ background: 'var(--gold)' }} />
             Growing
           </span>
-          <h2 className="font-headline font-bold leading-tight text-white mb-2"
-            style={{ fontSize: 'clamp(36px, 6vw, 64px)' }}>
+          <h2 className="font-headline font-bold leading-tight mb-2"
+            style={{ fontSize: 'clamp(36px, 6vw, 64px)', color: 'var(--text)' }}>
             Strategic{' '}
             <span className="amber-text-gradient">Growth</span>
           </h2>
-          <p className="text-on-surface-variant font-body text-sm leading-relaxed max-w-xl">
+          <p className="font-body text-sm leading-relaxed max-w-xl" style={{ color: 'var(--text3)' }}>
             A focused journey from full-stack to AI-augmented development — building skills
             in Python, ML, and intelligent system integrations.
           </p>
@@ -93,7 +93,7 @@ export default function Learning() {
           <div className="flex flex-col gap-6">
             {/* Quote block */}
             <div className="glass-panel rounded-xl p-6 border border-border-glass">
-              <p className="text-on-surface-variant font-body text-sm leading-relaxed italic mb-6">
+              <p className="font-body text-sm leading-relaxed italic mb-6" style={{ color: 'var(--text3)' }}>
                 "Web intelligence is the next frontier. We aren't just building interfaces;
                 we're crafting sentient digital ecosystems that evolve with human intent."
               </p>
@@ -108,8 +108,8 @@ export default function Learning() {
                   />
                 </div>
                 <div>
-                  <p className="text-white font-bold text-sm">Hashir Ahmad</p>
-                  <p className="text-[#e6c364] text-xs uppercase tracking-tight">Full-Stack Tech Architect</p>
+                  <p className="font-bold text-sm" style={{ color: 'var(--text)' }}>Hashir Ahmad</p>
+                  <p className="font-label-mono text-xs uppercase tracking-tight" style={{ color: 'var(--gold)' }}>Full-Stack Tech Architect</p>
                 </div>
               </div>
             </div>
@@ -126,20 +126,20 @@ export default function Learning() {
                 </p>
               </div>
               <div className="space-y-3">
-                {[
-                  { label: 'Neural Density', value: '88.4%', pct: 88, color: 'bg-[#ffba20]/40' },
-                  { label: 'Synaptic Throughput', value: 'Active', pct: 62, color: 'bg-[#e6c364]/40' },
-                ].map(bar => (
-                  <div key={bar.label} className="space-y-1">
-                    <div className="flex justify-between text-[10px] font-label-mono text-white/40 uppercase tracking-tight">
-                      <span>{bar.label}</span>
-                      <span>{bar.value}</span>
-                    </div>
-                    <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                      <div className={`h-full ${bar.color} rounded-full`} style={{ width: `${bar.pct}%` }} />
-                    </div>
+              {[
+                { label: 'Neural Density',    value: '88.4%', pct: 88 },
+                { label: 'Synaptic Throughput', value: 'Active', pct: 62 },
+              ].map(bar => (
+                <div key={bar.label} className="space-y-1">
+                  <div className="flex justify-between text-[10px] font-label-mono uppercase tracking-tight" style={{ color: 'var(--text3)' }}>
+                    <span>{bar.label}</span>
+                    <span>{bar.value}</span>
                   </div>
-                ))}
+                  <div className="h-1 w-full rounded-full overflow-hidden" style={{ background: 'var(--border2)' }}>
+                    <div className="h-full glow-meter-fill rounded-full" style={{ width: `${bar.pct}%`, background: 'var(--gold)' }} />
+                  </div>
+                </div>
+              ))}
               </div>
             </div>
 
@@ -149,14 +149,14 @@ export default function Learning() {
                 <p className="text-on-surface-variant text-[10px] font-label-mono uppercase tracking-wider mb-0.5">
                   CURRENT FOCUS
                 </p>
-                <p className="text-white font-bold text-sm">Neural Architecture Search</p>
+                <p className="font-bold text-sm" style={{ color: 'var(--text)' }}>Neural Architecture Search</p>
               </div>
               <div className="w-px bg-outline-variant self-stretch hidden sm:block" />
               <div>
                 <p className="text-on-surface-variant text-[10px] font-label-mono uppercase tracking-wider mb-0.5">
                   NEXT UP
                 </p>
-                <p className="text-white font-bold text-sm">Reinforcement Learning</p>
+                <p className="font-bold text-sm" style={{ color: 'var(--text)' }}>Reinforcement Learning</p>
               </div>
             </div>
           </div>
@@ -173,7 +173,10 @@ export default function Learning() {
         <div className="mt-12 flex justify-center sm:justify-end">
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-[#ffba20] text-[#0e0e0f] text-sm font-bold hover:shadow-[0_0_24px_rgba(255,186,32,0.45)] transition-all font-headline"
+            className="inline-flex items-center gap-2 px-7 py-3 rounded-full text-sm font-bold transition-all font-headline"
+            style={{ background: 'var(--gold)', color: 'var(--void)', boxShadow: '0 0 0 0 transparent' }}
+            onMouseEnter={e => e.currentTarget.style.boxShadow = '0 0 24px rgba(163,125,36,0.5)'}
+            onMouseLeave={e => e.currentTarget.style.boxShadow = '0 0 0 0 transparent'}
           >
             Start a Project
           </a>

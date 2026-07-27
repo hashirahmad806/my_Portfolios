@@ -48,7 +48,7 @@ function SkillRow({ name, pct, color, visible, delay }) {
     <div className="group cursor-default">
       <div className="flex justify-between items-center mb-2">
         <span className="text-on-surface font-medium">{name}</span>
-        <span className="text-[#ffdca1] text-xs font-label-mono">{pct}%</span>
+        <span className="font-label-mono text-xs" style={{ color: 'var(--gold)' }}>{pct}%</span>
       </div>
       <div className="skill-progress-bg rounded-full overflow-hidden">
         <div 
@@ -102,7 +102,7 @@ function GroupPanel({ g, idx }) {
         <div className="p-3 rounded-lg bg-primary-container/10" style={{ color: g.color }}>
           <span className="material-symbols-outlined text-3xl">{g.icon}</span>
         </div>
-        <h3 className="text-white font-headline text-2xl font-bold">{g.label}</h3>
+        <h3 className="font-headline text-2xl font-bold" style={{ color: 'var(--text)' }}>{g.label}</h3>
       </div>
       
       <div className="space-y-6">
@@ -123,7 +123,7 @@ export default function Skills() {
   const { ref: hRef, visible: hVis } = useScrollReveal()
 
   return (
-    <section id="skills" className="text-[#e5e2e3] py-20 relative overflow-hidden" style={{ background: '#131314' }}>
+    <section id="skills" className="py-20 relative overflow-hidden" style={{ background: 'var(--void)', color: 'var(--text)' }}>
       <main className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
         
         {/* Header */}
@@ -136,7 +136,7 @@ export default function Skills() {
             <div className="h-1 w-12 bg-primary-container rounded-full"></div>
             <span className="text-secondary-fixed font-label-mono uppercase tracking-widest text-xs">Full Stack Mastery</span>
           </div>
-          <h2 className="text-white text-5xl md:text-6xl font-headline font-bold mb-6">Technical Ecosystem</h2>
+          <h2 className="font-headline text-5xl md:text-6xl font-bold mb-6" style={{ color: 'var(--text)' }}>Technical Ecosystem</h2>
           <p className="text-on-surface-variant text-lg max-w-2xl leading-relaxed font-body">
             A meticulously curated selection of my core professional stack, reflecting years of specialized development in building scalable, modern web applications.
           </p>
@@ -151,7 +151,7 @@ export default function Skills() {
 
         {/* Core Competencies Tag Pills */}
         <div className="mt-20">
-          <h4 className="text-white font-headline text-xl font-bold mb-8 text-center">Core Competencies</h4>
+          <h4 className="font-headline text-xl font-bold mb-8 text-center" style={{ color: 'var(--text)' }}>Core Competencies</h4>
           <div className="flex flex-wrap justify-center gap-3">
             {[
               'Responsive Design', 'Microservices', 'WebSockets', 'Unit Testing', 
@@ -159,7 +159,8 @@ export default function Skills() {
             ].map(tag => (
               <span 
                 key={tag} 
-                className="glass-panel px-6 py-3 rounded-full text-sm font-medium text-[#ffdca1] hover:border-[#ffdca1]/40 cursor-default transition-colors font-label-mono"
+                className="glass-panel px-6 py-3 rounded-full text-sm font-medium cursor-default transition-colors font-label-mono"
+                style={{ color: 'var(--gold)' }}
               >
                 {tag}
               </span>
@@ -173,9 +174,9 @@ export default function Skills() {
             className="absolute inset-0 bg-cover bg-center opacity-30 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none" 
             style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuADwyKT8J23nZYbyiTli3YVgunT223w9fHb_Szh-XDGzYmFPcux-KgCQGBcOYQEzMtYpxMYkhthWvn07Vb9CYVmCCS-ThSjkIkl-GB459KfJXy-JCW0RgElNMJVEDQzMYojh9yDfrOtasUZnrqO1g9TVUGikSnTcbHx5M73wSMj2yWjQqkN5BVvlOjLda51522fQjQspw60ig9kFXhdtUGx79DOGigo7NUamjKER6OWIiNPYpCB0yRucOWYBT0sjtJpQJGAECkfCcc")' }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#131314] via-transparent to-transparent"></div>
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, var(--void) 0%, transparent 70%)' }}></div>
           <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
-            <h3 className="text-3xl font-headline text-white font-bold mb-4">Continuously Evolving</h3>
+            <h3 className="text-3xl font-headline font-bold mb-4" style={{ color: 'var(--text)' }}>Continuously Evolving</h3>
             <p className="text-on-surface-variant max-w-lg font-body leading-relaxed text-sm md:text-base">
               Committed to lifelong learning and adopting emerging technologies that drive business value and exceptional user experiences.
             </p>
