@@ -1,0 +1,354 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Studio Learn - Currently Learning</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Inter:wght@100..900&amp;family=JetBrains+Mono:wght@100..800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#abebff",
+                    "secondary-fixed-dim": "#e6c364",
+                    "on-tertiary": "#003641",
+                    "border-glass": "rgba(255, 255, 255, 0.08)",
+                    "on-secondary-container": "#fdd977",
+                    "surface-variant": "#353436",
+                    "inverse-on-surface": "#313031",
+                    "primary-fixed": "#ffdea8",
+                    "surface-container": "#201f20",
+                    "on-primary-fixed-variant": "#5e4200",
+                    "surface-bright": "#3a393a",
+                    "error": "#ffb4ab",
+                    "on-tertiary-fixed-variant": "#004e5d",
+                    "tertiary-container": "#00d7fe",
+                    "on-tertiary-container": "#005a6b",
+                    "inverse-primary": "#7c5800",
+                    "terminal-green": "#00E5A0",
+                    "inverse-surface": "#e5e2e3",
+                    "on-primary-container": "#6b4c00",
+                    "surface-container-low": "#1c1b1c",
+                    "outline-variant": "#514532",
+                    "error-container": "#93000a",
+                    "tertiary-fixed-dim": "#17d8ff",
+                    "surface": "#131314",
+                    "on-primary-fixed": "#271900",
+                    "on-background": "#e5e2e3",
+                    "on-surface": "#e5e2e3",
+                    "secondary": "#e6c364",
+                    "on-error-container": "#ffdad6",
+                    "surface-container-lowest": "#0e0e0f",
+                    "on-error": "#690005",
+                    "primary-fixed-dim": "#ffba20",
+                    "on-secondary": "#3d2e00",
+                    "surface-dim": "#131314",
+                    "primary": "#ffdca1",
+                    "surface-container-high": "#2a2a2b",
+                    "primary-container": "#ffb800",
+                    "on-secondary-fixed-variant": "#584400",
+                    "secondary-fixed": "#ffe08f",
+                    "on-tertiary-fixed": "#001f27",
+                    "tertiary-fixed": "#b0ecff",
+                    "surface-elevated": "#141416",
+                    "outline": "#9e8f78",
+                    "surface-tint": "#ffba20",
+                    "secondary-container": "#785d00",
+                    "surface-container-highest": "#353436",
+                    "on-secondary-fixed": "#241a00",
+                    "on-surface-variant": "#d5c4ab",
+                    "accent-glow": "rgba(255, 184, 0, 0.15)",
+                    "background": "#131314",
+                    "on-primary": "#412d00"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "section-gap": "120px",
+                    "gutter": "24px",
+                    "margin-mobile": "20px",
+                    "unit": "4px",
+                    "container-max": "1200px"
+            },
+            "fontFamily": {
+                    "headline-xl": ["Geist"],
+                    "headline-lg": ["Geist"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-lg-mobile": ["Geist"],
+                    "caption": ["Inter"],
+                    "headline-md": ["Geist"],
+                    "label-mono": ["JetBrains Mono"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #131314;
+            color: #e5e2e3;
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 186, 32, 0.3);
+            transform: translateY(-2px);
+        }
+        .glow-meter-bg {
+            background: rgba(255, 255, 255, 0.05);
+            height: 4px;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .glow-meter-fill {
+            background: linear-gradient(90deg, #ffba20, #ffdca1);
+            height: 100%;
+            border-radius: 2px;
+            box-shadow: 0 0 12px rgba(255, 186, 32, 0.4);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #ffffff 0%, #a1a1a1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .amber-text-gradient {
+            background: linear-gradient(135deg, #ffba20 0%, #e6c364 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.02;
+            z-index: 50;
+            background-image: url("https://www.transparenttextures.com/patterns/carbon-fibre.png");
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background">
+<div class="noise-overlay"></div>
+<!-- Shared Top Navigation (Included as per Relevance Test - it's a Destination/Browsing context) -->
+
+<main class="max-w-container-max mx-auto px-margin-mobile lg:px-gutter py-20 relative">
+<!-- Atmospheric Background Element -->
+<div class="absolute top-0 right-0 -z-10 w-1/2 h-full opacity-20 blur-[120px]">
+<div class="w-full h-full bg-primary/30 rounded-full translate-x-1/2 -translate-y-1/2"></div>
+</div>
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+<!-- Left Side: Narrative Quote -->
+<div class="lg:col-span-5 flex flex-col gap-8 sticky top-32">
+<div class="flex flex-col gap-2">
+<span class="text-secondary font-label-mono uppercase tracking-widest text-caption flex items-center gap-2"><span class="w-8 h-[1px] bg-secondary"></span>Growing Hi</span>
+<h1 class="text-headline-lg lg:text-headline-xl text-white font-headline-xl leading-tight">Strategic <br class=""><span class="amber-text-gradient">Growth</span></h1>
+</div>
+<div class="relative mt-8">
+
+<p class="text-body-lg text-on-surface-variant font-body-lg leading-relaxed italic">
+                        "Web intelligence is the next frontier. We aren't just building interfaces; we're crafting sentient digital ecosystems that evolve with human intent. The future belongs to those who speak the language of data."
+                    </p>
+<div class="mt-8 flex items-center gap-4">
+<div class="h-12 w-12 rounded-full border border-outline-variant p-0.5">
+<div class="h-full w-full rounded-full bg-cover bg-center" data-alt="A professional studio portrait of a futuristic AI developer looking thoughtful against a minimalist dark background with soft golden rim lighting. High fashion photography style, moody and high-end." style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuBY0kTaiFy3vX6xvEVom3S5g3LMYNPOTrYk3Y9MMDeB_FiikqBbI3HepyXK-e6lUFuYFjLNvITOSowjkGUMbGfrjmVlfl_02DnEVE5zcJdBI-_hI1OVAP0hHC30K-I4RmHfe-CSl-nzW7MLIM9JPvGahy3SsCwZif2XDOztupsnVclI5NkQKlzLLlW9vSo1pUNZnZ0l791HDIZoMOTi7ClCp9fZk80JeMK31IInMJuQP0j23PvVX8V69u8uqg8of-GKmgKrtQlz1wI&quot;);"></div>
+</div>
+<div>
+<p class="text-white font-bold text-sm">Alex Dev</p>
+<p class="text-secondary text-xs font-medium uppercase tracking-tighter">Chief Systems Architect</p>
+</div>
+</div>
+</div>
+<!-- Abstract Visual -->
+<div class="mt-12 h-64 rounded-xl overflow-hidden glass-card relative group border border-border-glass flex flex-col justify-end p-6">
+  <div class="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent -z-10"></div>
+  <webgl-shader class="absolute inset-0 w-full h-full -z-20 opacity-40" src="{{DATA:ANIMATION:ANIMATION_1}}"></webgl-shader>
+  
+  <div class="flex flex-col gap-4">
+    <div class="flex items-center gap-3">
+      <div class="relative flex h-2 w-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+      </div>
+      <p class="text-xs font-label-mono text-primary tracking-widest uppercase">System Status: Evolving</p>
+    </div>
+    
+    <div class="space-y-2">
+      <div class="flex justify-between text-[10px] font-label-mono text-white/40 uppercase tracking-tighter">
+        <span class="">Neural Density</span>
+        <span class="">88.4%</span>
+      </div>
+      <div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+        <div class="h-full bg-primary/40 w-[88%] rounded-full"></div>
+      </div>
+    </div>
+
+    <div class="space-y-2">
+      <div class="flex justify-between text-[10px] font-label-mono text-white/40 uppercase tracking-tighter">
+        <span class="">Synaptic Throughput</span>
+        <span class="">Active</span>
+      </div>
+      <div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+        <div class="h-full bg-secondary/40 w-[62%] rounded-full"></div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="absolute top-4 right-4">
+    <span class="material-symbols-outlined text-white/20 text-lg">sensors</span>
+  </div>
+</div>
+</div>
+<!-- Right Side: Learning Progress -->
+<div class="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Python -->
+<div class="glass-card rounded-xl p-6 flex flex-col gap-6">
+<div class="flex justify-between items-start">
+<div class="p-3 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: &quot;FILL&quot; 1;">code</span>
+</div>
+<span class="text-white font-label-mono text-xl">55%</span>
+</div>
+<div class="flex flex-col gap-3">
+<h3 class="text-white font-headline-md text-body-lg font-semibold">Python</h3>
+<div class="glow-meter-bg">
+<div class="glow-meter-fill" style="width: 55%; transition: width 1.5s cubic-bezier(0.65, 0, 0.35, 1);"></div>
+</div>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest font-medium">Core Intelligence Layer</p>
+</div>
+</div>
+<!-- Machine Learning -->
+<div class="glass-card rounded-xl p-6 flex flex-col gap-6">
+<div class="flex justify-between items-start">
+<div class="p-3 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: &quot;FILL&quot; 1;">psychology</span>
+</div>
+<span class="text-white font-label-mono text-xl">40%</span>
+</div>
+<div class="flex flex-col gap-3">
+<h3 class="text-white font-headline-md text-body-lg font-semibold">Machine Learning</h3>
+<div class="glow-meter-bg">
+<div class="glow-meter-fill" style="width: 40%; transition: width 1.5s cubic-bezier(0.65, 0, 0.35, 1);"></div>
+</div>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest font-medium">Pattern Recognition</p>
+</div>
+</div>
+<!-- TensorFlow -->
+<div class="glass-card rounded-xl p-6 flex flex-col gap-6">
+<div class="flex justify-between items-start">
+<div class="p-3 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: &quot;FILL&quot; 1;">memory</span>
+</div>
+<span class="text-white font-label-mono text-xl">30%</span>
+</div>
+<div class="flex flex-col gap-3">
+<h3 class="text-white font-headline-md text-body-lg font-semibold">TensorFlow / Keras</h3>
+<div class="glow-meter-bg">
+<div class="glow-meter-fill" style="width: 30%; transition: width 1.5s cubic-bezier(0.65, 0, 0.35, 1);"></div>
+</div>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest font-medium">Deep Neural Networks</p>
+</div>
+</div>
+<!-- Data Analysis -->
+<div class="glass-card rounded-xl p-6 flex flex-col gap-6">
+<div class="flex justify-between items-start">
+<div class="p-3 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: &quot;FILL&quot; 1;">analytics</span>
+</div>
+<span class="text-white font-label-mono text-xl">50%</span>
+</div>
+<div class="flex flex-col gap-3">
+<h3 class="text-white font-headline-md text-body-lg font-semibold">Data Analysis</h3>
+<div class="glow-meter-bg">
+<div class="glow-meter-fill" style="width: 50%; transition: width 1.5s cubic-bezier(0.65, 0, 0.35, 1);"></div>
+</div>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest font-medium">Insight Extraction</p>
+</div>
+</div>
+<!-- AI Integration -->
+<div class="glass-card rounded-xl p-6 flex flex-col gap-6 md:col-span-1">
+<div class="flex justify-between items-start">
+<div class="p-3 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: &quot;FILL&quot; 1;">settings_input_component</span>
+</div>
+<span class="text-white font-label-mono text-xl">60%</span>
+</div>
+<div class="flex flex-col gap-3">
+<h3 class="text-white font-headline-md text-body-lg font-semibold">AI Integration</h3>
+<div class="glow-meter-bg">
+<div class="glow-meter-fill" style="width: 60%; transition: width 1.5s cubic-bezier(0.65, 0, 0.35, 1);"></div>
+</div>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest font-medium">Seamless API Logic</p>
+</div>
+</div>
+<!-- AI + MERN Stack -->
+<div class="glass-card rounded-xl p-6 flex flex-col gap-6 md:col-span-1">
+<div class="flex justify-between items-start">
+<div class="p-3 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: &quot;FILL&quot; 1;">layers</span>
+</div>
+<span class="text-white font-label-mono text-xl">45%</span>
+</div>
+<div class="flex flex-col gap-3">
+<h3 class="text-white font-headline-md text-body-lg font-semibold">AI + MERN Stack</h3>
+<div class="glow-meter-bg">
+<div class="glow-meter-fill" style="width: 45%; transition: width 1.5s cubic-bezier(0.65, 0, 0.35, 1);"></div>
+</div>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest font-medium">Full-Stack Intelligence</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer / Sidebar Preview Area -->
+<div class="mt-24 pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-8">
+<div class="flex flex-col">
+<p class="text-on-surface-variant text-caption font-label-mono">CURRENT FOCUS</p>
+<p class="text-white font-bold">Neural Architecture Search</p>
+</div>
+<div class="h-10 w-[1px] bg-outline-variant hidden md:block"></div>
+<div class="flex flex-col">
+<p class="text-on-surface-variant text-caption font-label-mono">NEXT UP</p>
+<p class="text-white font-bold">Reinforcement Learning</p>
+</div>
+</div>
+<div class="flex gap-4">
+
+<button class="px-6 py-2 rounded-full bg-primary text-on-primary text-sm font-bold hover:shadow-[0_0_20px_rgba(255,186,32,0.4)] transition-all">Start Project</button>
+</div>
+</div>
+</main>
+<script>
+        // Micro-interaction for the progress bars
+        document.addEventListener('DOMContentLoaded', () => {
+            const progressFills = document.querySelectorAll('.glow-meter-fill');
+            progressFills.forEach(fill => {
+                const targetWidth = fill.style.width;
+                fill.style.width = '0%';
+                setTimeout(() => {
+                    fill.style.transition = 'width 1.5s cubic-bezier(0.65, 0, 0.35, 1)';
+                    fill.style.width = targetWidth;
+                }, 100);
+            });
+        });
+    </script>
+
+
+
+
+</body></html>

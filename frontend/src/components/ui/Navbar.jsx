@@ -4,6 +4,11 @@ import { Link } from 'react-scroll'
 import { FiSun, FiMoon, FiMenu, FiX } from 'react-icons/fi'
 import { useTheme } from '../../context/ThemeContext'
 
+const motionOk = typeof window !== 'undefined'
+  ? !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  : true
+const gold = '#c9a84c'
+
 const links = [
   { to: 'about',           label: 'About'          },
   { to: 'skills',          label: 'Skills'         },
@@ -77,7 +82,24 @@ export default function Navbar() {
             <button
               onClick={toggle}
               className="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200"
-              style={{ border: '1px solid var(--border)', background: 'var(--surface2)', color: 'var(--text2)' }}
+              style={{
+                border: '1px solid var(--border)',
+                background: 'linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))',
+                boxShadow: 'var(--card-shadow)',
+                color: 'var(--text2)',
+                cursor: 'pointer',
+                transition: 'all 0.25s ease',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.borderColor = 'rgba(201,168,76,0.35)'
+                e.currentTarget.style.color = gold
+                if (motionOk) e.currentTarget.style.transform = 'translateY(-1px)'
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.borderColor = 'var(--border)'
+                e.currentTarget.style.color = 'var(--text2)'
+                e.currentTarget.style.transform = 'translateY(0)'
+              }}
             >
               {dark ? <FiSun size={15} /> : <FiMoon size={15} />}
             </button>
@@ -85,15 +107,13 @@ export default function Navbar() {
             {/* Hire Me CTA */}
             <Link
               to="contact" smooth offset={-80}
-              className="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold tracking-wide transition-all duration-300 cursor-pointer"
+              className="hidden md:flex items-center gap-2 tactile-btn-primary"
               style={{
-                fontFamily: "'Cabinet Grotesk',sans-serif",
-                border: '1px solid rgba(201,168,76,0.35)',
-                background: 'rgba(201,168,76,0.04)',
-                color: '#c9a84c',
+                padding: '8px 18px',
+                fontSize: 12,
+                borderRadius: 100,
+                cursor: 'pointer',
               }}
-              onMouseEnter={e => { e.currentTarget.style.background = '#c9a84c'; e.currentTarget.style.color = '#080810' }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(201,168,76,0.04)'; e.currentTarget.style.color = '#c9a84c' }}
             >
               Hire Me
             </Link>

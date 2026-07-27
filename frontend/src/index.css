@@ -24,6 +24,8 @@
   --glass-bg:   rgba(255,255,255,0.7);
   --radius:     16px;
   --ease:       cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --card-shadow: 0 2px 8px rgba(0,0,0,0.05), 0 8px 28px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.9);
+  --card-shadow-hover: 0 6px 20px rgba(0,0,0,0.1), 0 18px 48px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9);
 }
 
 html.dark {
@@ -39,10 +41,12 @@ html.dark {
   --amber:      #f5a623;
   --text:       #e8e8f0;
   --text2:      #9090a8;
-  --text3:      #5a5a72;
+  --text3:      #787898;
   --emerald:    #00e5a0;
   --cyan:       #00d4ff;
   --glass-bg:   rgba(17,17,31,0.7);
+  --card-shadow: 0 2px 8px rgba(0,0,0,0.4), 0 8px 28px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.05);
+  --card-shadow-hover: 0 6px 20px rgba(0,0,0,0.55), 0 18px 48px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.07);
 }
 
 /* ── Reset ─────────────────────────────────── */
@@ -241,3 +245,159 @@ body::before {
   position: absolute; border-radius: 50%;
   filter: blur(100px); pointer-events: none;
 }
+
+/* ── Premium Soft-Depth Design System Utilities ── */
+.soft-depth-card {
+  background: linear-gradient(145deg, rgba(255,255,255,0.025) 0%, rgba(0,0,0,0.06) 100%), var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--card-shadow);
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.35s var(--ease);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .soft-depth-card:hover {
+    transform: translateY(-5px);
+  }
+}
+
+/* Frosted glass trays for icons */
+.frosted-icon-chip {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.45), inset 0 -1px 0 rgba(255,255,255,0.04), 0 2px 6px rgba(0,0,0,0.22);
+}
+
+/* Tactile primary button (e.g. gold gradient fill, click press down) */
+.tactile-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 100px;
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--gold) 0%, #aa8730 100%);
+  border: 1px solid rgba(201,168,76,0.3);
+  color: #080810;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 2px 8px rgba(201,168,76,0.2), 0 4px 16px rgba(0,0,0,0.15);
+  text-decoration: none;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+  cursor: pointer;
+}
+.tactile-btn-primary:hover {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 4px 16px rgba(201,168,76,0.4), 0 8px 24px rgba(0,0,0,0.25);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .tactile-btn-primary:hover {
+    transform: translateY(-1px);
+  }
+}
+.tactile-btn-primary:active {
+  transform: scale(0.97) !important;
+}
+
+/* Tactile outline/secondary button */
+.tactile-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 100px;
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid var(--border2);
+  background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 2px 6px rgba(0,0,0,0.15);
+  color: var(--text2);
+  text-decoration: none;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), border-color 0.2s, color 0.2s;
+  cursor: pointer;
+}
+.tactile-btn-secondary:hover {
+  border-color: rgba(201,168,76,0.4);
+  color: var(--gold);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 12px rgba(0,0,0,0.22), 0 0 8px rgba(201,168,76,0.15);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .tactile-btn-secondary:hover {
+    transform: translateY(-1px);
+  }
+}
+.tactile-btn-secondary:active {
+  transform: scale(0.97) !important;
+}
+
+/* Recessed tactile inputs */
+.tactile-input {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.12) 100%);
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.4), inset 0 -1px 0 rgba(255,255,255,0.02);
+  color: var(--text);
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-size: 15px;
+  outline: none;
+  resize: none;
+  transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.tactile-input:focus {
+  border-color: rgba(201,168,76,0.4);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.4), 0 0 0 3px rgba(201,168,76,0.07);
+}
+
+/* Dimensional Tag/Chip pills */
+.dimensional-pill {
+  padding: 6px 14px;
+  border-radius: 9px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 2px 5px rgba(0,0,0,0.15);
+  color: var(--text3);
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), border-color 0.2s, color 0.2s;
+  cursor: default;
+}
+.dimensional-pill:hover {
+  border-color: rgba(201,168,76,0.5);
+  color: var(--gold2);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 10px rgba(0,0,0,0.25), 0 0 8px rgba(201,168,76,0.2);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .dimensional-pill:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* Animated nav-link underline effect */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--gold);
+  transition: width 0.3s var(--ease), left 0.3s var(--ease);
+}
+.nav-link:hover::after, .nav-link.active::after {
+  width: 100%;
+  left: 0;
+}
+

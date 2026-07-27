@@ -39,10 +39,27 @@ export default function Footer() {
             ].map(({ href, Icon }) => (
               <a
                 key={href} href={href} target="_blank" rel="noopener noreferrer"
-                className="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200"
-                style={{ border: '1px solid var(--border)', color: 'var(--text2)' }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(201,168,76,0.35)'; e.currentTarget.style.color = '#c9a84c' }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text2)' }}
+                className="frosted-icon-chip"
+                style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: 10,
+                  border: '1px solid var(--border)',
+                  color: 'var(--text2)',
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01))',
+                  transition: 'all 0.25s ease',
+                  textDecoration: 'none'
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.borderColor = 'rgba(201,168,76,0.35)'
+                  e.currentTarget.style.color = '#c9a84c'
+                  e.currentTarget.style.transform = 'translateY(-2px)'
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.borderColor = 'var(--border)'
+                  e.currentTarget.style.color = 'var(--text2)'
+                  e.currentTarget.style.transform = 'translateY(0)'
+                }}
               >
                 <Icon size={15} />
               </a>

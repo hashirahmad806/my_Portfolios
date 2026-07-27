@@ -7,6 +7,10 @@ import { projectsAPI } from "../../utils/api";
 const gold = "#c9a84c";
 const dim = "#5a5a72";
 
+const motionOk = typeof window !== 'undefined'
+  ? !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  : true;
+
 const FALLBACK = [
   {
     _id: "1",
@@ -103,28 +107,44 @@ const FILTERS = ["all", "fullstack", "frontend", "backend"];
 
 function ProjectCard({ p, i }) {
   const { ref, visible } = useScrollReveal(0.05);
+  const startColor = (() => {
+    const match = (p.gradient || '').match(/#[a-fA-F0-9]{3,8}/);
+    return match ? match[0] : gold;
+  })();
+
+  const handleEnter = (ev) => {
+    const el = ev.currentTarget;
+    if (motionOk) el.style.transform = 'translateY(-5px)';
+    el.style.boxShadow = `0 6px 20px rgba(0,0,0,0.55), 0 18px 48px rgba(0,0,0,0.35), 0 0 0 1px ${startColor}22, 0 0 28px ${startColor}10, inset 0 1px 0 rgba(255,255,255,0.07)`;
+    el.style.borderColor = `${startColor}28`;
+  };
+
+  const handleLeave = (ev) => {
+    const el = ev.currentTarget;
+    el.style.transform = 'translateY(0)';
+    el.style.boxShadow = 'var(--card-shadow)';
+    el.style.borderColor = 'var(--border)';
+  };
+
   return (
-    <motion.div
+    <div
       ref={ref}
-      whileHover={{ y: -6, borderColor: "rgba(201,168,76,0.25)" }}
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
       style={{
         borderRadius: 20,
         border: "1px solid var(--border)",
-        background: "var(--surface)",
+        background: "linear-gradient(145deg, rgba(255,255,255,0.025) 0%, rgba(0,0,0,0.06) 100%), var(--surface)",
+        boxShadow: "var(--card-shadow)",
         overflow: "hidden",
         cursor: "default",
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(28px)",
-        transition: `opacity .6s ease ${i * 0.07}s, transform .6s ease ${i * 0.07}s`,
-        boxShadow: "0 0 0 0 transparent",
+        transition: motionOk 
+          ? `opacity .6s ease ${i * 0.07}s, transform .6s ease ${i * 0.07}s, box-shadow .35s ease, border-color .35s ease`
+          : `opacity .6s ease ${i * 0.07}s`,
       }}
     >
-      {/* Visual header */}
-      {/* <div style={{ height: 170, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, background: p.gradient, opacity: 0.18 }} />
-        <span style={{ fontSize: 56, position: 'relative', zIndex: 1 }}>{p.emoji}</span>
-      </div> */}
-
       {/* Visual header */}
       <div
         style={{
@@ -134,6 +154,7 @@ function ProjectCard({ p, i }) {
           alignItems: "center",
           justifyContent: "center",
           overflow: "hidden",
+          background: "rgba(0,0,0,0.2)"
         }}
       >
         <div
@@ -145,6 +166,13 @@ function ProjectCard({ p, i }) {
           }}
         />
 
+        {/* Top edge glow wash */}
+        <div style={{
+          position: 'absolute', top: 0, left: 0, right: 0, height: 40,
+          background: `linear-gradient(180deg, ${startColor}15 0%, transparent 100%)`,
+          pointerEvents: 'none',
+        }} />
+
         <img
           src={`https://api.microlink.io/?url=${p.liveUrl}&screenshot=true&meta=false&embed=screenshot.url`}
           alt={p.title}
@@ -154,8 +182,25 @@ function ProjectCard({ p, i }) {
             objectFit: "cover",
             position: "relative",
             zIndex: 1,
+            opacity: 0.85,
+            transition: 'opacity 0.3s ease',
           }}
+          onMouseEnter={e => e.currentTarget.style.opacity = 1}
+          onMouseLeave={e => e.currentTarget.style.opacity = 0.85}
         />
+
+        {/* Emoji Badge overlay on left corner */}
+        <div style={{
+          position: 'absolute', bottom: 10, left: 10, zIndex: 2,
+          width: 32, height: 32, borderRadius: 8,
+          background: 'rgba(8,8,16,0.65)',
+          backdropFilter: 'blur(8px)',
+          border: '1px solid rgba(255,255,255,0.08)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: 14,
+        }}>
+          {p.emoji}
+        </div>
       </div>
 
       {/* Body */}
@@ -164,7 +209,7 @@ function ProjectCard({ p, i }) {
           style={{
             fontFamily: "JetBrains Mono,monospace",
             fontSize: 10,
-            color: gold,
+            color: startColor,
             letterSpacing: "0.2em",
             textTransform: "uppercase",
             marginBottom: 8,
@@ -190,6 +235,11 @@ function ProjectCard({ p, i }) {
             lineHeight: 1.7,
             color: "var(--text3)",
             marginBottom: 18,
+            height: 66,
+            overflow: "hidden",
+            display: "-webkit-box",
+            WebkitLineClamp: 3,
+            WebkitBoxOrient: "vertical"
           }}
         >
           {p.description}
@@ -202,19 +252,18 @@ function ProjectCard({ p, i }) {
             flexWrap: "wrap",
             gap: 6,
             marginBottom: 20,
+            height: 56,
+            overflow: "hidden"
           }}
         >
           {p.tech.map((t) => (
             <span
               key={t}
+              className="dimensional-pill"
               style={{
                 padding: "4px 10px",
                 borderRadius: 6,
-                fontFamily: "JetBrains Mono,monospace",
                 fontSize: 10,
-                letterSpacing: "0.04em",
-                border: "1px solid var(--border)",
-                color: "var(--text3)",
               }}
             >
               {t}
@@ -225,35 +274,31 @@ function ProjectCard({ p, i }) {
         {/* Links */}
         <div style={{ display: "flex", gap: 10 }}>
           {[
-            { href: p.githubUrl, Icon: FiGithub, label: "Code" },
-            { href: p.liveUrl, Icon: FiExternalLink, label: "Demo" },
-          ].map(({ href, Icon, label }) => (
+            { href: p.githubUrl, Icon: FiGithub, label: "Code", primary: false },
+            { href: p.liveUrl, Icon: FiExternalLink, label: "Demo", primary: true },
+          ].map(({ href, Icon, label, primary }) => (
             <a
               key={label}
               href={href}
               target="_blank"
               rel="noopener noreferrer"
+              className={primary ? "tactile-btn-primary" : "tactile-btn-secondary"}
               style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 6,
                 padding: "8px 16px",
                 borderRadius: 8,
                 fontSize: 12,
-                fontWeight: 600,
-                fontFamily: "'Cabinet Grotesk',sans-serif",
-                border: "1px solid var(--border)",
-                color: "var(--text2)",
-                textDecoration: "none",
-                transition: "all .2s",
+                flex: 1,
+                justifyContent: "center",
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "rgba(201,168,76,.3)";
-                e.currentTarget.style.color = gold;
+              onMouseEnter={e => {
+                if (primary) {
+                  e.currentTarget.style.boxShadow = `inset 0 1px 0 rgba(255,255,255,0.2), 0 4px 12px ${startColor}40, 0 8px 24px rgba(0,0,0,0.25)`
+                }
               }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "var(--border)";
-                e.currentTarget.style.color = "var(--text2)";
+              onMouseLeave={e => {
+                if (primary) {
+                  e.currentTarget.style.boxShadow = `inset 0 1px 0 rgba(255,255,255,0.18), 0 2px 8px rgba(201,168,76,0.2), 0 4px 16px rgba(0,0,0,0.15)`
+                }
               }}
             >
               <Icon size={12} /> {label}
@@ -264,7 +309,7 @@ function ProjectCard({ p, i }) {
 
       {/* Bottom accent line */}
       <div style={{ height: 1, background: p.gradient, opacity: 0.35 }} />
-    </motion.div>
+    </div>
   );
 }
 
@@ -347,31 +392,29 @@ export default function Projects() {
             marginBottom: 48,
           }}
         >
-          {FILTERS.map((f) => (
-            <button
-              key={f}
-              onClick={() => setFilter(f)}
-              style={{
-                padding: "8px 20px",
-                borderRadius: 100,
-                fontSize: 13,
-                fontWeight: 600,
-                fontFamily: "'Cabinet Grotesk',sans-serif",
-                border: "1px solid " + (filter === f ? gold : "var(--border)"),
-                background: filter === f ? gold : "transparent",
-                color: filter === f ? "#080810" : "var(--text2)",
-                cursor: "pointer",
-                transition: "all .25s",
-                textTransform: "capitalize",
-              }}
-            >
-              {f === "all"
-                ? "All Projects"
-                : f === "fullstack"
-                  ? "Full Stack"
-                  : f.charAt(0).toUpperCase() + f.slice(1)}
-            </button>
-          ))}
+          {FILTERS.map((f) => {
+            const isActive = filter === f;
+            return (
+              <button
+                key={f}
+                onClick={() => setFilter(f)}
+                className={isActive ? "tactile-btn-primary" : "tactile-btn-secondary"}
+                style={{
+                  padding: "8px 20px",
+                  borderRadius: 100,
+                  fontSize: 13,
+                  cursor: "pointer",
+                  textTransform: "capitalize",
+                }}
+              >
+                {f === "all"
+                  ? "All Projects"
+                  : f === "fullstack"
+                    ? "Full Stack"
+                    : f.charAt(0).toUpperCase() + f.slice(1)}
+              </button>
+            );
+          })}
         </div>
 
         {/* Grid */}

@@ -1,0 +1,394 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Technical Toolkit Showcase</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;family=Geist:wght@600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-elevated": "#141416",
+                    "on-primary-container": "#6b4c00",
+                    "on-secondary-fixed": "#241a00",
+                    "secondary-fixed": "#ffe08f",
+                    "tertiary-fixed-dim": "#17d8ff",
+                    "error-container": "#93000a",
+                    "on-primary": "#412d00",
+                    "surface-container-high": "#2a2a2b",
+                    "border-glass": "rgba(255, 255, 255, 0.08)",
+                    "secondary-fixed-dim": "#e6c364",
+                    "on-tertiary-container": "#005a6b",
+                    "outline": "#9e8f78",
+                    "surface-variant": "#353436",
+                    "surface-container": "#201f20",
+                    "surface": "#131314",
+                    "on-error-container": "#ffdad6",
+                    "primary-fixed-dim": "#ffba20",
+                    "on-secondary-fixed-variant": "#584400",
+                    "secondary": "#e6c364",
+                    "on-surface-variant": "#d5c4ab",
+                    "outline-variant": "#514532",
+                    "surface-bright": "#3a393a",
+                    "surface-container-highest": "#353436",
+                    "secondary-container": "#785d00",
+                    "tertiary": "#abebff",
+                    "primary-container": "#ffb800",
+                    "on-primary-fixed-variant": "#5e4200",
+                    "on-background": "#e5e2e3",
+                    "on-error": "#690005",
+                    "on-tertiary-fixed": "#001f27",
+                    "on-surface": "#e5e2e3",
+                    "on-secondary": "#3d2e00",
+                    "tertiary-fixed": "#b0ecff",
+                    "accent-glow": "rgba(255, 184, 0, 0.15)",
+                    "on-secondary-container": "#fdd977",
+                    "surface-dim": "#131314",
+                    "primary": "#ffdca1",
+                    "background": "#131314",
+                    "surface-container-low": "#1c1b1c",
+                    "inverse-on-surface": "#313031",
+                    "inverse-primary": "#7c5800",
+                    "inverse-surface": "#e5e2e3",
+                    "primary-fixed": "#ffdea8",
+                    "on-tertiary-fixed-variant": "#004e5d",
+                    "tertiary-container": "#00d7fe",
+                    "surface-container-lowest": "#0e0e0f",
+                    "on-tertiary": "#003641",
+                    "error": "#ffb4ab",
+                    "terminal-green": "#00E5A0",
+                    "on-primary-fixed": "#271900",
+                    "surface-tint": "#ffba20"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(32, 31, 32, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .skill-progress-bg {
+            background: rgba(255, 255, 255, 0.05);
+            height: 2px;
+        }
+        .skill-progress-fill {
+            height: 2px;
+            box-shadow: 0 0 10px currentColor;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .floating { animation: float 6s ease-in-out infinite; }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary-container selection:text-on-primary-container">
+<!-- Shared Navigation -->
+<div class="relative flex h-auto min-h-screen w-full flex-col dark group/design-root overflow-x-hidden bg-surface-dim" style="font-family: &quot;Be Vietnam Pro&quot;, &quot;Noto Sans&quot;, sans-serif;">
+<div class="layout-container flex h-full grow flex-col">
+<div class="px-40 flex flex-1 justify-center py-5 max-md:px-4">
+<div class="layout-content-container flex flex-col max-w-[1200px] flex-1">
+
+<!-- Main Showcase Container -->
+<main class="flex-1 px-4 py-12 md:px-10">
+<div class="mb-16">
+<div class="flex items-center gap-4 mb-4">
+<div class="h-1 w-12 bg-primary-container rounded-full"></div>
+<span class="text-secondary-fixed font-label-mono uppercase tracking-widest text-xs">Full Stack Mastery</span>
+</div>
+<h1 class="text-white text-5xl md:text-6xl font-headline-xl mb-6">Technical Ecosystem</h1>
+<p class="text-on-surface-variant text-lg max-w-2xl leading-relaxed">
+                                A meticulously curated selection of my core professional stack, reflecting years of specialized development in building scalable, modern web applications.
+                            </p>
+</div>
+<!-- Grid Columns -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Frontend Column -->
+<section class="glass-panel rounded-xl p-8 flex flex-col gap-8 transition-transform hover:scale-[1.01] duration-300" style="--mouse-x: 116.94660949707031px; --mouse-y: 364.989501953125px;">
+<div class="flex items-center gap-4">
+<div class="p-3 rounded-lg bg-primary-container/10 text-primary-container">
+<span class="material-symbols-outlined text-3xl">token</span>
+</div>
+<h3 class="text-white font-headline-md">Frontend</h3>
+</div>
+<div class="space-y-6">
+<!-- React -->
+<div class="group cursor-default">
+<div class="flex justify-between items-center mb-2">
+<span class="text-on-surface font-medium">React.js</span>
+<span class="text-primary text-xs font-label-mono">95%</span>
+</div>
+<div class="skill-progress-bg rounded-full overflow-hidden">
+<div class="skill-progress-fill bg-[#61DAFB] w-[95%]" style="color: rgb(97, 218, 251); transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);"></div>
+</div>
+</div>
+<!-- JS -->
+<div class="group cursor-default">
+<div class="flex justify-between items-center mb-2">
+<span class="text-on-surface font-medium">JavaScript ES6+</span>
+<span class="text-primary text-xs font-label-mono">90%</span>
+</div>
+<div class="skill-progress-bg rounded-full overflow-hidden">
+<div class="skill-progress-fill bg-[#F7DF1E] w-[90%]" style="color: rgb(247, 223, 30); transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);"></div>
+</div>
+</div>
+<!-- HTML/CSS -->
+<div class="group cursor-default">
+<div class="flex justify-between items-center mb-2">
+<span class="text-on-surface font-medium">HTML5 / CSS3</span>
+<span class="text-primary text-xs font-label-mono">98%</span>
+</div>
+<div class="skill-progress-bg rounded-full overflow-hidden">
+<div class="skill-progress-fill bg-[#E34F26] w-[98%]" style="color: rgb(227, 79, 38); transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);"></div>
+</div>
+</div>
+<!-- Tailwind -->
+<div class="group cursor-default">
+<div class="flex justify-between items-center mb-2">
+<span class="text-on-surface font-medium">Tailwind CSS</span>
+<span class="text-primary text-xs font-label-mono">92%</span>
+</div>
+<div class="skill-progress-bg rounded-full overflow-hidden">
+<div class="skill-progress-fill bg-[#06B6D4] w-[92%]" style="color: rgb(6, 182, 212); transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);"></div>
+</div>
+</div>
+<!-- Framer -->
+<div class="group cursor-default">
+<div class="flex justify-between items-center mb-2">
+<span class="text-on-surface font-medium">Framer Motion</span>
+<span class="text-primary text-xs font-label-mono">85%</span>
+</div>
+<div class="skill-progress-bg rounded-full overflow-hidden">
+<div class="skill-progress-fill bg-[#0055FF] w-[85%]" style="color: rgb(0, 85, 255); transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Backend Column -->
+<section class="glass-panel rounded-xl p-8 flex flex-col gap-8 transition-transform hover:scale-[1.01] duration-300" style="--mouse-x: 152.1158447265625px; --mouse-y: 309.68231201171875px;">
+<div class="flex items-center gap-4">
+<div class="p-3 rounded-lg bg-secondary-container/10 text-secondary">
+<span class="material-symbols-outlined text-3xl">terminal</span>
+</div>
+<h3 class="text-white font-headline-md">Backend</h3>
+</div>
+<div class="space-y-6">
+<!-- Node -->
+<div class="group cursor-default">
+<div class="flex justify-between items-center mb-2">
+<span class="text-on-surface font-medium">Node.js</span>
+<span class="text-primary text-xs font-label-mono">88%</span>
+</div>
+<div class="skill-progress-bg rounded-full overflow-hidden">
+<div class="skill-progress-fill bg-[#339933] w-[88%]" style="color: rgb(51, 153, 51); transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);"></div>
+</div>
+</div>
+<!-- Express -->
+<div class="group cursor-default">
+<div class="flex justify-between items-center mb-2">
+<span class="text-on-surface font-medium">Express.js</span>
+<span class="text-primary text-xs font-label-mono">92%</span>
+</div>
+<div class="skill-progress-bg rounded-full overflow-hidden">
+<div class="skill-progress-fill bg-[#ffffff] w-[92%]" style="color: rgb(255, 255, 255); transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);"></div>
+</div>
+</div>
+<!-- API Design -->
+<div class="group cursor-default">
+<div class="flex justify-between items-center mb-2">
+<span class="text-on-surface font-medium">REST API Design</span>
+<span class="text-primary text-xs font-label-mono">95%</span>
+</div>
+<div class="skill-progress-bg rounded-full overflow-hidden">
+<div class="skill-progress-fill bg-secondary w-[95%]" style="color: rgb(230, 195, 100); transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);"></div>
+</div>
+</div>
+<!-- JWT -->
+<div class="group cursor-default">
+<div class="flex justify-between items-center mb-2">
+<span class="text-on-surface font-medium">JWT Auth</span>
+<span class="text-primary text-xs font-label-mono">84%</span>
+</div>
+<div class="skill-progress-bg rounded-full overflow-hidden">
+<div class="skill-progress-fill bg-[#D63AFF] w-[84%]" style="color: rgb(214, 58, 255); transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);"></div>
+</div>
+</div>
+<!-- Middleware -->
+<div class="group cursor-default">
+<div class="flex justify-between items-center mb-2">
+<span class="text-on-surface font-medium">Middleware Architecture</span>
+<span class="text-primary text-xs font-label-mono">80%</span>
+</div>
+<div class="skill-progress-bg rounded-full overflow-hidden">
+<div class="skill-progress-fill bg-[#FF6B6B] w-[80%]" style="color: rgb(255, 107, 107); transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Database Column -->
+<section class="glass-panel rounded-xl p-8 flex flex-col gap-8 transition-transform hover:scale-[1.01] duration-300" style="--mouse-x: 154.01007080078125px; --mouse-y: 17.515869140625px;">
+<div class="flex items-center gap-4">
+<div class="p-3 rounded-lg bg-tertiary-container/10 text-tertiary">
+<span class="material-symbols-outlined text-3xl">database</span>
+</div>
+<h3 class="text-white font-headline-md">Data &amp; Tooling</h3>
+</div>
+<div class="space-y-6">
+<!-- MongoDB -->
+<div class="group cursor-default">
+<div class="flex justify-between items-center mb-2">
+<span class="text-on-surface font-medium">MongoDB</span>
+<span class="text-primary text-xs font-label-mono">85%</span>
+</div>
+<div class="skill-progress-bg rounded-full overflow-hidden">
+<div class="skill-progress-fill bg-[#47A248] w-[85%]" style="color: rgb(71, 162, 72); transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);"></div>
+</div>
+</div>
+<!-- Mongoose -->
+<div class="group cursor-default">
+<div class="flex justify-between items-center mb-2">
+<span class="text-on-surface font-medium">Mongoose ODM</span>
+<span class="text-primary text-xs font-label-mono">88%</span>
+</div>
+<div class="skill-progress-bg rounded-full overflow-hidden">
+<div class="skill-progress-fill bg-[#880000] w-[88%]" style="color: rgb(136, 0, 0); transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);"></div>
+</div>
+</div>
+<!-- Git -->
+<div class="group cursor-default">
+<div class="flex justify-between items-center mb-2">
+<span class="text-on-surface font-medium">Git &amp; GitHub</span>
+<span class="text-primary text-xs font-label-mono">94%</span>
+</div>
+<div class="skill-progress-bg rounded-full overflow-hidden">
+<div class="skill-progress-fill bg-[#F05032] w-[94%]" style="color: rgb(240, 80, 50); transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);"></div>
+</div>
+</div>
+<!-- VS Code -->
+<div class="group cursor-default">
+<div class="flex justify-between items-center mb-2">
+<span class="text-on-surface font-medium">VS Code</span>
+<span class="text-primary text-xs font-label-mono">98%</span>
+</div>
+<div class="skill-progress-bg rounded-full overflow-hidden">
+<div class="skill-progress-fill bg-[#007ACC] w-[98%]" style="color: rgb(0, 122, 204); transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);"></div>
+</div>
+</div>
+<!-- Vite -->
+<div class="group cursor-default">
+<div class="flex justify-between items-center mb-2">
+<span class="text-on-surface font-medium">Vite / Build Tools</span>
+<span class="text-primary text-xs font-label-mono">90%</span>
+</div>
+<div class="skill-progress-bg rounded-full overflow-hidden">
+<div class="skill-progress-fill bg-[#646CFF] w-[90%]" style="color: rgb(100, 108, 255); transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);"></div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Pill Tags Section -->
+<div class="mt-20">
+<h4 class="text-white font-headline-md mb-8 text-center">Core Competencies</h4>
+<div class="flex flex-wrap justify-center gap-3">
+<span class="glass-panel px-6 py-3 rounded-full text-sm font-medium text-primary hover:border-primary/40 cursor-default transition-colors">Responsive Design</span>
+<span class="glass-panel px-6 py-3 rounded-full text-sm font-medium text-primary hover:border-primary/40 cursor-default transition-colors">Microservices</span>
+<span class="glass-panel px-6 py-3 rounded-full text-sm font-medium text-primary hover:border-primary/40 cursor-default transition-colors">WebSockets</span>
+<span class="glass-panel px-6 py-3 rounded-full text-sm font-medium text-primary hover:border-primary/40 cursor-default transition-colors">Unit Testing</span>
+<span class="glass-panel px-6 py-3 rounded-full text-sm font-medium text-primary hover:border-primary/40 cursor-default transition-colors">CI/CD Pipelines</span>
+<span class="glass-panel px-6 py-3 rounded-full text-sm font-medium text-primary hover:border-primary/40 cursor-default transition-colors">SEO Optimization</span>
+<span class="glass-panel px-6 py-3 rounded-full text-sm font-medium text-primary hover:border-primary/40 cursor-default transition-colors">Accessibility (A11y)</span>
+<span class="glass-panel px-6 py-3 rounded-full text-sm font-medium text-primary hover:border-primary/40 cursor-default transition-colors">State Management</span>
+</div>
+</div>
+<!-- Visual Flare -->
+<div class="mt-32 relative h-[300px] rounded-2xl overflow-hidden glass-panel group" style="--mouse-x: 182px; --mouse-y: 143.5px;">
+<div class="absolute inset-0 bg-cover bg-center opacity-30 group-hover:opacity-40 transition-opacity duration-700" data-alt="A futuristic and atmospheric close-up of high-speed fiber optic cables glowing in a neon gold and amber spectrum. The composition is sleek and professional, with shallow depth of field focusing on the intricate data light patterns. The overall lighting is dark and premium, reflecting a high-end technical workstation or data center environment." style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuADwyKT8J23nZYbyiTli3YVgunT223w9fHb_Szh-XDGzYmFPcux-KgCQGBcOYQEzMtYpxMYkhthWvn07Vb9CYVmCCS-ThSjkIkl-GB459KfJXy-JCW0RgElNMJVEDQzMYojh9yDfrOtasUZnrqO1g9TVUGikSnTcbHx5M73wSMj2yWjQqkN5BVvlOjLda51522fQjQspw60ig9kFXhdtUGx79DOGigo7NUamjKER6OWIiNPYpCB0yRucOWYBT0sjtJpQJGAECkfCcc&quot;);"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+<div class="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
+<h2 class="text-3xl font-headline-lg text-white mb-4">Continuously Evolving</h2>
+<p class="text-on-surface-variant max-w-lg">
+                                    Committed to lifelong learning and adopting emerging technologies that drive business value and exceptional user experiences.
+                                </p>
+</div>
+</div>
+</main>
+<!-- Footer Content -->
+<footer class="mt-auto flex flex-col gap-4 p-4 border-t border-[#4b3f20] bg-surface-dim">
+<div class="flex flex-wrap justify-between gap-3 items-center">
+<div class="flex gap-3 items-center">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDb47VaGLpUUwNr1DETzshQ-raQBdVb1lsGJZ-BM6n8xdjWM5kzM3vt8whKQ52JUEmA0LCcnmN-GSgHEF-lJ35YUwd5azKrTND5frQGxzDQLAJ69KuJZjd74FusofXFtbiIFZ9bUEkoNSq_MWCm1_d-x8iwX5q0IdrpQArCfALl1g745YcfnDDWWiF4OvFsrWU7-gHufwNKuiZoO_7GKr3yRMVFpKA08zR4rZ6Un6NhUn_HbZBgYpelEyX0JZJIRXeIKYgyRuJ_g8M&quot;);"></div>
+<span class="text-white text-sm font-medium">Software Engineer &amp; Tech Architect</span>
+</div>
+<div class="flex gap-4">
+<div class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-white cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-lg">description</span>
+<p class="text-xs font-medium">Download Resume</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-white cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-lg">mail</span>
+<p class="text-xs font-medium">Get in Touch</p>
+</div>
+</div>
+</div>
+</footer>
+</div>
+</div>
+</div>
+</div>
+<!-- Micro-interaction Scripts -->
+<script>
+        document.querySelectorAll('.glass-panel').forEach(panel => {
+            panel.addEventListener('mousemove', (e) => {
+                const rect = panel.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                panel.style.setProperty('--mouse-x', `${x}px`);
+                panel.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        // Simple visibility observer for progress bars
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const fill = entry.target.querySelector('.skill-progress-fill');
+                    if (fill) {
+                        const targetWidth = fill.style.width;
+                        fill.style.width = '0%';
+                        setTimeout(() => {
+                            fill.style.transition = 'width 1.5s cubic-bezier(0.22, 1, 0.36, 1)';
+                            fill.style.width = targetWidth;
+                        }, 50);
+                    }
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section > div > div').forEach(skill => {
+            observer.observe(skill);
+        });
+    </script>
+
+
+
+
+</body></html>

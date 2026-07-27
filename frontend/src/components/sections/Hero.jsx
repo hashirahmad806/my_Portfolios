@@ -14,6 +14,10 @@ const gold2  = '#e8c97a'
 const muted  = '#9090a8'
 const muted2 = '#5a5a72'
 
+const motionOk = typeof window !== 'undefined'
+  ? !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  : true
+
 export default function Hero() {
   return (
     <section id="hero" style={{ minHeight: '100vh', paddingTop: 120, paddingBottom: 80, position: 'relative', overflow: 'hidden' }}>
@@ -36,7 +40,15 @@ export default function Hero() {
           {/* ── Left column ── */}
           <div>
             {/* Status badge */}
-            <motion.div variants={stagger.item} className="inline-flex items-center gap-2.5 mb-8 px-4 py-2 rounded-full" style={{ border: '1px solid rgba(0,229,160,0.2)', background: 'rgba(0,229,160,0.04)' }}>
+            <motion.div
+              variants={stagger.item}
+              className="inline-flex items-center gap-2.5 mb-8 px-4 py-2 rounded-full"
+              style={{
+                border: '1px solid rgba(0,229,160,0.15)',
+                background: 'linear-gradient(135deg, rgba(0,229,160,0.08) 0%, rgba(0,229,160,0.02) 100%)',
+                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.03), 0 2px 8px rgba(0,229,160,0.05)',
+              }}
+            >
               <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#00e5a0', boxShadow: '0 0 10px #00e5a0', display: 'inline-block', animation: 'pulse 2s infinite' }} />
               <style>{`@keyframes pulse{0%,100%{box-shadow:0 0 8px #00e5a0}50%{box-shadow:0 0 18px #00e5a0,0 0 26px rgba(0,229,160,.3)}}`}</style>
               <span style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 11, color: '#00e5a0', letterSpacing: '0.1em' }}>
@@ -86,43 +98,40 @@ export default function Hero() {
             <motion.div variants={stagger.item} className="flex flex-wrap gap-3 mb-10">
               <Link to="projects" smooth offset={-80}>
                 <motion.button
-                  whileHover={{ y: -2, boxShadow: '0 12px 32px rgba(201,168,76,.35)' }}
-                  className="flex items-center gap-2.5 px-7 py-3.5 rounded-full font-bold text-sm tracking-wide"
-                  style={{ background: gold, color: '#080810', fontFamily: "'Cabinet Grotesk',sans-serif", border: 'none', cursor: 'pointer' }}
+                  whileTap={motionOk ? { scale: 0.97 } : {}}
+                  className="tactile-btn-primary"
+                  style={{ cursor: 'pointer' }}
                 >
                   View Projects <span>→</span>
                 </motion.button>
               </Link>
               <motion.a
                 href="https://github.com/hashirahmad806" target="_blank" rel="noopener noreferrer"
-                whileHover={{ y: -2 }}
-                className="flex items-center gap-2.5 px-6 py-3 rounded-full font-semibold text-sm tracking-wide"
-                style={{ border: '1px solid var(--border)', color: 'var(--text2)', background: 'var(--surface2)', fontFamily: "'Cabinet Grotesk',sans-serif", textDecoration: 'none' }}
+                whileTap={motionOk ? { scale: 0.97 } : {}}
+                className="tactile-btn-secondary"
               >
                 <FiGithub size={15} /> GitHub
               </motion.a>
               <Link to="contact" smooth offset={-80}>
                 <motion.button
-                  whileHover={{ y: -2, borderColor: 'rgba(201,168,76,.4)', color: gold }}
-                  className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm tracking-wide"
-                  style={{ border: '1px solid var(--border)', color: 'var(--text2)', background: 'transparent', fontFamily: "'Cabinet Grotesk',sans-serif", cursor: 'pointer' }}
+                  whileTap={motionOk ? { scale: 0.97 } : {}}
+                  className="tactile-btn-secondary"
+                  style={{ cursor: 'pointer' }}
                 >
                   Contact Me
                 </motion.button>
               </Link>
               <motion.a
                 href="/My_cv.pdf" download="Hashir_Ahmad_CV.pdf"
-                whileHover={{ y: -2, borderColor: 'rgba(201,168,76,.4)', color: gold }}
-                className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm tracking-wide"
-                style={{ border: '1px solid var(--border)', color: 'var(--text2)', background: 'transparent', fontFamily: "'Cabinet Grotesk',sans-serif", cursor: 'pointer', textDecoration: 'none' }}
+                whileTap={motionOk ? { scale: 0.97 } : {}}
+                className="tactile-btn-secondary"
               >
                 <FiDownload size={15} /> CV
               </motion.a>
               <motion.a
-                href="/internship Certificate  (1).png" download="Hashir_Ahmad_Certificate.png"
-                whileHover={{ y: -2, borderColor: 'rgba(201,168,76,.4)', color: gold }}
-                className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm tracking-wide"
-                style={{ border: '1px solid var(--border)', color: 'var(--text2)', background: 'transparent', fontFamily: "'Cabinet Grotesk',sans-serif", cursor: 'pointer', textDecoration: 'none' }}
+                href="/internship%20Certificate%20%20(1).png" download="Hashir_Ahmad_Certificate.png"
+                whileTap={motionOk ? { scale: 0.97 } : {}}
+                className="tactile-btn-secondary"
               >
                 <FiDownload size={15} /> Certificate
               </motion.a>
@@ -138,9 +147,25 @@ export default function Hero() {
               ].map(({ href, Icon }) => (
                 <motion.a
                   key={href} href={href} target="_blank" rel="noopener noreferrer"
-                  whileHover={{ y: -2, borderColor: 'rgba(201,168,76,.4)', color: gold }}
-                  className="w-10 h-10 rounded-xl flex items-center justify-center"
-                  style={{ border: '1px solid var(--border)', color: 'var(--text2)', background: 'var(--surface2)', textDecoration: 'none', transition: 'all .2s' }}
+                  whileTap={motionOk ? { scale: 0.95 } : {}}
+                  className="frosted-icon-chip"
+                  style={{
+                    border: '1px solid var(--border)',
+                    color: 'var(--text2)',
+                    background: 'linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01))',
+                    transition: 'all 0.25s ease',
+                    textDecoration: 'none'
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.borderColor = 'rgba(201,168,76,0.35)'
+                    e.currentTarget.style.color = gold
+                    if (motionOk) e.currentTarget.style.transform = 'translateY(-2px)'
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.borderColor = 'var(--border)'
+                    e.currentTarget.style.color = 'var(--text2)'
+                    e.currentTarget.style.transform = 'translateY(0)'
+                  }}
                 >
                   <Icon size={16} />
                 </motion.a>
@@ -181,13 +206,14 @@ export default function Hero() {
 
               {/* Floating badge — top left */}
               <motion.div
-                animate={{ y: [0, -8, 0] }}
+                animate={motionOk ? { y: [0, -8, 0] } : {}}
                 transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
+                className="soft-depth-card"
                 style={{
                   position: 'absolute', top: 28, left: -40, zIndex: 2,
-                  background: 'var(--glass-bg)', backdropFilter: 'blur(16px)',
-                  border: '1px solid var(--border)', borderRadius: 14,
                   padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10,
+                  boxShadow: 'var(--card-shadow), 0 0 16px rgba(201,168,76,0.06)',
+                  border: '1px solid rgba(251,200,80,0.15)',
                 }}
               >
                 <span style={{ fontSize: 22 }}>⚡</span>
@@ -199,13 +225,14 @@ export default function Hero() {
 
               {/* Floating badge — bottom right */}
               <motion.div
-                animate={{ y: [0, -8, 0] }}
+                animate={motionOk ? { y: [0, -8, 0] } : {}}
                 transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1.8 }}
+                className="soft-depth-card"
                 style={{
                   position: 'absolute', bottom: 48, right: -36, zIndex: 2,
-                  background: 'var(--glass-bg)', backdropFilter: 'blur(16px)',
-                  border: '1px solid var(--border)', borderRadius: 14,
                   padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10,
+                  boxShadow: 'var(--card-shadow), 0 0 16px rgba(201,168,76,0.06)',
+                  border: '1px solid rgba(201,168,76,0.15)',
                 }}
               >
                 <span style={{ fontSize: 22 }}>🚀</span>

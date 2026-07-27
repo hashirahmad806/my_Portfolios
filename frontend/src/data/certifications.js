@@ -1,6 +1,6 @@
 /**
  * Certifications data — add new certs here; no markup changes needed.
- * Each entry maps 1-to-1 to a certification card in the Certifications section.
+ * isRecent: true → shows a "Recent" badge (set to true for certs < ~60 days old).
  */
 export const certifications = [
   {
@@ -13,6 +13,7 @@ export const certifications = [
     icon: '👁️',
     file: '/certificates/computer-vision-ibm.pdf',
     verifyUrl: 'https://www.credly.com/go/s1VfeIFA',
+    isRecent: true,
   },
   {
     id: 'ai-fundamentals-google',
@@ -24,6 +25,7 @@ export const certifications = [
     icon: '🤖',
     file: '/certificates/ai-fundamentals-google.pdf',
     verifyUrl: 'https://coursera.org/verify/SAVTLW9G2TGH',
+    isRecent: true,
   },
   {
     id: 'cybersecurity-ibm',
@@ -35,6 +37,7 @@ export const certifications = [
     icon: '🔐',
     file: '/certificates/cybersecurity-ibm.pdf',
     verifyUrl: 'https://coursera.org/verify/6GG25VAU3KR1',
+    isRecent: false,
   },
   {
     id: 'data-analysis-jhu',
@@ -46,6 +49,7 @@ export const certifications = [
     icon: '📊',
     file: '/certificates/data-analysis-jhu.pdf',
     verifyUrl: 'https://coursera.org/verify/XV2YZI5FJ0L8',
+    isRecent: true,
   },
   {
     id: 'frontend-react-board-infinity',
@@ -57,6 +61,7 @@ export const certifications = [
     icon: '⚛️',
     file: '/certificates/frontend-react-board-infinity.pdf',
     verifyUrl: 'https://coursera.org/verify/X0XEEKDUFCA8',
+    isRecent: false,
   },
   {
     id: 'human-factors-ai-duke',
@@ -68,6 +73,7 @@ export const certifications = [
     icon: '🧠',
     file: '/certificates/human-factors-ai-duke.pdf',
     verifyUrl: 'https://coursera.org/verify/A6X7RU2OWASD',
+    isRecent: false,
   },
   {
     id: 'azure-ai-fundamentals',
@@ -80,5 +86,6 @@ export const certifications = [
     file: '/certificates/azure-ai-fundamentals-microsoft.pdf',
     verifyUrl: 'https://learn.microsoft.com/api/credentials/share/en-us/6B28946001D96051',
     credentialId: '6B28946001D96051',
+    isRecent: true,
   },
 ]

@@ -9,6 +9,10 @@ const gold = "#c9a84c";
 const muted = "#9090a8";
 const dim = "#5a5a72";
 
+const motionOk = typeof window !== 'undefined'
+  ? !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  : true;
+
 const contactInfo = [
   {
     Icon: FiMail,
@@ -40,13 +44,14 @@ const inputStyle = {
   width: "100%",
   padding: "14px 18px",
   borderRadius: 12,
-  border: "1px solid var(--border)",
-  background: "var(--surface)",
+  background: "linear-gradient(135deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.12) 100%)",
+  border: "1px solid rgba(255,255,255,0.06)",
+  boxShadow: "inset 0 2px 4px rgba(0,0,0,0.4), inset 0 -1px 0 rgba(255,255,255,0.02)",
   color: "var(--text)",
   fontFamily: "'Cabinet Grotesk',sans-serif",
   fontSize: 15,
   outline: "none",
-  transition: "border-color .2s, box-shadow .2s",
+  transition: "border-color 0.3s, box-shadow 0.3s",
 };
 
 export default function Contact() {
@@ -60,11 +65,11 @@ export default function Contact() {
 
   const onFocus = (e) => {
     e.target.style.borderColor = "rgba(201,168,76,0.4)";
-    e.target.style.boxShadow = "0 0 0 3px rgba(201,168,76,0.07)";
+    e.target.style.boxShadow = "inset 0 2px 4px rgba(0,0,0,0.4), 0 0 0 3px rgba(201,168,76,0.07)";
   };
   const onBlur = (e) => {
-    e.target.style.borderColor = "var(--border)";
-    e.target.style.boxShadow = "none";
+    e.target.style.borderColor = "rgba(255,255,255,0.06)";
+    e.target.style.boxShadow = "inset 0 2px 4px rgba(0,0,0,0.4), inset 0 -1px 0 rgba(255,255,255,0.02)";
   };
 
   const handleSubmit = async (e) => {
@@ -173,6 +178,16 @@ export default function Contact() {
               {contactInfo.map(({ Icon, label, value, href }) => {
                 const inner = (
                   <div
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = "rgba(201,168,76,.28)";
+                      if (motionOk) e.currentTarget.style.transform = "translateY(-3px)";
+                      e.currentTarget.style.boxShadow = `0 6px 16px rgba(0,0,0,0.4), 0 0 16px rgba(201,168,76,0.08), inset 0 1px 0 rgba(255,255,255,0.07)`;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = "var(--border)";
+                      e.currentTarget.style.transform = "translateY(0)";
+                      e.currentTarget.style.boxShadow = "var(--card-shadow)";
+                    }}
                     style={{
                       display: "flex",
                       alignItems: "center",
@@ -180,30 +195,21 @@ export default function Contact() {
                       padding: "14px 18px",
                       borderRadius: 14,
                       border: "1px solid var(--border)",
-                      background: "var(--surface)",
-                      transition: "all .25s",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor =
-                        "rgba(201,168,76,.25)";
-                      e.currentTarget.style.transform = "translateX(5px)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = "var(--border)";
-                      e.currentTarget.style.transform = "translateX(0)";
+                      background: "linear-gradient(145deg, rgba(255,255,255,0.025) 0%, rgba(0,0,0,0.06) 100%), var(--surface)",
+                      boxShadow: "var(--card-shadow)",
+                      transition: "all .3s ease",
                     }}
                   >
                     <div
+                      className="frosted-icon-chip"
                       style={{
                         width: 36,
                         height: 36,
                         borderRadius: 10,
-                        background: "rgba(201,168,76,0.08)",
-                        border: "1px solid rgba(201,168,76,0.12)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
+                        background: "rgba(201,168,76,0.12)",
+                        border: "1px solid rgba(201,168,76,0.2)",
+                        fontSize: 15,
+                        boxShadow: `inset 0 1px 3px rgba(0,0,0,0.45), inset 0 -1px 0 rgba(255,255,255,0.04), 0 2px 6px rgba(0,0,0,0.22)`,
                       }}
                     >
                       <Icon size={15} style={{ color: gold }} />
@@ -299,9 +305,17 @@ export default function Contact() {
                 padding: 36,
                 borderRadius: 24,
                 border: "1px solid var(--border)",
-                background: "var(--surface)",
+                background: "linear-gradient(145deg, rgba(255,255,255,0.025) 0%, rgba(0,0,0,0.06) 100%), var(--surface)",
+                boxShadow: "var(--card-shadow)",
+                position: "relative",
               }}
             >
+              {/* Subtle top edge highlight */}
+              <div style={{
+                position: 'absolute', top: 0, left: 24, right: 24,
+                height: 1, background: `linear-gradient(90deg, transparent, ${gold}25, transparent)`,
+                pointerEvents: 'none',
+              }} />
               <h3
                 style={{
                   fontFamily: "'Clash Display','Syne',sans-serif",
@@ -420,26 +434,14 @@ export default function Contact() {
                   <motion.button
                     type="submit"
                     disabled={loading}
-                    whileHover={{
-                      y: -2,
-                      boxShadow: "0 12px 32px rgba(201,168,76,.3)",
-                    }}
-                    whileTap={{ scale: 0.98 }}
+                    whileTap={motionOk ? { scale: 0.97 } : {}}
+                    className="tactile-btn-primary"
                     style={{
                       width: "100%",
-                      padding: "16px 24px",
-                      borderRadius: 100,
-                      border: "none",
-                      background: loading ? "rgba(201,168,76,.5)" : gold,
-                      color: "#080810",
-                      fontFamily: "'Cabinet Grotesk',sans-serif",
-                      fontSize: 15,
-                      fontWeight: 700,
-                      cursor: loading ? "not-allowed" : "pointer",
-                      display: "flex",
-                      alignItems: "center",
+                      padding: "14px 24px",
                       justifyContent: "center",
-                      gap: 10,
+                      cursor: loading ? "not-allowed" : "pointer",
+                      opacity: loading ? 0.7 : 1,
                     }}
                   >
                     {loading ? (

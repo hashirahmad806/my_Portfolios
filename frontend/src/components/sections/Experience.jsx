@@ -31,30 +31,61 @@ const experiences = [
   },
 ]
 
+const motionOk = typeof window !== 'undefined'
+  ? !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  : true
+
 function ExpCard({ e, idx }) {
   const { ref, visible } = useScrollReveal()
+
+  const handleEnter = (ev) => {
+    const el = ev.currentTarget
+    if (motionOk) el.style.transform = 'translateY(-5px)'
+    el.style.boxShadow = `0 6px 20px rgba(0,0,0,0.55), 0 18px 48px rgba(0,0,0,0.35), 0 0 0 1px ${e.color}22, 0 0 28px ${e.color}10, inset 0 1px 0 rgba(255,255,255,0.07)`
+    el.style.borderColor = `${e.color}28`
+  }
+
+  const handleLeave = (ev) => {
+    const el = ev.currentTarget
+    el.style.transform = 'translateY(0)'
+    el.style.boxShadow = 'var(--card-shadow)'
+    el.style.borderColor = 'var(--border)'
+  }
+
   return (
     <div
       ref={ref}
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
       style={{
-        padding: '32px 28px', borderRadius: 20,
+        padding: '32px 28px 32px 36px',
+        borderRadius: 20,
         border: '1px solid var(--border)',
-        background: 'var(--surface)', position: 'relative', overflow: 'hidden',
+        background: 'linear-gradient(145deg, rgba(255,255,255,0.025) 0%, rgba(0,0,0,0.06) 100%), var(--surface)',
+        boxShadow: 'var(--card-shadow)',
+        position: 'relative',
+        overflow: 'hidden',
         opacity: visible ? 1 : 0,
         transform: visible ? 'translateY(0)' : 'translateY(28px)',
-        transition: `opacity .7s ease ${idx * 0.12}s, transform .7s ease ${idx * 0.12}s, border-color .3s`,
-      }}
-      onMouseEnter={ev => {
-        ev.currentTarget.style.borderColor = 'rgba(201,168,76,0.15)'
-        ev.currentTarget.querySelector('.accent-bar').style.height = '100%'
-      }}
-      onMouseLeave={ev => {
-        ev.currentTarget.style.borderColor = 'var(--border)'
-        ev.currentTarget.querySelector('.accent-bar').style.height = '0%'
+        transition: motionOk 
+          ? `opacity .7s ease ${idx * 0.12}s, transform .7s ease ${idx * 0.12}s, box-shadow .35s ease, border-color .35s ease`
+          : `opacity .7s ease ${idx * 0.12}s`,
       }}
     >
-      {/* Accent bar */}
-      <div className="accent-bar" style={{ position: 'absolute', top: 0, left: 0, width: 3, height: 0, background: e.color, transition: 'height .5s ease', borderRadius: '0 0 3px 3px' }} />
+      {/* Always-visible issuer left accent bar */}
+      <div style={{
+        position: 'absolute', top: 0, left: 0, bottom: 0,
+        width: 4,
+        background: `linear-gradient(180deg, ${e.color}, ${e.color}55)`,
+        borderRadius: '20px 0 0 20px',
+      }} />
+
+      {/* Top-left corner radial glow */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: `radial-gradient(ellipse 60% 40% at 0% 0%, ${e.color}0c, transparent 60%)`,
+        pointerEvents: 'none',
+      }} />
 
       {/* Period */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>

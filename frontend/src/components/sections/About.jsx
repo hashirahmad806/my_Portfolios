@@ -5,6 +5,10 @@ const gold  = '#c9a84c'
 const muted = '#9090a8'
 const dim   = '#5a5a72'
 
+const motionOk = typeof window !== 'undefined'
+  ? !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  : true
+
 const cards = [
   { icon: '🎨', title: 'Frontend Dev',    desc: 'Pixel-perfect React UIs with Tailwind CSS, Framer Motion & modern component architecture.' },
   { icon: '⚙️', title: 'Backend APIs',    desc: 'Secure Node.js & Express servers with JWT auth, middleware pipelines & clean MVC structure.' },
@@ -66,15 +70,8 @@ export default function About() {
                 {['Based in Pakistan 🇵🇰','Open to Remote 🌍','Full Stack Dev 💻','AI Enthusiast 🤖','Available Now ✅'].map(t => (
                   <span
                     key={t}
-                    style={{
-                      padding: '7px 14px', borderRadius: 8,
-                      border: '1px solid var(--border)',
-                      fontFamily: 'JetBrains Mono,monospace', fontSize: 11,
-                      color: 'var(--text2)', background: 'var(--surface2)',
-                      transition: 'all .2s', cursor: 'default',
-                    }}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(201,168,76,.3)'; e.currentTarget.style.color = gold }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text2)' }}
+                    className="dimensional-pill"
+                    style={{ padding: '7px 14px', borderRadius: 9 }}
                   >
                     {t}
                   </span>
@@ -87,24 +84,53 @@ export default function About() {
           <div className="grid grid-cols-2 gap-4">
             {cards.map((c, i) => (
               <RevealDiv key={c.title} delay={0.1 + i * 0.08}>
-                <motion.div
-                  whileHover={{ y: -5, borderColor: 'rgba(201,168,76,0.25)' }}
+                <div
+                  onMouseEnter={ev => {
+                    const el = ev.currentTarget;
+                    if (motionOk) el.style.transform = 'translateY(-5px)';
+                    el.style.boxShadow = `0 6px 20px rgba(0,0,0,0.55), 0 18px 48px rgba(0,0,0,0.35), 0 0 0 1px ${gold}22, 0 0 28px ${gold}10, inset 0 1px 0 rgba(255,255,255,0.07)`;
+                    el.style.borderColor = `${gold}28`;
+                  }}
+                  onMouseLeave={ev => {
+                    const el = ev.currentTarget;
+                    el.style.transform = 'translateY(0)';
+                    el.style.boxShadow = 'var(--card-shadow)';
+                    el.style.borderColor = 'var(--border)';
+                  }}
                   style={{
-                    padding: '28px 24px', borderRadius: 18,
+                    padding: '28px 24px',
+                    borderRadius: 20,
                     border: '1px solid var(--border)',
-                    background: 'var(--surface)',
-                    position: 'relative', overflow: 'hidden',
-                    transition: 'all .3s',
+                    background: 'linear-gradient(145deg, rgba(255,255,255,0.025) 0%, rgba(0,0,0,0.06) 100%), var(--surface)',
+                    boxShadow: 'var(--card-shadow)',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    transition: motionOk ? 'transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s' : 'border-color 0.3s',
                   }}
                 >
-                  {/* hover bg glow */}
-                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg,rgba(201,168,76,0.04),transparent)', opacity: 0, transition: 'opacity .3s', pointerEvents: 'none' }}
-                    className="hover-glow" />
+                  {/* Subtle top edge highlight */}
+                  <div style={{
+                    position: 'absolute', top: 0, left: 20, right: 20,
+                    height: 1, background: `linear-gradient(90deg, transparent, ${gold}25, transparent)`,
+                    pointerEvents: 'none',
+                  }} />
 
-                  <div style={{ fontSize: 28, marginBottom: 18 }}>{c.icon}</div>
+                  {/* Frosted icon chip */}
+                  <div
+                    className="frosted-icon-chip"
+                    style={{
+                      background: `linear-gradient(145deg, ${gold}20, ${gold}08)`,
+                      border: `1px solid ${gold}28`,
+                      boxShadow: `inset 0 1px 3px rgba(0,0,0,0.45), inset 0 -1px 0 rgba(255,255,255,0.04), 0 2px 6px rgba(0,0,0,0.22)`,
+                      marginBottom: 18,
+                    }}
+                  >
+                    {c.icon}
+                  </div>
+
                   <div style={{ fontFamily: "'Clash Display','Syne',sans-serif", fontSize: 16, fontWeight: 600, color: 'var(--text)', marginBottom: 10 }}>{c.title}</div>
                   <div style={{ fontSize: 13, lineHeight: 1.7, color: 'var(--text3)' }}>{c.desc}</div>
-                </motion.div>
+                </div>
               </RevealDiv>
             ))}
           </div>

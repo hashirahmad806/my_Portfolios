@@ -3,12 +3,14 @@ import { createContext, useContext, useState, useEffect } from 'react'
 const Ctx = createContext()
 
 export function ThemeProvider({ children }) {
-  const [dark, setDark] = useState(false)
-
-  useEffect(() => {
-    const stored = localStorage.getItem('ha-theme')
-    if (stored) setDark(stored === 'dark')
-  }, [])
+  const [dark, setDark] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('ha-theme')
+      if (stored) return stored === 'dark'
+      return window.matchMedia('(prefers-color-scheme: dark)').matches
+    }
+    return false
+  })
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', dark)
@@ -23,3 +25,4 @@ export function ThemeProvider({ children }) {
 }
 
 export const useTheme = () => useContext(Ctx)
+
