@@ -1,233 +1,158 @@
 import { useScrollReveal } from '../../hooks/useScrollReveal'
 
-const gold  = '#c9a84c'
-const gold2 = '#e8c97a'
-
 const motionOk = typeof window !== 'undefined'
   ? !window.matchMedia('(prefers-reduced-motion: reduce)').matches
   : true
 
-const CARD_SHADOW = '0 2px 8px rgba(0,0,0,0.4), 0 8px 28px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.05)'
-
-const items = [
-  { icon: '🐍', name: 'Python',            sub: 'Core language for AI/ML',           pct: 55, color: '#3776AB' },
-  { icon: '🤖', name: 'Machine Learning',  sub: 'Supervised & unsupervised learning', pct: 40, color: '#ff6b35' },
-  { icon: '🧠', name: 'TensorFlow / Keras',sub: 'Deep learning & neural networks',    pct: 30, color: '#FF6F00' },
-  { icon: '📊', name: 'Data Analysis',     sub: 'NumPy, Pandas, Matplotlib',          pct: 50, color: '#F37626' },
-  { icon: '✨', name: 'AI Integration',    sub: 'Connecting AI APIs to web apps',     pct: 60, color: '#00d4ff' },
-  { icon: '⚡', name: 'AI × MERN Stack',  sub: 'Intelligent full-stack apps',        pct: 45, color: gold    },
-]
-
-/* ─── Frosted glass icon chip ─── */
-function IconChip({ icon, color, size = 42 }) {
-  return (
-    <div style={{
-      width: size, height: size, flexShrink: 0,
-      borderRadius: Math.round(size * 0.28),
-      background: `linear-gradient(145deg, ${color}22, ${color}08)`,
-      border: `1px solid ${color}28`,
-      boxShadow: `inset 0 1px 3px rgba(0,0,0,0.45), inset 0 -1px 0 rgba(255,255,255,0.04), 0 2px 6px rgba(0,0,0,0.22)`,
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-      fontSize: size * 0.44,
-    }}>
-      {icon}
-    </div>
-  )
-}
-
-/* ─── Skill row with gradient+glow progress bar ─── */
-function LearnItem({ item, idx, visible }) {
-  return (
-    <div
-      style={{
-        display: 'flex', alignItems: 'center', gap: 16,
-        padding: '16px 20px', borderRadius: 16,
-        background: 'linear-gradient(145deg, rgba(255,255,255,0.025), rgba(0,0,0,0.05)), var(--surface)',
-        border: '1px solid var(--border)',
-        boxShadow: CARD_SHADOW,
-        opacity: visible ? 1 : 0,
-        transform: visible ? 'translateX(0)' : 'translateX(-18px)',
-        transition: motionOk
-          ? `opacity .6s ease ${idx * 0.09}s, transform .6s ease ${idx * 0.09}s, box-shadow .3s, border-color .3s`
-          : `opacity .6s ease ${idx * 0.09}s`,
-      }}
-      onMouseEnter={e => {
-        e.currentTarget.style.borderColor = `${item.color}28`
-        e.currentTarget.style.boxShadow = `0 6px 20px rgba(0,0,0,0.5), 0 16px 36px rgba(0,0,0,0.28), 0 0 16px ${item.color}10, inset 0 1px 0 rgba(255,255,255,0.07)`
-        if (motionOk) e.currentTarget.style.transform = 'translateX(6px)'
-      }}
-      onMouseLeave={e => {
-        e.currentTarget.style.borderColor = 'var(--border)'
-        e.currentTarget.style.boxShadow = CARD_SHADOW
-        e.currentTarget.style.transform = 'translateX(0)'
-      }}
-    >
-      <IconChip icon={item.icon} color={item.color} size={42} />
-
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontFamily: "'Clash Display','Syne',sans-serif", fontSize: 14, fontWeight: 600, color: 'var(--text)', marginBottom: 3 }}>
-          {item.name}
-        </div>
-        <div style={{ fontSize: 12, color: 'var(--text3)', marginBottom: 8 }}>{item.sub}</div>
-
-        {/* Gradient glow progress bar */}
-        <div style={{ height: 3, borderRadius: 100, background: 'rgba(255,255,255,0.06)', overflow: 'visible', position: 'relative' }}>
-          <div style={{
-            height: '100%', borderRadius: 100,
-            background: `linear-gradient(90deg, ${item.color}, ${item.color}cc, ${item.color}66)`,
-            boxShadow: visible ? `0 0 8px ${item.color}70, 0 0 16px ${item.color}35` : 'none',
-            width: visible ? `${item.pct}%` : '0%',
-            transition: motionOk
-              ? `width 1.25s cubic-bezier(.4,0,.2,1) ${idx * 0.09 + 0.3}s, box-shadow 1.25s ease ${idx * 0.09 + 0.3}s`
-              : 'none',
-          }} />
-        </div>
-      </div>
-
-      <div style={{ width: 44, flexShrink: 0, textAlign: 'right' }}>
-        <span style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 12, color: item.color }}>
-          {item.pct}%
-        </span>
-      </div>
-    </div>
-  )
-}
-
-/* ─── Mini status card (Python / AI-ML / AI×MERN) ─── */
-function MiniCard({ emoji, name, status }) {
-  return (
-    <div
-      style={{
-        flex: 1, padding: '16px 12px', borderRadius: 14, textAlign: 'center',
-        background: 'linear-gradient(145deg, rgba(255,255,255,0.025), rgba(0,0,0,0.06)), var(--surface)',
-        border: '1px solid var(--border)',
-        boxShadow: CARD_SHADOW,
-        transition: motionOk ? 'transform .3s ease, box-shadow .3s ease, border-color .3s' : 'border-color .3s',
-      }}
-      onMouseEnter={e => {
-        if (motionOk) e.currentTarget.style.transform = 'translateY(-4px)'
-        e.currentTarget.style.boxShadow = `0 8px 24px rgba(0,0,0,0.45), 0 0 16px ${gold}12, inset 0 1px 0 rgba(255,255,255,0.07)`
-        e.currentTarget.style.borderColor = `${gold}22`
-      }}
-      onMouseLeave={e => {
-        e.currentTarget.style.transform = 'translateY(0)'
-        e.currentTarget.style.boxShadow = CARD_SHADOW
-        e.currentTarget.style.borderColor = 'var(--border)'
-      }}
-    >
-      <div style={{ fontSize: 22, marginBottom: 8 }}>{emoji}</div>
-      <div style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 13, fontWeight: 600, color: 'var(--text)', marginBottom: 4 }}>
-        {name}
-      </div>
-      <div style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 9, color: gold, letterSpacing: '0.1em' }}>
-        {status}
-      </div>
-    </div>
-  )
-}
-
 export default function Learning() {
   const { ref: hRef, visible: hVis } = useScrollReveal()
-  const { ref: iRef, visible: iVis } = useScrollReveal()
+  const { ref: gridRef, visible: gridVis } = useScrollReveal()
+
+  const items = [
+    { icon: 'code',                       name: 'Python',             pct: 55, sub: 'Core Intelligence Layer' },
+    { icon: 'psychology',                 name: 'Machine Learning',   pct: 40, sub: 'Pattern Recognition' },
+    { icon: 'memory',                     name: 'TensorFlow / Keras', pct: 30, sub: 'Deep Neural Networks' },
+    { icon: 'analytics',                  name: 'Data Analysis',      pct: 50, sub: 'Insight Extraction' },
+    { icon: 'settings_input_component',   name: 'AI Integration',     pct: 60, sub: 'Seamless API Logic' },
+    { icon: 'layers',                     name: 'AI + MERN Stack',    pct: 45, sub: 'Full-Stack Intelligence' },
+  ]
 
   return (
-    <section id="learning" style={{ padding: '120px 0' }}>
-      <div className="max-w-6xl mx-auto px-6 md:px-12">
+    <section id="learning" className="bg-[#131314] text-[#e5e2e3] py-24 relative overflow-hidden">
+      {/* Atmospheric Background Element */}
+      <div className="absolute top-0 right-0 -z-10 w-1/2 h-full opacity-20 blur-[120px] pointer-events-none">
+        <div className="w-full h-full bg-[#ffdca1]/30 rounded-full translate-x-1/2 -translate-y-1/2"></div>
+      </div>
 
-        {/* Section header */}
-        <div ref={hRef} style={{
-          opacity: hVis ? 1 : 0,
-          transform: hVis ? 'translateY(0)' : 'translateY(24px)',
-          transition: 'opacity .7s, transform .7s',
-          marginBottom: 64,
+      <main className="max-w-container-max mx-auto px-margin-mobile lg:px-gutter">
+        <div ref={gridRef} className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start" style={{
+          opacity: gridVis ? 1 : 0,
+          transform: gridVis ? 'translateY(0)' : 'translateY(28px)',
+          transition: 'opacity .8s ease, transform .8s ease',
         }}>
-          <div className="flex items-center gap-3 mb-4">
-            <div style={{ width: 28, height: 1, background: gold }} />
-            <span style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 11, color: gold, letterSpacing: '0.25em', textTransform: 'uppercase' }}>
-              Growing
-            </span>
-          </div>
-          <h2 style={{ fontFamily: "'Clash Display','Syne',sans-serif", fontSize: 'clamp(36px,5vw,60px)', fontWeight: 600, lineHeight: 1.05, letterSpacing: '-0.03em', color: 'var(--text)' }}>
-            Currently{' '}
-            <em style={{ fontFamily: "'Instrument Serif',serif", fontStyle: 'italic', fontWeight: 400, color: gold }}>
-              learning
-            </em>
-          </h2>
-        </div>
-
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
-
-          {/* ── Left: Vision card + mini cards ── */}
-          <div>
-            {/* Outer container card */}
-            <div style={{
-              borderRadius: 24,
-              border: '1px solid var(--border)',
-              background: 'linear-gradient(145deg, rgba(255,255,255,0.03), rgba(0,0,0,0.08)), var(--surface)',
-              boxShadow: CARD_SHADOW,
-              overflow: 'hidden',
-              marginBottom: 16,
-              position: 'relative',
-            }}>
-              {/* Ambient gold glow top-right */}
-              <div style={{
-                position: 'absolute', inset: 0,
-                background: `radial-gradient(ellipse 55% 45% at 100% 0%, ${gold}08, transparent 60%)`,
-                pointerEvents: 'none',
-              }} />
-
-              {/* Inner quote block — card-within-card */}
-              <div style={{
-                margin: 6,
-                padding: '32px 32px 28px',
-                borderRadius: 20,
-                background: 'linear-gradient(145deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.06) 100%)',
-                border: '1px solid rgba(255,255,255,0.04)',
-                boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.35), inset 0 -1px 0 rgba(255,255,255,0.03)',
-                position: 'relative', overflow: 'hidden',
-              }}>
-                {/* Watermark quotation mark */}
-                <div style={{
-                  position: 'absolute', top: -20, left: 16,
-                  fontFamily: "'Instrument Serif',serif",
-                  fontSize: 160, lineHeight: 1,
-                  color: gold, opacity: 0.055,
-                  userSelect: 'none', pointerEvents: 'none',
-                  zIndex: 0,
-                }}>
-                  "
+          {/* Left Side: Narrative Quote */}
+          <div className="lg:col-span-5 flex flex-col gap-8 lg:sticky lg:top-32">
+            <div ref={hRef} className="flex flex-col gap-2">
+              <span className="text-secondary font-label-mono uppercase tracking-widest text-xs flex items-center gap-2">
+                <span className="w-8 h-[1px] bg-secondary"></span>Growing
+              </span>
+              <h2 className="text-[40px] lg:text-[64px] text-white font-headline leading-tight">
+                Strategic <br />
+                <span className="amber-text-gradient">Growth</span>
+              </h2>
+            </div>
+            
+            <div className="relative mt-8">
+              <p className="text-[18px] text-on-surface-variant font-body leading-relaxed italic">
+                "Web intelligence is the next frontier. We aren't just building interfaces; we're crafting sentient digital ecosystems that evolve with human intent. The future belongs to those who speak the language of data."
+              </p>
+              <div className="mt-8 flex items-center gap-4">
+                <div className="h-12 w-12 rounded-full border border-outline-variant p-0.5">
+                  <div 
+                    className="h-full w-full rounded-full bg-cover bg-center" 
+                    style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBY0kTaiFy3vX6xvEVom3S5g3LMYNPOTrYk3Y9MMDeB_FiikqBbI3HepyXK-e6lUFuYFjLNvITOSowjkGUMbGfrjmVlfl_02DnEVE5zcJdBI-_hI1OVAP0hHC30K-I4RmHfe-CSl-nzW7MLIM9JPvGahy3SsCwZif2XDOztupsnVclI5NkQKlzLLlW9vSo1pUNZnZ0l791HDIZoMOTi7ClCp9fZk80JeMK31IInMJuQP0j23PvVX8V69u8uqg8of-GKmgKrtQlz1wI")' }}
+                  />
                 </div>
-
-                <div style={{ position: 'relative', zIndex: 1 }}>
-                  <p style={{ fontFamily: "'Instrument Serif',serif", fontStyle: 'italic', fontSize: 20, color: 'var(--text)', lineHeight: 1.55, marginBottom: 20 }}>
-                    The future of web is intelligent — and I'm building towards it.
-                  </p>
-                  <p style={{ fontSize: 14, lineHeight: 1.85, color: 'var(--text2)' }}>
-                    I'm expanding into{' '}
-                    <strong style={{ color: gold }}>AI & Machine Learning with Python</strong>{' '}
-                    to bridge the gap between modern MERN stack engineering and artificial intelligence.
-                    My goal: build apps that aren't just functional — but genuinely smart.
-                  </p>
+                <div>
+                  <p className="text-white font-bold text-sm">Hashir Ahmad</p>
+                  <p className="text-secondary text-xs font-medium uppercase tracking-tighter">Full-Stack Tech Architect</p>
                 </div>
               </div>
             </div>
 
-            {/* Mini status cards */}
-            <div style={{ display: 'flex', gap: 12 }}>
-              <MiniCard emoji="🐍" name="Python"   status="In Progress" />
-              <MiniCard emoji="🤖" name="AI / ML"  status="Learning"    />
-              <MiniCard emoji="⚡" name="AI+MERN"  status="Building"    />
+            {/* Abstract Visual */}
+            <div className="mt-12 h-64 rounded-xl overflow-hidden glass-panel relative group border border-border-glass flex flex-col justify-end p-6">
+              <div className="absolute inset-0 bg-gradient-to-t from-[#131314]/80 to-transparent -z-10"></div>
+              
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ffba20] opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#ffba20]"></span>
+                  </div>
+                  <p className="text-xs font-label-mono text-[#ffba20] tracking-widest uppercase">System Status: Evolving</p>
+                </div>
+                
+                <div className="space-y-2">
+                  <div className="flex justify-between text-[10px] font-label-mono text-white/40 uppercase tracking-tighter">
+                    <span>Neural Density</span>
+                    <span>88.4%</span>
+                  </div>
+                  <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                    <div className="h-full bg-[#ffba20]/40 rounded-full" style={{ width: '88%' }}></div>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex justify-between text-[10px] font-label-mono text-white/40 uppercase tracking-tighter">
+                    <span>Synaptic Throughput</span>
+                    <span>Active</span>
+                  </div>
+                  <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                    <div className="h-full bg-[#e6c364]/40 rounded-full" style={{ width: '62%' }}></div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="absolute top-4 right-4">
+                <span className="material-symbols-outlined text-white/20 text-lg">sensors</span>
+              </div>
             </div>
           </div>
 
-          {/* ── Right: Learning items ── */}
-          <div ref={iRef} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {items.map((item, i) => (
-              <LearnItem key={item.name} item={item} idx={i} visible={iVis} />
+          {/* Right Side: Learning Progress */}
+          <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-4">
+            {items.map((item, idx) => (
+              <div key={item.name} className="glass-panel rounded-xl p-6 flex flex-col gap-6">
+                <div className="flex justify-between items-start">
+                  <div className="p-3 bg-[#ffdca1]/10 rounded-lg text-[#ffdca1]">
+                    <span className="material-symbols-outlined text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>
+                      {item.icon}
+                    </span>
+                  </div>
+                  <span className="text-white font-label-mono text-xl">{item.pct}%</span>
+                </div>
+                <div className="flex flex-col gap-3">
+                  <h3 className="text-white font-headline text-[18px] font-semibold">{item.name}</h3>
+                  <div className="glow-meter-bg">
+                    <div 
+                      className="glow-meter-fill" 
+                      style={{ 
+                        width: gridVis ? `${item.pct}%` : '0%', 
+                        transition: motionOk ? 'width 1.5s cubic-bezier(0.65, 0, 0.35, 1)' : 'none' 
+                      }}
+                    />
+                  </div>
+                  <p className="text-[11px] font-label-mono text-on-surface-variant uppercase tracking-widest font-medium">{item.sub}</p>
+                </div>
+              </div>
             ))}
           </div>
         </div>
-      </div>
+
+        {/* Footer Info Area */}
+        <div className="mt-24 pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex flex-wrap items-center gap-8">
+            <div className="flex flex-col">
+              <p className="text-on-surface-variant text-[11px] font-label-mono uppercase tracking-wider">CURRENT FOCUS</p>
+              <p className="text-white font-bold">Neural Architecture Search</p>
+            </div>
+            <div className="h-10 w-[1px] bg-outline-variant hidden md:block"></div>
+            <div className="flex flex-col">
+              <p className="text-on-surface-variant text-[11px] font-label-mono uppercase tracking-wider">NEXT UP</p>
+              <p className="text-white font-bold">Reinforcement Learning</p>
+            </div>
+          </div>
+          <div className="flex gap-4">
+            <a 
+              href="#contact" 
+              className="px-6 py-2.5 rounded-full bg-[#ffba20] text-[#0e0e0f] text-sm font-bold hover:shadow-[0_0_20px_rgba(255,186,32,0.4)] transition-all font-headline"
+            >
+              Start Project
+            </a>
+          </div>
+        </div>
+      </main>
     </section>
   )
 }

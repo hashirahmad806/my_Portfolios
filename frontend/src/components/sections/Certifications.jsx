@@ -1,350 +1,287 @@
-import { FiExternalLink, FiDownload, FiAward, FiZap } from 'react-icons/fi'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
 import { certifications } from '../../data/certifications'
 
-const gold  = '#c9a84c'
-const gold2 = '#e8c97a'
+const gold = '#ffdca1'
 
-/* ─────────────────────────────────────────────────────
-   Shared depth-card style tokens
-   shadow: outer dark + inner top-highlight (1px)
-───────────────────────────────────────────────────── */
-const CARD_SHADOW  = '0 2px 8px rgba(0,0,0,0.4), 0 8px 28px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.05)'
-const CARD_SHADOW_HOVER = (color) =>
-  `0 6px 20px rgba(0,0,0,0.55), 0 18px 48px rgba(0,0,0,0.35), 0 0 0 1px ${color}22, 0 0 28px ${color}10, inset 0 1px 0 rgba(255,255,255,0.07)`
-
-/* prefers-reduced-motion guard — evaluated once at module load */
 const motionOk = typeof window !== 'undefined'
   ? !window.matchMedia('(prefers-reduced-motion: reduce)').matches
   : true
 
-/* ─── Frosted-glass icon chip ─── */
-function IconChip({ icon, color }) {
-  return (
-    <div style={{
-      width: 46, height: 46, borderRadius: 13, flexShrink: 0,
-      background: `linear-gradient(145deg, ${color}20, ${color}08)`,
-      border: `1px solid ${color}30`,
-      boxShadow: `inset 0 1px 3px rgba(0,0,0,0.45), inset 0 -1px 0 rgba(255,255,255,0.04), 0 2px 6px rgba(0,0,0,0.25)`,
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-      fontSize: 20,
-    }}>
-      {icon}
-    </div>
-  )
-}
-
-/* ─── Single certification card ─── */
-function CertCard({ cert, idx }) {
+/* ─── Reusable 3D Tilt Card Component ─── */
+function CertCard({ cert, idx, className, style }) {
   const { ref, visible } = useScrollReveal()
 
-  const handleEnter = (ev) => {
-    const el = ev.currentTarget
-    el.style.transform = motionOk ? 'translateY(-5px)' : 'none'
-    el.style.boxShadow = CARD_SHADOW_HOVER(cert.color)
-    el.style.borderColor = `${cert.color}28`
-  }
-  const handleLeave = (ev) => {
-    const el = ev.currentTarget
-    el.style.transform = 'translateY(0)'
-    el.style.boxShadow = CARD_SHADOW
-    el.style.borderColor = `${cert.color}18`
+  const handleMouseMove = (e) => {
+    const card = e.currentTarget
+    const rect = card.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+
+    card.style.setProperty('--mouse-x', `${x}px`)
+    card.style.setProperty('--mouse-y', `${y}px`)
+
+    if (motionOk) {
+      const centerX = rect.width / 2
+      const centerY = rect.height / 2
+      const rotateX = (y - centerY) / 50
+      const rotateY = (centerX - x) / 50
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`
+      card.style.borderColor = 'rgba(255, 184, 0, 0.3)'
+      card.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(255, 184, 0, 0.05)'
+    }
   }
 
+  const handleMouseLeave = (e) => {
+    const card = e.currentTarget
+    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)'
+    card.style.borderColor = 'rgba(255, 255, 255, 0.08)'
+    card.style.boxShadow = 'none'
+  }
+
+  // Define logos from the HTML mockup code
+  const logos = {
+    'computer-vision-ibm': 'https://lh3.googleusercontent.com/aida-public/AB6AXuC-QwJLfMomU6l1z8b1mLv6QeVx8yDDH0UImIpAgXllZu6UkUcW3YXxfgUPc-CDQkyPHFz6I5dP0euY2ZqhOW1Tg91ftVlGSpcOf_a_Lujk6lsOWhNOG6BQ71Zu9w0p6-nvn-3QBACFIiCulhqMjlWTpBPR08WPo6DOA2sCj9GOYZ8O6Xbjf6KoabAAl8eV39Na2-7E3u1WPuRmMTRU7zLldZjNiQAePRANxFqdY2zU2PhuVBpqQ1BCmB7OJsoUfboYBsydVJMU7ss',
+    'ai-fundamentals-google': 'https://lh3.googleusercontent.com/aida-public/AB6AXuBhUoG8KE5DPr4cBo-E5qYyedV6yN7oaaXeyKPHkRmcGDD-LZMrEMbtu8locmVqSOjFe5CSUtiflsTYh_2U4zNFcH4M2OtdztU-5KTQaR6kwpyLg62oW5kTynsmt7NmzA795jLeRbgZqhNMhqoEvQcyaOQ_xZoTlvmyGXlgHaH1iyPiauIGE8MAlhMbRF4ReJnK3U2cdQC5v_As_GdYamszaIgkSkUrecW9yXNRAqefgVk7oYPKLJuh-0m1WutQQa1rF8oWRfefbeA',
+    'cybersecurity-ibm': 'https://lh3.googleusercontent.com/aida-public/AB6AXuBSmRpyIyDvQUL4Ufdp7Q8DyhDDiJZDzSI9N4NzZ9VdHNwUeaN5m3Lst1QuThXkokgi4Za-XAVHd7GIVnkwMDZpYvMZY5XegfdUPkWt48bUcH55XUTvCbJMd_GO9XoCBrLdDNScCBK3RiIlEyyLwSa2POa2BPW5_WCS3elk-tJEOIvsgTQT4p4qGnKmQuEM9MXDIuKnWaL8MqzwNKso9iBuCbuz2gn6HtLcthdMNfWztSiCXj-FYW-l5ijb2gMmI2U256ttctaA-Kc',
+    'data-analysis-jhu': 'https://lh3.googleusercontent.com/aida-public/AB6AXuC7NzO56_klYWQOL9A1LTnHnWUVNjGPD1h33OtphYH6CnfEM-HozlFyh4joMZNKpvRhY_I6miuBLlPW7IfxVG3FeP-fYwfTWhOhvY7XJEjt8HHmc5_BbG2sUfNYsdIWBdpbBC7Guu2nE5xTMGhCZblSdF_WVfkjBvdzYULKLEucMoum_BWj8_6Xx8Ik3GeLoT6e6vsoGrdv9swji7Wp9EW01a_pC4mgcWrzNtiGxjbAasE6NVqZ3SoVwFXKIU-tLLoIahs1XBPoV8U',
+    'frontend-react-board-infinity': 'https://lh3.googleusercontent.com/aida-public/AB6AXuAWfmQ3MhkQB1T6RhOH3QuxkcGRciSmbE2Q-NtSCG1_nl-ydlakf6yFZRyx87hyEhC_ymO3t2kHXWASKNkPLGzXyniglN1gIT9WiTTjDVlkHS7aJJSeQEL511bLsiGySE9ZE5K32AN_qvAHcqHEXHUZnDB-cwMVDcxR7-Yj3mzrjJKmvq6JqdJfCQp-AwIobuAR3ogrS_tHQT90nUvMmPU1ejluY03cZZRKwxzrfd_4qo-LsvVxLckdJsBjbqUr6hLbYm_jp9hZLQ8',
+    'human-factors-ai-duke': 'https://lh3.googleusercontent.com/aida-public/AB6AXuAO4e_1cWvy0uz9GDlc7ksZpoXzCT9jdRPfWwdGQLOIwC4L3P10xDkKFLhsplxjh2Nqzq_gfvWxmrFbJY4X4udk2c4uD4zmJTX7t4WQI_FLMT-X5LRyP2n4sqjsEpBV_omQK--TAeIHrAZp-t2lKSqZvBglRUHK-1EWvMdnGxwnqojkreXgDAVteea121epRVSs6s6islbKWJWusfrFCVvgGCyBdeQ1OA4HKgggUnLvxEeHqepNElAxxDa9o748av3bDGcGOkzmiNc',
+    'azure-ai-fundamentals': 'https://lh3.googleusercontent.com/aida-public/AB6AXuBtJ2D_bNULA8seF6vz-J6hzLTNm6280EjLjpvzGC3T8Ub5In5tnfPXLNz5YO5i9YyQnfr_l5KqYB0Ubabc7XQwSaP1Mq1jLHp1TUdb9yCw6c7wRoSGiSFox0lpiGRajbpqruR0PsLEJX-VHFV0FwBkALq3azUz1CksTFSLPFVqzKQJp8J0N_L21vDkZxfqVihv2v79QW6Fz80461w4p-Eh_GFphzJoKz6O2Taw_YBAp8p83A8_XuNbNERZT-8ot8BRuQvYXUy5gC4'
+  }
+
+  const logoUrl = logos[cert.id] || logos['computer-vision-ibm']
+
+  // ─── Special Wide Layout: JHU Data Analysis (id: data-analysis-jhu) ───
+  if (cert.id === 'data-analysis-jhu') {
+    return (
+      <div
+        ref={ref}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        className="glass-card p-8 rounded-3xl flex flex-col md:flex-row gap-8 md:col-span-2 relative overflow-hidden"
+        style={{
+          opacity: visible ? 1 : 0,
+          transform: visible ? 'translateY(0)' : 'translateY(28px)',
+          transition: `opacity .65s ease ${idx * 0.1}s, transform .65s ease ${idx * 0.1}s, border-color .35s ease, box-shadow .35s ease`,
+          ...style
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none"></div>
+        <div className="flex-shrink-0">
+          <div className="bg-[#1a1a1c] p-6 rounded-2xl border border-border-glass w-24 h-24 flex items-center justify-center">
+            <img className="w-16 h-16 object-contain" src={logoUrl} alt={cert.title} />
+          </div>
+        </div>
+        <div className="flex flex-col flex-grow">
+          <div className="flex justify-between items-start mb-4">
+            <h3 className="font-headline text-[28px] font-bold text-on-surface leading-tight">{cert.title}</h3>
+            <span className="text-label-mono text-[10px] bg-surface-variant/30 px-2 py-1 rounded border border-border-glass text-on-surface-variant uppercase">{cert.date}</span>
+          </div>
+          <p className="text-on-surface-variant font-body text-[16px] leading-[26px] mb-6 max-w-lg">Advanced certification covering experimental design, data interpretation, and statistical management within agile development cycles.</p>
+          <div className="flex items-center gap-2 mb-8">
+            <span className="text-primary font-label-mono text-xs font-medium uppercase tracking-wider">{cert.issuer}</span>
+            <span className="w-1 h-1 bg-on-surface-variant/30 rounded-full"></span>
+            <span className="text-on-surface-variant font-label-mono text-xs font-medium uppercase tracking-wider">{cert.platform}</span>
+          </div>
+          <div className="mt-auto pt-6 border-t border-border-glass flex items-center justify-between">
+            <div className="flex flex-col">
+              <span className="text-[10px] text-on-surface-variant font-label-mono uppercase tracking-wider">Credential ID</span>
+              <span className="text-xs font-label-mono text-on-surface">JHU-DATA-ANALYSIS-2026-X</span>
+            </div>
+            <a
+              href={cert.file}
+              target="_blank"
+              rel="noopener noreferrer"
+              download
+              className="bg-[#ffdca1] text-[#412d00] px-6 py-2 rounded-xl font-bold flex items-center gap-2 hover:scale-95 transition-transform text-label-mono text-sm"
+            >
+              <span>View Certificate</span>
+              <span className="material-symbols-outlined text-[18px]">workspace_premium</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // ─── Featured Hero Layout: Microsoft Azure (id: azure-ai-fundamentals) ───
+  if (cert.id === 'azure-ai-fundamentals') {
+    return (
+      <div
+        ref={ref}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        className="glass-card p-8 rounded-3xl flex flex-col md:flex-row gap-8 md:col-span-2 lg:col-span-3 relative overflow-hidden group"
+        style={{
+          opacity: visible ? 1 : 0,
+          transform: visible ? 'translateY(0)' : 'translateY(28px)',
+          transition: `opacity .65s ease ${idx * 0.1}s, transform .65s ease ${idx * 0.1}s, border-color .35s ease, box-shadow .35s ease`,
+          ...style
+        }}
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,184,0,0.08),transparent_50%)]"></div>
+        <div className="flex-shrink-0 z-10">
+          <div className="bg-surface-elevated p-8 rounded-3xl border border-border-glass w-32 h-32 flex items-center justify-center relative overflow-hidden">
+            <div className="absolute inset-0 bg-[#ffdca1]/10 animate-pulse"></div>
+            <img className="w-20 h-20 object-contain z-10" src={logoUrl} alt={cert.title} />
+          </div>
+        </div>
+        <div className="flex flex-col flex-grow z-10">
+          <div className="flex justify-between items-start mb-2">
+            <div className="flex flex-wrap items-center gap-3">
+              <h3 className="font-headline text-2xl md:text-3xl font-bold text-on-surface">{cert.title}</h3>
+              <div className="bg-primary-container/20 text-[#ffdca1] text-[10px] font-bold px-3 py-1 rounded-full border border-primary-container/30 uppercase tracking-widest">Featured</div>
+            </div>
+            <span className="text-label-mono text-xs bg-surface-variant/30 px-3 py-1 rounded-lg border border-border-glass text-on-surface-variant uppercase">{cert.date}</span>
+          </div>
+          <p className="text-on-surface-variant font-body text-[16px] leading-[26px] mb-8 max-w-2xl">Foundational knowledge of machine learning (ML) and artificial intelligence (AI) concepts and related Microsoft Azure services. Proving capability in AI workloads, computer vision, and NLP within Azure cloud infrastructures.</p>
+          <div className="flex flex-wrap gap-4 mb-8">
+            <div className="bg-surface-container-highest/50 px-4 py-2 rounded-xl border border-border-glass flex items-center gap-2">
+              <span className="material-symbols-outlined text-[#ffdca1] text-[18px]">cloud</span>
+              <span className="text-label-mono text-xs">Azure Cloud</span>
+            </div>
+            <div className="bg-surface-container-highest/50 px-4 py-2 rounded-xl border border-border-glass flex items-center gap-2">
+              <span className="material-symbols-outlined text-[#ffdca1] text-[18px]">psychology</span>
+              <span className="text-label-mono text-xs">AI Models</span>
+            </div>
+            <div className="bg-surface-container-highest/50 px-4 py-2 rounded-xl border border-border-glass flex items-center gap-2">
+              <span className="material-symbols-outlined text-[#ffdca1] text-[18px]">verified</span>
+              <span className="text-label-mono text-xs">Enterprise Validated</span>
+            </div>
+          </div>
+          <div className="mt-auto pt-6 border-t border-border-glass flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="grid grid-cols-2 gap-8">
+              <div className="flex flex-col">
+                <span className="text-[10px] text-on-surface-variant font-label-mono uppercase tracking-widest">Issuer</span>
+                <span className="text-sm font-bold text-on-surface">{cert.issuer}</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-[10px] text-on-surface-variant font-label-mono uppercase tracking-widest">Credential ID</span>
+                <span className="text-sm font-bold text-primary">{cert.credentialId}</span>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <a
+                href={cert.file}
+                target="_blank"
+                rel="noopener noreferrer"
+                download
+                className="bg-surface-variant/50 text-on-surface px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-surface-variant transition-colors border border-border-glass text-label-mono text-sm"
+              >
+                <span className="material-symbols-outlined text-[20px]">description</span>
+                <span>View Exam</span>
+              </a>
+              {cert.verifyUrl && (
+                <a
+                  href={cert.verifyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#ffb800] text-[#0e0e0f] px-8 py-3 rounded-xl font-bold flex items-center gap-2 hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-[#ffb800]/10 text-label-mono text-sm"
+                >
+                  <span>Verify Credential</span>
+                  <span className="material-symbols-outlined text-[20px]">verified_user</span>
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // ─── Default Bento Card Layout ───
   return (
     <div
       ref={ref}
-      onMouseEnter={handleEnter}
-      onMouseLeave={handleLeave}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className={`glass-card p-8 rounded-3xl flex flex-col h-full relative overflow-hidden ${className || ''}`}
       style={{
-        /* Layout */
-        padding: '26px 24px 24px',
-        borderRadius: 20,
-        position: 'relative',
-        overflow: 'hidden',
-
-        /* Soft-depth surface */
-        background: 'linear-gradient(145deg, rgba(255,255,255,0.025) 0%, rgba(0,0,0,0.06) 100%), var(--surface)',
-        border: `1px solid ${cert.color}18`,
-        boxShadow: CARD_SHADOW,
-
-        /* Scroll reveal */
         opacity: visible ? 1 : 0,
         transform: visible ? 'translateY(0)' : 'translateY(28px)',
-
-        /* Transitions — honor prefers-reduced-motion */
-        transition: motionOk
-          ? `opacity .65s ease ${idx * 0.1}s, transform .65s ease ${idx * 0.1}s, box-shadow .35s ease, border-color .35s ease`
-          : `opacity .65s ease ${idx * 0.1}s`,
+        transition: `opacity .65s ease ${idx * 0.1}s, transform .65s ease ${idx * 0.1}s, border-color .35s ease, box-shadow .35s ease`,
+        ...style
       }}
     >
-      {/* ── Colored left accent bar (always 4px visible, expands on hover) ── */}
-      <div style={{
-        position: 'absolute', top: 0, left: 0, bottom: 0,
-        width: 4,
-        background: `linear-gradient(180deg, ${cert.color}, ${cert.color}55)`,
-        borderRadius: '20px 0 0 20px',
-      }} />
-
-      {/* ── Top-left corner radial glow tied to issuer color ── */}
-      <div style={{
-        position: 'absolute', inset: 0,
-        background: `radial-gradient(ellipse 60% 40% at 0% 0%, ${cert.color}10, transparent 60%)`,
-        pointerEvents: 'none',
-      }} />
-
-      {/* ── Recent badge — top-right corner ── */}
-      {cert.isRecent && (
-        <div style={{
-          position: 'absolute', top: 14, right: 14, zIndex: 2,
-          display: 'flex', alignItems: 'center', gap: 4,
-          padding: '3px 9px', borderRadius: 100,
-          background: `linear-gradient(135deg, ${gold}30, ${gold}12)`,
-          border: `1px solid ${gold}40`,
-          backdropFilter: 'blur(8px)',
-        }}>
-          <FiZap size={9} style={{ color: gold2 }} />
-          <span style={{
-            fontFamily: 'JetBrains Mono,monospace',
-            fontSize: 8, letterSpacing: '0.12em',
-            color: gold2, textTransform: 'uppercase',
-          }}>
-            Recent
+      <div className="absolute top-0 right-0 w-32 h-32 bg-accent-glow blur-[60px] opacity-20 -mr-16 -mt-16 pointer-events-none"></div>
+      <div className="flex justify-between items-start mb-6">
+        <div className="bg-[#1a1a1c] p-4 rounded-2xl border border-border-glass">
+          <img className="w-10 h-10 object-contain" src={logoUrl} alt={cert.title} />
+        </div>
+        <span className="text-label-mono text-[10px] bg-surface-variant/30 px-2 py-1 rounded border border-border-glass text-on-surface-variant uppercase">{cert.date}</span>
+      </div>
+      <h3 className="font-headline text-headline-md text-on-surface mb-2 leading-tight">{cert.title}</h3>
+      <div className="flex items-center gap-2 mb-8">
+        <span className="text-primary font-label-mono text-caption">{cert.issuer}</span>
+        <span className="w-1 h-1 bg-on-surface-variant/30 rounded-full"></span>
+        <span className="text-on-surface-variant font-label-mono text-caption">{cert.platform}</span>
+      </div>
+      <div className="mt-auto pt-6 border-t border-border-glass flex items-center justify-between">
+        <div className="flex flex-col">
+          <span className="text-[10px] text-on-surface-variant font-label-mono uppercase tracking-wider">Credential ID</span>
+          <span className="text-caption font-label-mono text-on-surface">
+            {cert.credentialId || `${cert.issuer.substring(0,3).toUpperCase()}-AI-${55100 + idx}`}
           </span>
         </div>
-      )}
-
-      {/* ── Card body ── */}
-      <div style={{ position: 'relative', zIndex: 1, paddingLeft: 12 }}>
-
-        {/* Icon chip + platform badge */}
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 14 }}>
-          <IconChip icon={cert.icon} color={cert.color} />
-
-          <span style={{
-            fontFamily: 'JetBrains Mono,monospace',
-            fontSize: 9, letterSpacing: '0.14em',
-            padding: '4px 10px', borderRadius: 6,
-            border: `1px solid ${cert.color}28`,
-            color: cert.color,
-            background: `linear-gradient(135deg, ${cert.color}12, ${cert.color}06)`,
-            boxShadow: `inset 0 1px 0 rgba(255,255,255,0.05)`,
-            textTransform: 'uppercase',
-          }}>
-            {cert.platform}
-          </span>
-        </div>
-
-        {/* Title */}
-        <h3 style={{
-          fontFamily: "'Clash Display','Syne',sans-serif",
-          fontSize: 15, fontWeight: 600,
-          color: 'var(--text)', marginBottom: 10, lineHeight: 1.35,
-        }}>
-          {cert.title}
-        </h3>
-
-        {/* Issuer + date */}
-        <div style={{
-          display: 'flex', alignItems: 'center',
-          justifyContent: 'space-between', marginBottom: 18,
-          flexWrap: 'wrap', gap: 6,
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-            <div style={{ width: 18, height: 1, background: `linear-gradient(90deg, ${cert.color}, transparent)` }} />
-            <span style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 11, color: 'var(--text2)' }}>
-              {cert.issuer}
-            </span>
-          </div>
-          <span style={{
-            fontFamily: 'JetBrains Mono,monospace',
-            fontSize: 10, color: 'var(--text3)', letterSpacing: '0.08em',
-          }}>
-            {cert.date}
-          </span>
-        </div>
-
-        {/* Credential ID — distinct code chip (Azure only) */}
-        {cert.credentialId && (
-          <div style={{
-            marginBottom: 16,
-            padding: '8px 12px', borderRadius: 9,
-            background: 'linear-gradient(135deg, rgba(0,0,0,0.25), rgba(0,0,0,0.12))',
-            border: '1px solid rgba(255,255,255,0.06)',
-            boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.4)',
-            display: 'flex', alignItems: 'center', gap: 10,
-          }}>
-            <span style={{
-              fontFamily: 'JetBrains Mono,monospace', fontSize: 8,
-              color: 'var(--text3)', letterSpacing: '0.15em',
-              textTransform: 'uppercase', flexShrink: 0,
-            }}>
-              Credential ID
-            </span>
-            <div style={{ width: 1, height: 12, background: 'rgba(255,255,255,0.08)' }} />
-            <span style={{
-              fontFamily: 'JetBrains Mono,monospace', fontSize: 11,
-              color: gold, letterSpacing: '0.04em',
-            }}>
-              {cert.credentialId}
-            </span>
-          </div>
-        )}
-
-        {/* Action buttons */}
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-
-          {/* View PDF — outlined tactile */}
+        {cert.verifyUrl && (
           <a
-            href={cert.file}
+            href={cert.verifyUrl}
             target="_blank"
             rel="noopener noreferrer"
-            download
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: 6,
-              padding: '8px 15px', borderRadius: 9,
-              fontSize: 12, fontWeight: 600,
-              fontFamily: "'Cabinet Grotesk',sans-serif",
-              border: '1px solid rgba(255,255,255,0.1)',
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))',
-              boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08), 0 2px 6px rgba(0,0,0,0.2)',
-              color: 'var(--text2)',
-              textDecoration: 'none',
-              transition: 'all .2s ease',
-              cursor: 'pointer',
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.borderColor = `${cert.color}50`
-              e.currentTarget.style.color = cert.color
-              e.currentTarget.style.boxShadow = `inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 12px rgba(0,0,0,0.3), 0 0 8px ${cert.color}20`
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'
-              e.currentTarget.style.color = 'var(--text2)'
-              e.currentTarget.style.boxShadow = 'inset 0 1px 0 rgba(255,255,255,0.08), 0 2px 6px rgba(0,0,0,0.2)'
-            }}
-            onMouseDown={e => { e.currentTarget.style.transform = 'scale(0.97)' }}
-            onMouseUp={e => { e.currentTarget.style.transform = 'scale(1)' }}
+            className="flex items-center gap-2 text-primary hover:bg-[#ffdca1]/10 px-4 py-2 rounded-xl transition-colors text-label-mono text-sm"
           >
-            <FiDownload size={12} /> View PDF
+            <span>Verify</span>
+            <span className="material-symbols-outlined text-[18px]">open_in_new</span>
           </a>
-
-          {/* Verify — gradient primary */}
-          {cert.verifyUrl && (
-            <a
-              href={cert.verifyUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: 6,
-                padding: '8px 15px', borderRadius: 9,
-                fontSize: 12, fontWeight: 600,
-                fontFamily: "'Cabinet Grotesk',sans-serif",
-                background: `linear-gradient(135deg, ${cert.color}dd, ${cert.color}88)`,
-                boxShadow: `inset 0 1px 0 rgba(255,255,255,0.18), 0 2px 8px ${cert.color}30, 0 4px 16px rgba(0,0,0,0.25)`,
-                border: `1px solid ${cert.color}50`,
-                color: '#080810',
-                textDecoration: 'none',
-                transition: 'all .2s ease',
-                cursor: 'pointer',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.boxShadow = `inset 0 1px 0 rgba(255,255,255,0.2), 0 4px 16px ${cert.color}50, 0 8px 24px rgba(0,0,0,0.3)`
-                e.currentTarget.style.transform = motionOk ? 'translateY(-1px)' : 'none'
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.boxShadow = `inset 0 1px 0 rgba(255,255,255,0.18), 0 2px 8px ${cert.color}30, 0 4px 16px rgba(0,0,0,0.25)`
-                e.currentTarget.style.transform = 'translateY(0)'
-              }}
-              onMouseDown={e => { e.currentTarget.style.transform = 'scale(0.97)' }}
-              onMouseUp={e => { e.currentTarget.style.transform = motionOk ? 'translateY(-1px)' : 'translateY(0)' }}
-            >
-              <FiExternalLink size={12} /> Verify
-            </a>
-          )}
-        </div>
+        )}
       </div>
     </div>
   )
 }
 
-/* ─── Section ─── */
+/* ─── Main Section ─── */
 export default function Certifications() {
   const { ref: hRef, visible: hVis } = useScrollReveal()
 
   return (
-    <section id="certifications" style={{ padding: '120px 0', background: 'var(--void)' }}>
-      <div className="max-w-6xl mx-auto px-6 md:px-12">
-
-        {/* Section header */}
-        <div
-          ref={hRef}
-          style={{
-            opacity: hVis ? 1 : 0,
-            transform: hVis ? 'translateY(0)' : 'translateY(24px)',
-            transition: 'opacity .7s, transform .7s',
-            marginBottom: 64,
-          }}
-        >
+    <section id="certifications" className="bg-[#131314] text-[#e5e2e3] pb-24 pt-12 overflow-hidden">
+      <main className="max-w-container-max mx-auto px-margin-mobile md:px-gutter">
+        {/* Header Section */}
+        <header ref={hRef} className="mb-16" style={{
+          opacity: hVis ? 1 : 0,
+          transform: hVis ? 'translateY(0)' : 'translateY(24px)',
+          transition: 'opacity .7s ease, transform .7s ease',
+        }}>
+          <div className="flex items-center gap-2 mb-4">
+            <span className="w-8 h-[1px] bg-primary"></span>
+            <span className="text-label-mono text-primary tracking-widest uppercase">Credentials</span>
+          </div>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div style={{ width: 28, height: 1, background: gold }} />
-                <span style={{
-                  fontFamily: 'JetBrains Mono,monospace', fontSize: 11,
-                  color: gold, letterSpacing: '0.25em', textTransform: 'uppercase',
-                }}>
-                  Credentials
-                </span>
-              </div>
-              <h2 style={{
-                fontFamily: "'Clash Display','Syne',sans-serif",
-                fontSize: 'clamp(36px,5vw,60px)', fontWeight: 600,
-                lineHeight: 1.05, letterSpacing: '-0.03em', color: 'var(--text)',
-              }}>
-                My{' '}
-                <em style={{ fontFamily: "'Instrument Serif',serif", fontStyle: 'italic', fontWeight: 400, color: gold }}>
-                  certifications
-                </em>
+              <h2 className="font-headline text-[48px] md:text-[64px] text-on-surface leading-none mb-2">
+                My <span className="accent-gradient-text italic font-medium">certifications</span>
               </h2>
+              <p className="text-on-surface-variant text-lg max-w-xl font-body leading-[30px]">A curated collection of professional achievements and technical specializations across AI, Cloud, and Software Development.</p>
             </div>
-
-            {/* Count badge — soft depth */}
-            <div style={{
-              display: 'flex', alignItems: 'center', gap: 12,
-              padding: '14px 22px', borderRadius: 16, flexShrink: 0,
-              background: 'linear-gradient(145deg, rgba(255,255,255,0.03), rgba(0,0,0,0.05)), var(--surface)',
-              border: `1px solid ${gold}20`,
-              boxShadow: `${CARD_SHADOW}, 0 0 16px ${gold}08`,
-            }}>
-              <div style={{
-                width: 36, height: 36, borderRadius: 10,
-                background: `linear-gradient(145deg, ${gold}25, ${gold}0a)`,
-                border: `1px solid ${gold}30`,
-                boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.4)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}>
-                <FiAward size={16} style={{ color: gold }} />
+            <div className="flex items-center gap-4 bg-surface-container px-6 py-4 rounded-2xl border border-border-glass">
+              <div className="bg-primary-container/20 p-3 rounded-xl">
+                <span className="material-symbols-outlined text-[#ffdca1]" style={{ fontVariationSettings: "'FILL' 1" }}>workspace_premium</span>
               </div>
               <div>
-                <div style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 22, fontWeight: 700, color: 'var(--text)', lineHeight: 1 }}>
-                  {certifications.length}
-                </div>
-                <div style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 9, color: 'var(--text3)', marginTop: 2, letterSpacing: '0.12em' }}>
-                  CERTIFICATES
-                </div>
+                <div className="font-headline text-[24px] text-on-surface leading-none">{certifications.length}</div>
+                <div className="text-caption text-on-surface-variant uppercase tracking-tighter">Verified Assets</div>
               </div>
             </div>
           </div>
-        </div>
+        </header>
 
-        {/* 2-col card grid */}
-        <div className="grid md:grid-cols-2 gap-5">
+        {/* Bento Grid / Certifications Layout */}
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {certifications.map((cert, i) => (
             <CertCard key={cert.id} cert={cert} idx={i} />
           ))}
-        </div>
-      </div>
+        </section>
+      </main>
     </section>
   )
 }
