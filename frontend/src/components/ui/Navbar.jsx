@@ -5,12 +5,13 @@ import { FiSun, FiMoon, FiMenu, FiX } from 'react-icons/fi'
 import { useTheme } from '../../context/ThemeContext'
 
 const links = [
-  { to: 'about',      label: 'About'      },
-  { to: 'skills',     label: 'Skills'     },
-  { to: 'projects',   label: 'Projects'   },
-  { to: 'experience', label: 'Experience' },
-  { to: 'learning',   label: 'Learning'   },
-  { to: 'contact',    label: 'Contact'    },
+  { to: 'about',           label: 'About'          },
+  { to: 'skills',          label: 'Skills'         },
+  { to: 'projects',        label: 'Projects'       },
+  { to: 'experience',      label: 'Experience'     },
+  { to: 'learning',        label: 'Learning'       },
+  { to: 'certifications',  label: 'Certifications' },
+  { to: 'contact',         label: 'Contact'        },
 ]
 
 export default function Navbar() {

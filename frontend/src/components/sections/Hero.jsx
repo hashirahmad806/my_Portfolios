@@ -111,7 +111,7 @@ export default function Hero() {
                 </motion.button>
               </Link>
               <motion.a
-                href="/CV.pdf" download="Hashir_Ahmad_CV.pdf"
+                href="/My_cv.pdf" download="Hashir_Ahmad_CV.pdf"
                 whileHover={{ y: -2, borderColor: 'rgba(201,168,76,.4)', color: gold }}
                 className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm tracking-wide"
                 style={{ border: '1px solid var(--border)', color: 'var(--text2)', background: 'transparent', fontFamily: "'Cabinet Grotesk',sans-serif", cursor: 'pointer', textDecoration: 'none' }}

@@ -68,7 +68,7 @@ const FALLBACK = [
     description:
       "Dynamic news aggregation platform for the Malakand region with category navigation, breaking news alerts, search functionality & a full CMS.",
     tech: ["React.js", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
-    emoji: "https://malakand-news.vercel.app/",
+    emoji: "📰",
     gradient: "linear-gradient(135deg,#f093fb,#f5576c)",
     githubUrl: "https://github.com/hashirahmad806",
     liveUrl: "https://malakand-news.vercel.app/",
@@ -80,7 +80,7 @@ const FALLBACK = [
     description:
       "RealNova is a modern movie discovery web app built with React and Tailwind CSS. It features real-time search, favorites, Appwrite authentication, analytics tracking, and a sleek responsive UI. Built for film lovers to explore, save, and enjoy curated movie content effortlessly.",
     tech: ["React.js", "Node.js", "Express", "MongoDB", "JWT"],
-    emoji: "https://reel-nova-movie.vercel.app/",
+    emoji: "🎬",
     gradient: "linear-gradient(135deg,#4facfe,#00f2fe)",
     githubUrl: "https://github.com/hashirahmad806/ReelNova-Movie-Web",
     liveUrl: "https://reel-nova-movie.vercel.app/",

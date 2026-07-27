@@ -1,7 +1,7 @@
 import { Link } from 'react-scroll'
 import { FiGithub, FiLinkedin, FiHeart } from 'react-icons/fi'
 
-const navLinks = ['about','skills','projects','experience','learning','contact']
+const navLinks = ['about','skills','projects','experience','learning','certifications','contact']
 
 export default function Footer() {
   return (

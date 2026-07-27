@@ -11,8 +11,9 @@ import About       from './components/sections/About'
 import Skills      from './components/sections/Skills'
 import Projects    from './components/sections/Projects'
 import Experience  from './components/sections/Experience'
-import Learning    from './components/sections/Learning'
-import Contact     from './components/sections/Contact'
+import Learning        from './components/sections/Learning'
+import Certifications  from './components/sections/Certifications'
+import Contact         from './components/sections/Contact'
 
 export default function App() {
   const [loading, setLoading] = useState(true)
@@ -30,7 +31,7 @@ export default function App() {
         <Cursor />
         <Navbar />
         <main className="relative z-10">
-          <Hero /><About /><Skills /><Projects /><Experience /><Learning /><Contact />
+          <Hero /><About /><Skills /><Projects /><Experience /><Learning /><Certifications /><Contact />
         </main>
         <Footer />
         <ToastContainer position="bottom-right" autoClose={4000} toastStyle={{ background:'var(--surface2)', border:'1px solid var(--border)', color:'var(--text)', fontSize:14 }} />
