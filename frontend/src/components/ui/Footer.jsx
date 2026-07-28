@@ -1,5 +1,6 @@
 import { Link } from 'react-scroll'
-import { FiGithub, FiLinkedin, FiHeart } from 'react-icons/fi'
+import { FiGithub, FiLinkedin, FiHeart, FiMail } from 'react-icons/fi'
+import { FaWhatsapp } from 'react-icons/fa'
 
 const navLinks = ['about','skills','projects','experience','learning','certifications','contact']
 
@@ -36,6 +37,8 @@ export default function Footer() {
             {[
               { href: 'https://github.com/hashirahmad806', Icon: FiGithub },
               { href: 'https://www.linkedin.com/in/hashir-ahmad-25639031b', Icon: FiLinkedin },
+              { href: 'https://wa.me/923705105561', Icon: FaWhatsapp },
+              { href: 'mailto:hashirahmad806@gmail.com', Icon: FiMail },
             ].map(({ href, Icon }) => (
               <a
                 key={href} href={href} target="_blank" rel="noopener noreferrer"

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
 import { FiGithub, FiLinkedin, FiMail, FiMapPin, FiSend, FiPaperclip } from "react-icons/fi";
+import { FaWhatsapp } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { contactAPI } from "../../utils/api";
 
@@ -19,6 +20,12 @@ const contactInfo = [
     label: "Email",
     value: "hashirahmad806@gmail.com",
     href: "mailto:hashirahmad806@gmail.com",
+  },
+  {
+    Icon: FaWhatsapp,
+    label: "WhatsApp",
+    value: "+92 370 5105561",
+    href: "https://wa.me/923705105561",
   },
   {
     Icon: FiGithub,

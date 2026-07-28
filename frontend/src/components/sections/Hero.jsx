@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion'
 import { Link }   from 'react-scroll'
 import { TypeAnimation } from 'react-type-animation'
-import { FiGithub, FiLinkedin, FiArrowDown, FiDownload } from 'react-icons/fi'
+import { FiGithub, FiLinkedin, FiArrowDown, FiDownload, FiMail } from 'react-icons/fi'
+import { FaWhatsapp } from 'react-icons/fa'
 import hashirPhoto from '../../assets/hashir.jpg'
 
 const stagger = {
@@ -143,7 +144,9 @@ export default function Hero() {
               <div style={{ width: 28, height: 1, background: 'var(--border)' }} />
               {[
                 { href: 'https://github.com/hashirahmad806',                         Icon: FiGithub   },
-                { href: 'https://www.linkedin.com/in/hashir-ahmad-25639031b', Icon: FiLinkedin },
+                { href: 'https://www.linkedin.com/in/hashir-ahmad-25639031b',         Icon: FiLinkedin },
+                { href: 'https://wa.me/923705105561',                                 Icon: FaWhatsapp },
+                { href: 'mailto:hashirahmad806@gmail.com',                            Icon: FiMail     },
               ].map(({ href, Icon }) => (
                 <motion.a
                   key={href} href={href} target="_blank" rel="noopener noreferrer"
