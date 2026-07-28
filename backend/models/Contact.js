@@ -23,6 +23,8 @@ const contactSchema = new mongoose.Schema(
       minlength: [10, 'Message must be at least 10 characters'],
       maxlength: [2000, 'Message cannot exceed 2000 characters'],
     },
+    fileUrl: { type: String, default: null },
+    fileOriginalName: { type: String, default: null },
     isRead: { type: Boolean, default: false },
     ipAddress: { type: String, default: null },
   },

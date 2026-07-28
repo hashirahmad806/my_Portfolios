@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
-import { FiGithub, FiLinkedin, FiMail, FiMapPin, FiSend } from "react-icons/fi";
+import { FiGithub, FiLinkedin, FiMail, FiMapPin, FiSend, FiPaperclip } from "react-icons/fi";
 import { toast } from "react-toastify";
 import { contactAPI } from "../../utils/api";
 
@@ -56,12 +56,44 @@ const inputStyle = {
 
 export default function Contact() {
   const { ref, visible } = useScrollReveal();
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", message: "", honey: "" });
+  const [file, setFile] = useState(null);
+  const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
 
   const onChange = (e) =>
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    if (!selectedFile) {
+      setFile(null);
+      setErrors((prev) => ({ ...prev, file: null }));
+      return;
+    }
+
+    // Client-side validations
+    const maxLimit = 5 * 1024 * 1024; // 5MB
+    if (selectedFile.size > maxLimit) {
+      setErrors((prev) => ({ ...prev, file: "File size exceeds 5MB limit." }));
+      toast.error("File size exceeds 5MB limit.");
+      setFile(null);
+      return;
+    }
+
+    const allowedExts = ["pdf", "doc", "docx", "png", "jpg", "jpeg"];
+    const ext = selectedFile.name.split(".").pop().toLowerCase();
+    if (!allowedExts.includes(ext)) {
+      setErrors((prev) => ({ ...prev, file: "Allowed file types: .pdf, .doc, .docx, .png, .jpg" }));
+      toast.error("Invalid file type. Allowed: .pdf, .doc, .docx, .png, .jpg");
+      setFile(null);
+      return;
+    }
+
+    setFile(selectedFile);
+    setErrors((prev) => ({ ...prev, file: null }));
+  };
 
   const onFocus = (e) => {
     e.target.style.borderColor = "rgba(201,168,76,0.4)";
@@ -74,19 +106,42 @@ export default function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.message) {
-      toast.error("Please fill in all fields.");
+
+    // Reset error state
+    setErrors({});
+
+    let localErrors = {};
+    if (!form.name.trim()) localErrors.name = "Name is required.";
+    if (!form.email.trim()) {
+      localErrors.email = "Email is required.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      localErrors.email = "Please enter a valid email address.";
+    }
+    if (!form.message.trim()) localErrors.message = "Message is required.";
+
+    if (Object.keys(localErrors).length > 0) {
+      setErrors(localErrors);
+      toast.error("Please resolve validation errors.");
       return;
     }
+
     setLoading(true);
     try {
-      await contactAPI.send({
-        name: form.name.trim(),
-        email: form.email.trim(),
-        message: form.message.trim(),
-      });
+      const formData = new FormData();
+      formData.append("name", form.name.trim());
+      formData.append("email", form.email.trim());
+      formData.append("message", form.message.trim());
+      if (form.honey) {
+        formData.append("honey", form.honey);
+      }
+      if (file) {
+        formData.append("file", file);
+      }
+
+      await contactAPI.send(formData);
       setSent(true);
-      setForm({ name: "", email: "", message: "" });
+      setForm({ name: "", email: "", message: "", honey: "" });
+      setFile(null);
       toast.success("Message sent! I'll be in touch soon 🚀");
     } catch (err) {
       const msg =
@@ -361,13 +416,26 @@ export default function Contact() {
                 <form
                   onSubmit={handleSubmit}
                   style={{ display: "flex", flexDirection: "column", gap: 18 }}
+                  noValidate
                 >
+                  {/* Honeypot field (hidden from screen readers & visual users) */}
+                  <div style={{ display: "none" }} aria-hidden="true">
+                    <input
+                      type="text"
+                      name="honey"
+                      value={form.honey}
+                      onChange={onChange}
+                      tabIndex="-1"
+                      autoComplete="off"
+                    />
+                  </div>
+
                   {[
                     {
                       id: "name",
                       label: "Your Name",
                       type: "text",
-                      ph: "Hashir Ahmad ",
+                      ph: "Hashir Ahmad",
                     },
                     {
                       id: "email",
@@ -398,9 +466,16 @@ export default function Contact() {
                         onFocus={onFocus}
                         onBlur={onBlur}
                         placeholder={f.ph}
-                        required
-                        style={inputStyle}
+                        style={{
+                          ...inputStyle,
+                          borderColor: errors[f.id] ? "#ef4444" : "rgba(255,255,255,0.06)",
+                        }}
                       />
+                      {errors[f.id] && (
+                        <span style={{ fontSize: 12, color: "#ef4444", marginTop: 4, display: "block" }}>
+                          {errors[f.id]}
+                        </span>
+                      )}
                     </div>
                   ))}
 
@@ -425,10 +500,114 @@ export default function Contact() {
                       onFocus={onFocus}
                       onBlur={onBlur}
                       placeholder="Hi Hashir, I'd love to discuss a project…"
-                      required
                       rows={5}
-                      style={{ ...inputStyle, resize: "none" }}
+                      style={{
+                        ...inputStyle,
+                        resize: "none",
+                        borderColor: errors.message ? "#ef4444" : "rgba(255,255,255,0.06)",
+                      }}
                     />
+                    {errors.message && (
+                      <span style={{ fontSize: 12, color: "#ef4444", marginTop: 4, display: "block" }}>
+                        {errors.message}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* File Upload Component */}
+                  <div>
+                    <label
+                      style={{
+                        display: "block",
+                        fontFamily: "JetBrains Mono,monospace",
+                        fontSize: 11,
+                        color: "var(--text3)",
+                        letterSpacing: "0.15em",
+                        textTransform: "uppercase",
+                        marginBottom: 8,
+                      }}
+                    >
+                      Attachment (Optional)
+                    </label>
+                    <div
+                      style={{
+                        position: "relative",
+                        width: "100%",
+                        padding: "24px 18px",
+                        borderRadius: 12,
+                        background: "linear-gradient(135deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.12) 100%)",
+                        border: errors.file ? "1px dashed #ef4444" : "1px dashed rgba(255,255,255,0.1)",
+                        boxShadow: "inset 0 2px 4px rgba(0,0,0,0.4), inset 0 -1px 0 rgba(255,255,255,0.02)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: 12,
+                        cursor: "pointer",
+                        transition: "all 0.3s ease",
+                      }}
+                      onMouseEnter={(e) => {
+                        if (!errors.file) {
+                          e.currentTarget.style.borderColor = "rgba(201,168,76,0.4)";
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!errors.file) {
+                          e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
+                        }
+                      }}
+                    >
+                      <input
+                        type="file"
+                        onChange={handleFileChange}
+                        accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
+                        style={{
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          width: "100%",
+                          height: "100%",
+                          opacity: 0,
+                          cursor: "pointer",
+                        }}
+                      />
+                      <FiPaperclip size={18} style={{ color: file ? "#00e5a0" : gold }} />
+                      <div style={{ flex: 1 }}>
+                        <p style={{ fontSize: 14, fontWeight: 500, color: file ? "#e5e2e3" : "var(--text2)" }}>
+                          {file ? file.name : "Choose a spec, brief or document..."}
+                        </p>
+                        <p style={{ fontSize: 11, color: "var(--text3)", marginTop: 2 }}>
+                          {file ? `${(file.size / (1024 * 1024)).toFixed(2)} MB` : "PDF, DOC, DOCX, PNG, JPG (Max 5MB)"}
+                        </p>
+                      </div>
+                      {file && (
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setFile(null);
+                            setErrors((prev) => ({ ...prev, file: null }));
+                          }}
+                          style={{
+                            background: "transparent",
+                            border: "none",
+                            color: "#ef4444",
+                            fontSize: 12,
+                            fontWeight: 600,
+                            cursor: "pointer",
+                            padding: "4px 8px",
+                            zIndex: 10,
+                          }}
+                        >
+                          Remove
+                        </button>
+                      )}
+                    </div>
+                    {errors.file && (
+                      <span style={{ fontSize: 12, color: "#ef4444", marginTop: 4, display: "block" }}>
+                        {errors.file}
+                      </span>
+                    )}
                   </div>
 
                   <motion.button
@@ -453,6 +632,7 @@ export default function Contact() {
                             border: "2.5px solid rgba(8,8,16,.3)",
                             borderTopColor: "#080810",
                             borderRadius: "50%",
+                            marginRight: 8,
                           }}
                           animate={{ rotate: 360 }}
                           transition={{
@@ -465,7 +645,7 @@ export default function Contact() {
                       </>
                     ) : (
                       <>
-                        <FiSend size={16} /> Send Message
+                        <FiSend size={16} style={{ marginRight: 8 }} /> Send Message
                       </>
                     )}
                   </motion.button>
