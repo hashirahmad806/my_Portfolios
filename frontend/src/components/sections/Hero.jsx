@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Link }   from 'react-scroll'
+import { Link } from 'react-scroll'
 import { TypeAnimation } from 'react-type-animation'
 import { FiGithub, FiLinkedin, FiArrowDown, FiDownload, FiMail } from 'react-icons/fi'
 import { FaWhatsapp } from 'react-icons/fa'
@@ -7,12 +7,12 @@ import hashirPhoto from '../../assets/hashir.jpg'
 
 const stagger = {
   container: { hidden: {}, show: { transition: { staggerChildren: 0.11, delayChildren: 0.2 } } },
-  item:      { hidden: { y: 32, opacity: 0 }, show: { y: 0, opacity: 1, transition: { duration: 0.7, ease: [0.25,0.46,0.45,0.94] } } },
+  item: { hidden: { y: 32, opacity: 0 }, show: { y: 0, opacity: 1, transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] } } },
 }
 
-const gold   = '#c9a84c'
-const gold2  = '#e8c97a'
-const muted  = '#9090a8'
+const gold = '#c9a84c'
+const gold2 = '#e8c97a'
+const muted = '#9090a8'
 const muted2 = '#5a5a72'
 
 const motionOk = typeof window !== 'undefined'
@@ -143,10 +143,10 @@ export default function Hero() {
               <span style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 10, color: 'var(--text3)', letterSpacing: '0.2em', textTransform: 'uppercase' }}>Find me</span>
               <div style={{ width: 28, height: 1, background: 'var(--border)' }} />
               {[
-                { href: 'https://github.com/hashirahmad806',                         Icon: FiGithub   },
-                { href: 'https://www.linkedin.com/in/hashir-ahmad-25639031b',         Icon: FiLinkedin },
-                { href: 'https://wa.me/923705105561',                                 Icon: FaWhatsapp },
-                { href: 'mailto:hashirahmad806@gmail.com',                            Icon: FiMail     },
+                { href: 'https://github.com/hashirahmad806', Icon: FiGithub },
+                { href: 'https://www.linkedin.com/in/hashir-ahmad-25639031b', Icon: FiLinkedin },
+                { href: 'https://wa.me/923705105561', Icon: FaWhatsapp },
+                { href: 'mailto:hashirahmad808@gmail.com', Icon: FiMail },
               ].map(({ href, Icon }) => (
                 <motion.a
                   key={href} href={href} target="_blank" rel="noopener noreferrer"
@@ -250,10 +250,10 @@ export default function Hero() {
                 position: 'absolute', bottom: -28, left: '50%', transform: 'translateX(-50%)',
                 display: 'flex', gap: 32, whiteSpace: 'nowrap', zIndex: 2,
               }}>
-                {[['10+','Projects'],['2+','Years'],['4','Core Tech']].map(([n,l]) => (
+                {[['10+', 'Projects'], ['2+', 'Years'], ['4', 'Core Tech']].map(([n, l]) => (
                   <div key={l} style={{ textAlign: 'center' }}>
                     <div style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 28, fontWeight: 700, color: 'var(--text)', lineHeight: 1 }}>
-                      {n.replace('+','')}<span style={{ color: gold }}>+</span>
+                      {n.replace('+', '')}<span style={{ color: gold }}>+</span>
                     </div>
                     <div style={{ fontFamily: "'Cabinet Grotesk',sans-serif", fontSize: 11, color: 'var(--text3)', marginTop: 3 }}>{l}</div>
                   </div>
@@ -271,7 +271,7 @@ export default function Hero() {
           transition={{ delay: 1.8 }}
         >
           <span style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 10, color: 'var(--text3)', letterSpacing: '0.2em', textTransform: 'uppercase' }}>scroll</span>
-          <motion.div animate={{ y: [0,6,0] }} transition={{ duration: 1.4, repeat: Infinity }}>
+          <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 1.4, repeat: Infinity }}>
             <FiArrowDown size={13} style={{ color: 'var(--text3)' }} />
           </motion.div>
         </motion.div>

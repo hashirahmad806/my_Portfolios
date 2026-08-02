@@ -15,4 +15,5 @@ api.interceptors.response.use(
 
 export const contactAPI  = { send: d => api.post('/contact', d) }
 export const projectsAPI = { getAll: (cat) => api.get('/projects', { params: { category: cat } }) }
+export const githubAPI   = { get: () => api.get('/github'), sync: () => api.post('/github/sync') }
 export default api

@@ -13,6 +13,7 @@ import Projects    from './components/sections/Projects'
 import Experience  from './components/sections/Experience'
 import Learning        from './components/sections/Learning'
 import Certifications  from './components/sections/Certifications'
+import GitHubActivity  from './components/sections/GitHubActivity'
 import Contact         from './components/sections/Contact'
 
 export default function App() {
@@ -31,7 +32,7 @@ export default function App() {
         <Cursor />
         <Navbar />
         <main className="relative z-10">
-          <Hero /><About /><Skills /><Projects /><Experience /><Learning /><Certifications /><Contact />
+          <Hero /><About /><Skills /><Projects /><Experience /><Learning /><Certifications /><GitHubActivity /><Contact />
         </main>
         <Footer />
         <ToastContainer position="bottom-right" autoClose={4000} toastStyle={{ background:'var(--surface2)', border:'1px solid var(--border)', color:'var(--text)', fontSize:14 }} />
