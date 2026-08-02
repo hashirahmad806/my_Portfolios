@@ -185,11 +185,16 @@ async function fetchGitHubData(username, token) {
       updatedAt: repo.updated_at,
     }));
 
-  // 3. Fetch Recent Commits Timeline (via public events)
+  // 3. Fetch Recent Commits Timeline
   const eventsRes = await axios.get(`https://api.github.com/users/${username}/events/public?per_page=30`, { headers });
   const commits = [];
-  eventsRes.data.forEach(event => {
-    if (event.type === 'PushEvent' && event.payload && event.payload.commits) {
+  
+  // Find all PushEvents
+  const pushEvents = eventsRes.data.filter(event => event.type === 'PushEvent');
+  
+  // Collect commits from payload (in case GITHUB_TOKEN is active and it provides them)
+  pushEvents.forEach(event => {
+    if (event.payload && event.payload.commits) {
       event.payload.commits.forEach(commit => {
         commits.push({
           repo: event.repo.name.replace(`${username}/`, ''),
@@ -201,6 +206,37 @@ async function fetchGitHubData(username, token) {
       });
     }
   });
+
+  // If commits list is still empty (like in unauthenticated public events), fetch from repositories
+  if (commits.length === 0 && pushEvents.length > 0) {
+    // Get unique repository names from the push events (limit to top 3 to avoid rate limit issues)
+    const uniqueRepos = [...new Set(pushEvents.map(event => event.repo.name))].slice(0, 3);
+    
+    // Fetch commits for each repository in parallel
+    const repoCommitsPromises = uniqueRepos.map(async (repoName) => {
+      try {
+        const repoCommitsRes = await axios.get(`https://api.github.com/repos/${repoName}/commits?author=${username}&per_page=5`, { headers });
+        return repoCommitsRes.data.map(commit => ({
+          repo: repoName.replace(`${username}/`, ''),
+          message: commit.commit.message,
+          sha: commit.sha.substring(0, 7),
+          date: commit.commit.author.date,
+          url: `https://github.com/${repoName}/commit/${commit.sha}`
+        }));
+      } catch (err) {
+        console.error(`Failed to fetch commits for ${repoName}:`, err.message);
+        return [];
+      }
+    });
+
+    const reposCommitsResults = await Promise.all(repoCommitsPromises);
+    reposCommitsResults.forEach(repoCommits => {
+      commits.push(...repoCommits);
+    });
+
+    // Sort combined commits by date descending
+    commits.sort((a, b) => new Date(b.date) - new Date(a.date));
+  }
 
   const recentCommits = commits.slice(0, 6);
 
