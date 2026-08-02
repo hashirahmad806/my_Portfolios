@@ -108,11 +108,11 @@ export default function GitHubActivity() {
   }
 
   return (
-    <section id="github" style={{ padding: '120px 0', background: 'var(--obsidian)' }}>
-      <div className="max-w-6xl mx-auto px-6 md:px-12">
+    <section id="github" className="relative w-full overflow-hidden" style={{ padding: '120px 0', background: 'var(--obsidian)' }}>
+      <div className="max-w-6xl mx-auto px-6 md:px-12 w-full">
         {/* Section Header */}
         <div ref={ref} style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(24px)', transition: 'opacity .7s, transform .7s', marginBottom: 64 }}>
-          <div className="flex justify-between items-end">
+          <div className="flex flex-col md:flex-row justify-start md:justify-between items-start md:items-end gap-6 md:gap-0">
             <div>
               <div className="flex items-center gap-3 mb-4">
                 <div style={{ width: 28, height: 1, background: gold }} />
@@ -246,7 +246,7 @@ export default function GitHubActivity() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="grid gap-6"
+              className="grid gap-6 w-full min-w-0"
             >
               {/* Profile Card & Stats Grid */}
               <div className="grid md:grid-cols-3 gap-6">
@@ -347,7 +347,7 @@ export default function GitHubActivity() {
               {/* Heatmap Section */}
               {data.contributionCalendar && data.contributionCalendar.length > 0 && (
                 <div
-                  className="glass p-6"
+                  className="glass p-6 w-full min-w-0"
                   style={{
                     borderRadius: 20,
                     boxShadow: 'var(--card-shadow)'
@@ -359,8 +359,8 @@ export default function GitHubActivity() {
                   </h4>
                   
                   {/* Heatmap grid scroll wrapper */}
-                  <div className="overflow-x-auto pb-2 scrollbar-thin">
-                    <div className="grid grid-flow-col gap-1" style={{ gridTemplateRows: 'repeat(7, minmax(0, 1fr))', width: 'max-content' }}>
+                  <div className="w-full overflow-x-auto pb-2 scrollbar-thin">
+                    <div className="grid grid-flow-col gap-1 min-w-max" style={{ gridTemplateRows: 'repeat(7, minmax(0, 1fr))' }}>
                       {data.contributionCalendar.map((day, idx) => (
                         <div
                           key={idx}
@@ -378,7 +378,7 @@ export default function GitHubActivity() {
                   </div>
 
                   {/* Heatmap Legend */}
-                  <div className="flex justify-between items-center mt-4 text-[10px] font-mono text-[var(--text3)]">
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0 mt-4 text-[10px] font-mono text-[var(--text3)]">
                     <div>* Pushes reflect commits and other platform updates</div>
                     <div className="flex items-center gap-1">
                       <span>Less</span>
@@ -449,10 +449,10 @@ export default function GitHubActivity() {
                             ⚡
                           </div>
 
-                          <div className="flex-1 bg-[var(--void)] border border-[var(--border)] p-3 rounded-xl transition-all group-hover:border-gold2">
-                            <div className="flex justify-between items-center mb-1">
-                              <span className="text-[10px] font-mono text-gray-500 font-semibold uppercase">{commit.repo}</span>
-                              <span className="text-[9px] font-mono text-gray-500">{getRelativeTime(commit.date)}</span>
+                          <div className="flex-1 min-w-0 bg-[var(--void)] border border-[var(--border)] p-3 rounded-xl transition-all group-hover:border-gold2">
+                            <div className="flex justify-between items-start sm:items-center mb-1 gap-2">
+                              <span className="text-[10px] font-mono text-gray-500 font-semibold uppercase truncate">{commit.repo}</span>
+                              <span className="text-[9px] font-mono text-gray-500 whitespace-nowrap">{getRelativeTime(commit.date)}</span>
                             </div>
                             <p className="text-[11px] text-[var(--text2)] font-mono line-clamp-1">{commit.message}</p>
                             <div className="mt-1 flex justify-between items-center">
@@ -493,11 +493,11 @@ export default function GitHubActivity() {
                       }}
                     >
                       <div>
-                        <div className="flex items-center justify-between mb-2">
-                          <h5 className="font-clash text-sm font-semibold text-[var(--text)] group-hover:text-gold2 transition-colors">
+                        <div className="flex items-start justify-between mb-2 gap-2">
+                          <h5 className="font-clash text-sm font-semibold text-[var(--text)] group-hover:text-gold2 transition-colors break-all">
                             {repo.name}
                           </h5>
-                          <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-[var(--surface2)] text-[var(--text2)]">
+                          <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-[var(--surface2)] text-[var(--text2)] whitespace-nowrap flex-shrink-0 mt-0.5">
                             {repo.language || 'Plain'}
                           </span>
                         </div>

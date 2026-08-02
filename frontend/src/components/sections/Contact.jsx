@@ -1,59 +1,31 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+﻿import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
-import { FiGithub, FiLinkedin, FiMail, FiMapPin, FiSend, FiPaperclip } from "react-icons/fi";
+import { FiGithub, FiLinkedin, FiMail, FiMapPin, FiSend, FiPaperclip, FiCheckCircle } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { contactAPI } from "../../utils/api";
 
 const gold = "#c9a84c";
-const muted = "#9090a8";
-const dim = "#5a5a72";
-
-const motionOk = typeof window !== 'undefined'
-  ? !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+const motionOk = typeof window !== "undefined"
+  ? !window.matchMedia("(prefers-reduced-motion: reduce)").matches
   : true;
 
-const contactInfo = [
-  {
-    Icon: FiMail,
-    label: "Email",
-    value: "hashirahmad806@gmail.com",
-    href: "mailto:hashirahmad806@gmail.com",
-  },
-  {
-    Icon: FaWhatsapp,
-    label: "WhatsApp",
-    value: "+92 370 5105561",
-    href: "https://wa.me/923705105561",
-  },
-  {
-    Icon: FiGithub,
-    label: "GitHub",
-    value: "github.com/hashirahmad806",
-    href: "https://github.com/hashirahmad806",
-  },
-  {
-    Icon: FiLinkedin,
-    label: "LinkedIn",
-    value: "linkedin.com/in/hashir-ahmad",
-    href: "https://www.linkedin.com/in/hashir-ahmad-25639031b",
-  },
-  {
-    Icon: FiMapPin,
-    label: "Location",
-    value: "Pakistan 🇵🇰 — Open to Remote",
-    href: null,
-  },
+const contactCards = [
+  { Icon: FiMail,     label: "Email",     value: "hashirahmad806@gmail.com",            href: "mailto:hashirahmad806@gmail.com", color: "#61DAFB" },
+  { Icon: FaWhatsapp, label: "WhatsApp",  value: "+92 370 5105561",                     href: "https://wa.me/923705105561",       color: "#25D366" },
+  { Icon: FiLinkedin, label: "LinkedIn",  value: "linkedin.com/in/hashir-ahmad",        href: "https://www.linkedin.com/in/hashir-ahmad-25639031b", color: "#0A66C2" },
+  { Icon: FiGithub,   label: "GitHub",    value: "github.com/hashirahmad806",           href: "https://github.com/hashirahmad806",  color: "#c9a84c" },
+  { Icon: FiMapPin,   label: "Location",  value: "Pakistan 🇵🇰 — Open to Remote",        href: null,                                 color: "#00E5A0" },
 ];
 
-const inputStyle = {
+const inputBase = {
   width: "100%",
   padding: "14px 18px",
   borderRadius: 12,
-  background: "linear-gradient(135deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.12) 100%)",
-  border: "1px solid rgba(255,255,255,0.06)",
-  boxShadow: "inset 0 2px 4px rgba(0,0,0,0.4), inset 0 -1px 0 rgba(255,255,255,0.02)",
+  background: "rgba(0,0,0,0.25)",
+  border: "1px solid rgba(255,255,255,0.07)",
+  boxShadow: "inset 0 2px 4px rgba(0,0,0,0.4)",
   color: "var(--text)",
   fontFamily: "'Cabinet Grotesk',sans-serif",
   fontSize: 15,
@@ -61,603 +33,305 @@ const inputStyle = {
   transition: "border-color 0.3s, box-shadow 0.3s",
 };
 
+function FloatLabel({ id, label, error, children }) {
+  return (
+    <div style={{ position: "relative" }}>
+      <label
+        htmlFor={id}
+        style={{
+          display: "block",
+          fontFamily: "JetBrains Mono,monospace",
+          fontSize: 10,
+          color: error ? "#ef4444" : "var(--text3)",
+          letterSpacing: "0.18em",
+          textTransform: "uppercase",
+          marginBottom: 7,
+        }}
+      >
+        {label}
+      </label>
+      {children}
+      {error && (
+        <motion.span
+          initial={{ opacity: 0, y: -4 }}
+          animate={{ opacity: 1, y: 0 }}
+          style={{ fontSize: 12, color: "#ef4444", marginTop: 5, display: "block" }}
+        >
+          {error}
+        </motion.span>
+      )}
+    </div>
+  );
+}
+
 export default function Contact() {
   const { ref, visible } = useScrollReveal();
-  const [form, setForm] = useState({ name: "", email: "", message: "", honey: "" });
+  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "", honey: "" });
   const [file, setFile] = useState(null);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
+  const [focused, setFocused] = useState(null);
 
-  const onChange = (e) =>
-    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  const onChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
   const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    if (!selectedFile) {
-      setFile(null);
-      setErrors((prev) => ({ ...prev, file: null }));
-      return;
-    }
-
-    // Client-side validations
-    const maxLimit = 5 * 1024 * 1024; // 5MB
-    if (selectedFile.size > maxLimit) {
-      setErrors((prev) => ({ ...prev, file: "File size exceeds 5MB limit." }));
-      toast.error("File size exceeds 5MB limit.");
-      setFile(null);
-      return;
-    }
-
-    const allowedExts = ["pdf", "doc", "docx", "png", "jpg", "jpeg"];
-    const ext = selectedFile.name.split(".").pop().toLowerCase();
-    if (!allowedExts.includes(ext)) {
-      setErrors((prev) => ({ ...prev, file: "Allowed file types: .pdf, .doc, .docx, .png, .jpg" }));
-      toast.error("Invalid file type. Allowed: .pdf, .doc, .docx, .png, .jpg");
-      setFile(null);
-      return;
-    }
-
-    setFile(selectedFile);
-    setErrors((prev) => ({ ...prev, file: null }));
+    const f = e.target.files[0];
+    if (!f) { setFile(null); return; }
+    if (f.size > 5 * 1024 * 1024) { toast.error("File exceeds 5MB limit."); return; }
+    const ext = f.name.split(".").pop().toLowerCase();
+    if (!["pdf","doc","docx","png","jpg","jpeg"].includes(ext)) { toast.error("Invalid file type."); return; }
+    setFile(f);
+    setErrors((p) => ({ ...p, file: null }));
   };
 
-  const onFocus = (e) => {
-    e.target.style.borderColor = "rgba(201,168,76,0.4)";
-    e.target.style.boxShadow = "inset 0 2px 4px rgba(0,0,0,0.4), 0 0 0 3px rgba(201,168,76,0.07)";
-  };
-  const onBlur = (e) => {
-    e.target.style.borderColor = "rgba(255,255,255,0.06)";
-    e.target.style.boxShadow = "inset 0 2px 4px rgba(0,0,0,0.4), inset 0 -1px 0 rgba(255,255,255,0.02)";
-  };
+  const fieldStyle = (id, hasError) => ({
+    ...inputBase,
+    borderColor: hasError ? "#ef4444" : focused === id ? "rgba(201,168,76,0.45)" : "rgba(255,255,255,0.07)",
+    boxShadow: focused === id
+      ? "inset 0 2px 4px rgba(0,0,0,0.4), 0 0 0 3px rgba(201,168,76,0.08)"
+      : "inset 0 2px 4px rgba(0,0,0,0.4)",
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Reset error state
     setErrors({});
-
-    let localErrors = {};
-    if (!form.name.trim()) localErrors.name = "Name is required.";
-    if (!form.email.trim()) {
-      localErrors.email = "Email is required.";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-      localErrors.email = "Please enter a valid email address.";
-    }
-    if (!form.message.trim()) localErrors.message = "Message is required.";
-
-    if (Object.keys(localErrors).length > 0) {
-      setErrors(localErrors);
-      toast.error("Please resolve validation errors.");
-      return;
-    }
+    const errs = {};
+    if (!form.name.trim()) errs.name = "Name is required.";
+    if (!form.email.trim()) errs.email = "Email is required.";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errs.email = "Enter a valid email.";
+    if (!form.message.trim()) errs.message = "Message is required.";
+    if (Object.keys(errs).length) { setErrors(errs); return; }
 
     setLoading(true);
     try {
-      const formData = new FormData();
-      formData.append("name", form.name.trim());
-      formData.append("email", form.email.trim());
-      formData.append("message", form.message.trim());
-      if (form.honey) {
-        formData.append("honey", form.honey);
-      }
-      if (file) {
-        formData.append("file", file);
-      }
-
-      await contactAPI.send(formData);
+      const fd = new FormData();
+      fd.append("name", form.name.trim());
+      fd.append("email", form.email.trim());
+      fd.append("message", form.message.trim());
+      if (form.honey) fd.append("honey", form.honey);
+      if (file) fd.append("file", file);
+      await contactAPI.send(fd);
       setSent(true);
-      setForm({ name: "", email: "", message: "", honey: "" });
+      setForm({ name: "", email: "", subject: "", message: "", honey: "" });
       setFile(null);
-      toast.success("Message sent! I'll be in touch soon 🚀");
+      toast.success("Message sent! I'll reply soon 🚀");
     } catch (err) {
-      const msg =
-        err?.response?.data?.message ||
-        (err?.response?.status === 429
-          ? "Too many messages. Please try again later."
-          : err?.response?.status >= 500
-            ? "Server error. Please try again."
-            : "Failed to send message. Please email me directly.");
-      toast.error(msg);
+      toast.error(err?.response?.data?.message || "Failed to send. Please email me directly.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <section
-      id="contact"
-      style={{ padding: "120px 0", background: "var(--void)" }}
-    >
-      <div className="max-w-6xl mx-auto px-6 md:px-12">
+    <section id="contact" style={{ padding: "120px 0", background: "var(--void)", position: "relative", overflow: "hidden" }}>
+      {/* Background ambient glow */}
+      <div style={{ position: "absolute", top: "20%", left: "-10%", width: 500, height: 500, borderRadius: "50%", background: `radial-gradient(circle, ${gold}08, transparent 70%)`, pointerEvents: "none" }} />
+      <div style={{ position: "absolute", bottom: "10%", right: "-5%", width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(97,218,251,0.05), transparent 70%)", pointerEvents: "none" }} />
+
+      <div className="max-w-6xl mx-auto px-6 md:px-12 relative z-10">
         {/* Header */}
-        <div
-          ref={ref}
-          style={{
-            opacity: visible ? 1 : 0,
-            transform: visible ? "translateY(0)" : "translateY(24px)",
-            transition: "opacity .7s,transform .7s",
-            marginBottom: 56,
-          }}
-        >
+        <div ref={ref} style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(24px)", transition: "opacity .7s, transform .7s", marginBottom: 64 }}>
           <div className="flex items-center gap-3 mb-4">
             <div style={{ width: 28, height: 1, background: gold }} />
-            <span
-              style={{
-                fontFamily: "JetBrains Mono,monospace",
-                fontSize: 11,
-                color: gold,
-                letterSpacing: "0.25em",
-                textTransform: "uppercase",
-              }}
-            >
-              Get In Touch
-            </span>
+            <span style={{ fontFamily: "JetBrains Mono,monospace", fontSize: 11, color: gold, letterSpacing: "0.25em", textTransform: "uppercase" }}>Get In Touch</span>
           </div>
-          <h2
-            style={{
-              fontFamily: "'Clash Display','Syne',sans-serif",
-              fontSize: "clamp(36px,5vw,60px)",
-              fontWeight: 600,
-              lineHeight: 1.05,
-              letterSpacing: "-0.03em",
-              color: "var(--text)",
-            }}
-          >
-            Let's{" "}
-            <em
-              style={{
-                fontFamily: "'Instrument Serif',serif",
-                fontStyle: "italic",
-                fontWeight: 400,
-                color: gold,
-              }}
-            >
-              build together
-            </em>
+          <h2 style={{ fontFamily: "'Clash Display','Syne',sans-serif", fontSize: "clamp(36px,5vw,60px)", fontWeight: 600, lineHeight: 1.05, letterSpacing: "-0.03em", color: "var(--text)" }}>
+            Let&apos;s{" "}
+            <em style={{ fontFamily: "'Instrument Serif',serif", fontStyle: "italic", fontWeight: 400, color: gold }}>build together</em>
           </h2>
+
+          {/* Availability badge */}
+          <motion.div
+            initial={motionOk ? { opacity: 0, y: 8 } : {}}
+            animate={motionOk ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.4, duration: 0.5 }}
+            style={{ display: "inline-flex", alignItems: "center", gap: 10, marginTop: 20, padding: "10px 18px", borderRadius: 999, border: "1px solid rgba(0,229,160,0.2)", background: "rgba(0,229,160,0.05)" }}
+          >
+            <motion.div
+              animate={motionOk ? { scale: [1, 1.4, 1] } : {}}
+              transition={{ duration: 2, repeat: Infinity }}
+              style={{ width: 8, height: 8, borderRadius: "50%", background: "#00e5a0", boxShadow: "0 0 8px #00e5a0" }}
+            />
+            <span style={{ fontFamily: "JetBrains Mono,monospace", fontSize: 11, color: "#00e5a0", letterSpacing: "0.08em" }}>
+              Available for Internships, Freelance & Full-Time Opportunities
+            </span>
+          </motion.div>
         </div>
 
-        <div className="grid lg:grid-cols-5 gap-12">
-          {/* Left info */}
-          <div className="lg:col-span-2">
-            <p
-              style={{
-                fontSize: 15,
-                lineHeight: 1.8,
-                color: "var(--text2)",
-                fontStyle: "italic",
-                fontFamily: "'Instrument Serif',serif",
-                marginBottom: 32,
-              }}
-            >
-              Have a project in mind? Looking for a dedicated MERN Stack
-              Developer? I'm available for full-time roles, freelance & exciting
-              collaborations.
+        <div className="grid lg:grid-cols-5 gap-12 items-start">
+          {/* LEFT: Info + Cards */}
+          <div className="lg:col-span-2 flex flex-col gap-6">
+            <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--text2)", fontFamily: "'Instrument Serif',serif", fontStyle: "italic" }}>
+              Have a project in mind or looking for a dedicated MERN Stack Developer? I&apos;m just a message away — let&apos;s create something remarkable together.
             </p>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              {contactInfo.map(({ Icon, label, value, href }) => {
-                const inner = (
-                  <div
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = "rgba(201,168,76,.28)";
-                      if (motionOk) e.currentTarget.style.transform = "translateY(-3px)";
-                      e.currentTarget.style.boxShadow = `0 6px 16px rgba(0,0,0,0.4), 0 0 16px rgba(201,168,76,0.08), inset 0 1px 0 rgba(255,255,255,0.07)`;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = "var(--border)";
-                      e.currentTarget.style.transform = "translateY(0)";
-                      e.currentTarget.style.boxShadow = "var(--card-shadow)";
-                    }}
+            <div className="flex flex-col gap-3">
+              {contactCards.map(({ Icon, label, value, href, color }) => {
+                const card = (
+                  <motion.div
+                    whileHover={motionOk ? { y: -4, borderColor: `${color}30` } : {}}
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 14,
-                      padding: "14px 18px",
-                      borderRadius: 14,
+                      display: "flex", alignItems: "center", gap: 14,
+                      padding: "14px 16px", borderRadius: 14,
                       border: "1px solid var(--border)",
-                      background: "linear-gradient(145deg, rgba(255,255,255,0.025) 0%, rgba(0,0,0,0.06) 100%), var(--surface)",
+                      background: "linear-gradient(145deg, rgba(255,255,255,0.03), rgba(0,0,0,0.08)), var(--surface)",
                       boxShadow: "var(--card-shadow)",
-                      transition: "all .3s ease",
+                      transition: "border-color 0.3s, box-shadow 0.3s",
+                      cursor: href ? "pointer" : "default",
+                      textDecoration: "none",
                     }}
+                    onHoverStart={el => { if (el?.currentTarget) el.currentTarget.style.boxShadow = `0 8px 24px rgba(0,0,0,0.4), 0 0 0 1px ${color}18`; }}
                   >
-                    <div
-                      className="frosted-icon-chip"
-                      style={{
-                        width: 36,
-                        height: 36,
-                        borderRadius: 10,
-                        background: "rgba(201,168,76,0.12)",
-                        border: "1px solid rgba(201,168,76,0.2)",
-                        fontSize: 15,
-                        boxShadow: `inset 0 1px 3px rgba(0,0,0,0.45), inset 0 -1px 0 rgba(255,255,255,0.04), 0 2px 6px rgba(0,0,0,0.22)`,
-                      }}
-                    >
-                      <Icon size={15} style={{ color: gold }} />
+                    {/* Icon chip */}
+                    <div style={{
+                      width: 38, height: 38, borderRadius: 10, flexShrink: 0,
+                      background: `${color}18`, border: `1px solid ${color}30`,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                    }}>
+                      <Icon size={16} style={{ color }} />
                     </div>
                     <div>
-                      <div
-                        style={{
-                          fontFamily: "JetBrains Mono,monospace",
-                          fontSize: 10,
-                          color: "var(--text3)",
-                          letterSpacing: "0.1em",
-                          marginBottom: 2,
-                        }}
-                      >
-                        {label}
-                      </div>
-                      <div
-                        style={{
-                          fontSize: 13,
-                          fontWeight: 500,
-                          color: "var(--text)",
-                        }}
-                      >
-                        {value}
-                      </div>
+                      <div style={{ fontFamily: "JetBrains Mono,monospace", fontSize: 9, color: "var(--text3)", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 3 }}>{label}</div>
+                      <div style={{ fontSize: 13, fontWeight: 500, color: "var(--text)" }}>{value}</div>
                     </div>
-                  </div>
+                    {href && <div style={{ marginLeft: "auto", color: "var(--text3)", fontSize: 12 }}>→</div>}
+                  </motion.div>
                 );
                 return href ? (
-                  <a
-                    key={label}
-                    href={href}
-                    target={href.startsWith("http") ? "_blank" : undefined}
-                    rel="noopener noreferrer"
-                    style={{ textDecoration: "none" }}
-                  >
-                    {inner}
+                  <a key={label} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+                    {card}
                   </a>
-                ) : (
-                  <div key={label}>{inner}</div>
-                );
+                ) : <div key={label}>{card}</div>;
               })}
-
-              {/* Available now pill */}
-              <div
-                style={{
-                  marginTop: 8,
-                  padding: "14px 18px",
-                  borderRadius: 14,
-                  border: "1px solid rgba(0,229,160,.15)",
-                  background: "rgba(0,229,160,.04)",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 8,
-                    marginBottom: 6,
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 7,
-                      height: 7,
-                      borderRadius: "50%",
-                      background: "#00e5a0",
-                      boxShadow: "0 0 8px #00e5a0",
-                    }}
-                  />
-                  <span
-                    style={{
-                      fontFamily: "JetBrains Mono,monospace",
-                      fontSize: 10,
-                      color: "#00e5a0",
-                      letterSpacing: "0.1em",
-                    }}
-                  >
-                    Available Now
-                  </span>
-                </div>
-                <p style={{ fontSize: 13, color: "var(--text2)" }}>
-                  Open to full-time roles, freelance & exciting collaborations.
-                </p>
-              </div>
             </div>
           </div>
 
-          {/* Right form */}
+          {/* RIGHT: Form */}
           <div className="lg:col-span-3">
-            <div
-              style={{
-                padding: 36,
-                borderRadius: 24,
-                border: "1px solid var(--border)",
-                background: "linear-gradient(145deg, rgba(255,255,255,0.025) 0%, rgba(0,0,0,0.06) 100%), var(--surface)",
-                boxShadow: "var(--card-shadow)",
-                position: "relative",
-              }}
-            >
-              {/* Subtle top edge highlight */}
-              <div style={{
-                position: 'absolute', top: 0, left: 24, right: 24,
-                height: 1, background: `linear-gradient(90deg, transparent, ${gold}25, transparent)`,
-                pointerEvents: 'none',
-              }} />
-              <h3
-                style={{
-                  fontFamily: "'Clash Display','Syne',sans-serif",
-                  fontSize: 20,
-                  fontWeight: 600,
-                  color: "var(--text)",
-                  marginBottom: 28,
-                }}
-              >
-                Send a Message
-              </h3>
+            <div style={{ padding: "clamp(24px,4vw,40px)", borderRadius: 24, border: "1px solid var(--border)", background: "linear-gradient(145deg, rgba(255,255,255,0.025), rgba(0,0,0,0.06)), var(--surface)", boxShadow: "var(--card-shadow)", position: "relative" }}>
+              {/* Top edge glow */}
+              <div style={{ position: "absolute", top: 0, left: 32, right: 32, height: 1, background: `linear-gradient(90deg, transparent, ${gold}25, transparent)`, pointerEvents: "none" }} />
 
-              {sent ? (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  style={{
-                    padding: 32,
-                    textAlign: "center",
-                    borderRadius: 16,
-                    border: "1px solid rgba(0,229,160,.2)",
-                    background: "rgba(0,229,160,.05)",
-                  }}
-                >
-                  <div style={{ fontSize: 48, marginBottom: 16 }}>🎉</div>
-                  <div
-                    style={{
-                      fontFamily: "'Clash Display',sans-serif",
-                      fontSize: 20,
-                      fontWeight: 600,
-                      color: "var(--text)",
-                      marginBottom: 10,
-                    }}
+              <h3 style={{ fontFamily: "'Clash Display','Syne',sans-serif", fontSize: 22, fontWeight: 600, color: "var(--text)", marginBottom: 28 }}>Send a Message</h3>
+
+              <AnimatePresence mode="wait">
+                {sent ? (
+                  <motion.div
+                    key="success"
+                    initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    style={{ padding: 40, textAlign: "center", borderRadius: 18, border: "1px solid rgba(0,229,160,0.2)", background: "rgba(0,229,160,0.05)" }}
                   >
-                    Message Sent!
-                  </div>
-                  <p style={{ fontSize: 14, color: "var(--text2)" }}>
-                    Thanks for reaching out! I'll get back to you as soon as
-                    possible.
-                  </p>
-                </motion.div>
-              ) : (
-                <form
-                  onSubmit={handleSubmit}
-                  style={{ display: "flex", flexDirection: "column", gap: 18 }}
-                  noValidate
-                >
-                  {/* Honeypot field (hidden from screen readers & visual users) */}
-                  <div style={{ display: "none" }} aria-hidden="true">
-                    <input
-                      type="text"
-                      name="honey"
-                      value={form.honey}
-                      onChange={onChange}
-                      tabIndex="-1"
-                      autoComplete="off"
-                    />
-                  </div>
+                    <motion.div animate={motionOk ? { scale: [0, 1.2, 1] } : {}} transition={{ duration: 0.5 }} style={{ display: "inline-block", marginBottom: 16 }}>
+                      <FiCheckCircle size={52} style={{ color: "#00e5a0" }} />
+                    </motion.div>
+                    <div style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 22, fontWeight: 600, color: "var(--text)", marginBottom: 10 }}>Message Sent!</div>
+                    <p style={{ fontSize: 14, color: "var(--text2)", lineHeight: 1.7 }}>Thanks for reaching out! I&apos;ll get back to you as soon as possible.</p>
+                    <button onClick={() => setSent(false)} style={{ marginTop: 24, padding: "10px 24px", borderRadius: 10, border: `1px solid ${gold}40`, background: `${gold}10`, color: gold, fontFamily: "JetBrains Mono,monospace", fontSize: 12, cursor: "pointer", letterSpacing: "0.1em" }}>
+                      Send Another →
+                    </button>
+                  </motion.div>
+                ) : (
+                  <motion.form
+                    key="form"
+                    onSubmit={handleSubmit}
+                    style={{ display: "flex", flexDirection: "column", gap: 18 }}
+                    noValidate
+                  >
+                    {/* Honeypot */}
+                    <div style={{ display: "none" }} aria-hidden="true">
+                      <input type="text" name="honey" value={form.honey} onChange={onChange} tabIndex="-1" autoComplete="off" />
+                    </div>
 
-                  {[
-                    {
-                      id: "name",
-                      label: "Your Name",
-                      type: "text",
-                      ph: "Hashir Ahmad",
-                    },
-                    {
-                      id: "email",
-                      label: "Email Address",
-                      type: "email",
-                      ph: "hashir@example.com",
-                    },
-                  ].map((f) => (
-                    <div key={f.id}>
-                      <label
-                        style={{
-                          display: "block",
-                          fontFamily: "JetBrains Mono,monospace",
-                          fontSize: 11,
-                          color: "var(--text3)",
-                          letterSpacing: "0.15em",
-                          textTransform: "uppercase",
-                          marginBottom: 8,
-                        }}
-                      >
-                        {f.label}
+                    {/* Name + Email row */}
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <FloatLabel id="name" label="Your Name" error={errors.name}>
+                        <input id="name" type="text" name="name" value={form.name} onChange={onChange}
+                          onFocus={() => setFocused("name")} onBlur={() => setFocused(null)}
+                          placeholder="Hashir Ahmad"
+                          style={fieldStyle("name", errors.name)} />
+                      </FloatLabel>
+                      <FloatLabel id="email" label="Email Address" error={errors.email}>
+                        <input id="email" type="email" name="email" value={form.email} onChange={onChange}
+                          onFocus={() => setFocused("email")} onBlur={() => setFocused(null)}
+                          placeholder="you@example.com"
+                          style={fieldStyle("email", errors.email)} />
+                      </FloatLabel>
+                    </div>
+
+                    {/* Subject */}
+                    <FloatLabel id="subject" label="Subject (Optional)" error={null}>
+                      <input id="subject" type="text" name="subject" value={form.subject} onChange={onChange}
+                        onFocus={() => setFocused("subject")} onBlur={() => setFocused(null)}
+                        placeholder="Project Inquiry / Collaboration / Full-Time Role"
+                        style={fieldStyle("subject", false)} />
+                    </FloatLabel>
+
+                    {/* Message */}
+                    <FloatLabel id="message" label="Message" error={errors.message}>
+                      <textarea id="message" name="message" value={form.message} onChange={onChange}
+                        onFocus={() => setFocused("message")} onBlur={() => setFocused(null)}
+                        placeholder="Hi Hashir, I'd love to discuss a project…"
+                        rows={5}
+                        style={{ ...fieldStyle("message", errors.message), resize: "none" }} />
+                    </FloatLabel>
+
+                    {/* File Upload */}
+                    <div>
+                      <label style={{ display: "block", fontFamily: "JetBrains Mono,monospace", fontSize: 10, color: "var(--text3)", letterSpacing: "0.18em", textTransform: "uppercase", marginBottom: 7 }}>
+                        Attachment (Optional)
                       </label>
-                      <input
-                        type={f.type}
-                        name={f.id}
-                        value={form[f.id]}
-                        onChange={onChange}
-                        onFocus={onFocus}
-                        onBlur={onBlur}
-                        placeholder={f.ph}
-                        style={{
-                          ...inputStyle,
-                          borderColor: errors[f.id] ? "#ef4444" : "rgba(255,255,255,0.06)",
-                        }}
-                      />
-                      {errors[f.id] && (
-                        <span style={{ fontSize: 12, color: "#ef4444", marginTop: 4, display: "block" }}>
-                          {errors[f.id]}
-                        </span>
-                      )}
-                    </div>
-                  ))}
-
-                  <div>
-                    <label
-                      style={{
-                        display: "block",
-                        fontFamily: "JetBrains Mono,monospace",
-                        fontSize: 11,
-                        color: "var(--text3)",
-                        letterSpacing: "0.15em",
-                        textTransform: "uppercase",
-                        marginBottom: 8,
-                      }}
-                    >
-                      Message
-                    </label>
-                    <textarea
-                      name="message"
-                      value={form.message}
-                      onChange={onChange}
-                      onFocus={onFocus}
-                      onBlur={onBlur}
-                      placeholder="Hi Hashir, I'd love to discuss a project…"
-                      rows={5}
-                      style={{
-                        ...inputStyle,
-                        resize: "none",
-                        borderColor: errors.message ? "#ef4444" : "rgba(255,255,255,0.06)",
-                      }}
-                    />
-                    {errors.message && (
-                      <span style={{ fontSize: 12, color: "#ef4444", marginTop: 4, display: "block" }}>
-                        {errors.message}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* File Upload Component */}
-                  <div>
-                    <label
-                      style={{
-                        display: "block",
-                        fontFamily: "JetBrains Mono,monospace",
-                        fontSize: 11,
-                        color: "var(--text3)",
-                        letterSpacing: "0.15em",
-                        textTransform: "uppercase",
-                        marginBottom: 8,
-                      }}
-                    >
-                      Attachment (Optional)
-                    </label>
-                    <div
-                      style={{
-                        position: "relative",
-                        width: "100%",
-                        padding: "24px 18px",
-                        borderRadius: 12,
-                        background: "linear-gradient(135deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.12) 100%)",
-                        border: errors.file ? "1px dashed #ef4444" : "1px dashed rgba(255,255,255,0.1)",
-                        boxShadow: "inset 0 2px 4px rgba(0,0,0,0.4), inset 0 -1px 0 rgba(255,255,255,0.02)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: 12,
-                        cursor: "pointer",
-                        transition: "all 0.3s ease",
-                      }}
-                      onMouseEnter={(e) => {
-                        if (!errors.file) {
-                          e.currentTarget.style.borderColor = "rgba(201,168,76,0.4)";
-                        }
-                      }}
-                      onMouseLeave={(e) => {
-                        if (!errors.file) {
-                          e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
-                        }
-                      }}
-                    >
-                      <input
-                        type="file"
-                        onChange={handleFileChange}
-                        accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
-                        style={{
-                          position: "absolute",
-                          top: 0,
-                          left: 0,
-                          width: "100%",
-                          height: "100%",
-                          opacity: 0,
-                          cursor: "pointer",
-                        }}
-                      />
-                      <FiPaperclip size={18} style={{ color: file ? "#00e5a0" : gold }} />
-                      <div style={{ flex: 1 }}>
-                        <p style={{ fontSize: 14, fontWeight: 500, color: file ? "#e5e2e3" : "var(--text2)" }}>
-                          {file ? file.name : "Choose a spec, brief or document..."}
-                        </p>
-                        <p style={{ fontSize: 11, color: "var(--text3)", marginTop: 2 }}>
-                          {file ? `${(file.size / (1024 * 1024)).toFixed(2)} MB` : "PDF, DOC, DOCX, PNG, JPG (Max 5MB)"}
-                        </p>
+                      <div
+                        style={{ position: "relative", padding: "20px 18px", borderRadius: 12, background: "rgba(0,0,0,0.2)", border: errors.file ? "1px dashed #ef4444" : file ? `1px dashed ${gold}50` : "1px dashed rgba(255,255,255,0.1)", display: "flex", alignItems: "center", gap: 12, cursor: "pointer", transition: "border-color 0.3s" }}
+                        onMouseEnter={e => { if (!errors.file) e.currentTarget.style.borderColor = `${gold}40`; }}
+                        onMouseLeave={e => { if (!errors.file && !file) e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }}
+                      >
+                        <input type="file" onChange={handleFileChange} accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" style={{ position: "absolute", inset: 0, opacity: 0, cursor: "pointer" }} />
+                        <FiPaperclip size={18} style={{ color: file ? "#00e5a0" : gold, flexShrink: 0 }} />
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <p style={{ fontSize: 14, fontWeight: 500, color: file ? "var(--text)" : "var(--text2)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                            {file ? file.name : "Choose a spec, brief or document..."}
+                          </p>
+                          <p style={{ fontSize: 11, color: "var(--text3)", marginTop: 2 }}>
+                            {file ? `${(file.size / (1024 * 1024)).toFixed(2)} MB` : "PDF, DOC, PNG, JPG — Max 5MB"}
+                          </p>
+                        </div>
+                        {file && (
+                          <button type="button" onClick={e => { e.preventDefault(); e.stopPropagation(); setFile(null); }}
+                            style={{ background: "transparent", border: "none", color: "#ef4444", fontSize: 12, fontWeight: 600, cursor: "pointer", padding: "4px 8px", zIndex: 10, flexShrink: 0 }}>
+                            Remove
+                          </button>
+                        )}
                       </div>
-                      {file && (
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            setFile(null);
-                            setErrors((prev) => ({ ...prev, file: null }));
-                          }}
-                          style={{
-                            background: "transparent",
-                            border: "none",
-                            color: "#ef4444",
-                            fontSize: 12,
-                            fontWeight: 600,
-                            cursor: "pointer",
-                            padding: "4px 8px",
-                            zIndex: 10,
-                          }}
-                        >
-                          Remove
-                        </button>
-                      )}
                     </div>
-                    {errors.file && (
-                      <span style={{ fontSize: 12, color: "#ef4444", marginTop: 4, display: "block" }}>
-                        {errors.file}
-                      </span>
-                    )}
-                  </div>
 
-                  <motion.button
-                    type="submit"
-                    disabled={loading}
-                    whileTap={motionOk ? { scale: 0.97 } : {}}
-                    className="tactile-btn-primary"
-                    style={{
-                      width: "100%",
-                      padding: "14px 24px",
-                      justifyContent: "center",
-                      cursor: loading ? "not-allowed" : "pointer",
-                      opacity: loading ? 0.7 : 1,
-                    }}
-                  >
-                    {loading ? (
-                      <>
-                        <motion.div
-                          style={{
-                            width: 18,
-                            height: 18,
-                            border: "2.5px solid rgba(8,8,16,.3)",
-                            borderTopColor: "#080810",
-                            borderRadius: "50%",
-                            marginRight: 8,
-                          }}
-                          animate={{ rotate: 360 }}
-                          transition={{
-                            duration: 0.7,
-                            repeat: Infinity,
-                            ease: "linear",
-                          }}
-                        />
-                        Sending…
-                      </>
-                    ) : (
-                      <>
-                        <FiSend size={16} style={{ marginRight: 8 }} /> Send Message
-                      </>
-                    )}
-                  </motion.button>
-                </form>
-              )}
+                    {/* Submit */}
+                    <motion.button
+                      type="submit"
+                      disabled={loading}
+                      whileTap={motionOk ? { scale: 0.97 } : {}}
+                      whileHover={motionOk ? { scale: 1.01 } : {}}
+                      className="tactile-btn-primary"
+                      style={{ width: "100%", padding: "15px 24px", justifyContent: "center", cursor: loading ? "not-allowed" : "pointer", opacity: loading ? 0.75 : 1 }}
+                    >
+                      {loading ? (
+                        <>
+                          <motion.div
+                            style={{ width: 18, height: 18, border: "2.5px solid rgba(8,8,16,.3)", borderTopColor: "#080810", borderRadius: "50%", marginRight: 8 }}
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 0.7, repeat: Infinity, ease: "linear" }}
+                          />
+                          Sending…
+                        </>
+                      ) : (
+                        <><FiSend size={16} style={{ marginRight: 8 }} /> Send Message</>
+                      )}
+                    </motion.button>
+                  </motion.form>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </div>
