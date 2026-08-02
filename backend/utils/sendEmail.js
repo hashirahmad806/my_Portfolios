@@ -19,6 +19,10 @@ const sendEmail = async (options) => {
     subject: options.subject,
     text: options.message,
     html: options.html,
+    // Support direct file attachments (e.g. from contact form uploads)
+    ...(options.attachments && options.attachments.length > 0
+      ? { attachments: options.attachments }
+      : {}),
   }
 
   // Send the email

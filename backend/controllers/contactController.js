@@ -140,7 +140,16 @@ exports.createMessage = async (req, res, next) => {
         attachmentHtml = `<br><br><strong>Attached File:</strong> ${fileOriginalName}<br><strong>Download Link:</strong> <a href="${fileUrl}" target="_blank" rel="noopener noreferrer">${fileUrl}</a>`
       }
 
-      // Notify the site owner
+      // Notify the site owner — attach the file directly to the email
+      const emailAttachments = []
+      if (req.file) {
+        emailAttachments.push({
+          filename: req.file.originalname,
+          content: req.file.buffer,
+          contentType: req.file.mimetype,
+        })
+      }
+
       await sendEmail({
         email: process.env.RECEIVER_EMAIL,
         subject: `New Contact Message from ${name}`,
@@ -150,7 +159,8 @@ exports.createMessage = async (req, res, next) => {
                <p><strong>Email:</strong> ${email}</p>
                <p><strong>Message:</strong><br>${message.replace(/\n/g, '<br>')}</p>
                ${attachmentHtml}
-               <p><small>IP Address: ${ipAddress}</small></p>`
+               <p><small>IP Address: ${ipAddress}</small></p>`,
+        attachments: emailAttachments,
       })
       
       // Auto-reply to the sender
