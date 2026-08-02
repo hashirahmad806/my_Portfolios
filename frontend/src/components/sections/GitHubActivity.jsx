@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { TypeAnimation } from 'react-type-animation'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
 import { githubAPI } from '../../utils/api'
 
@@ -118,7 +119,20 @@ export default function GitHubActivity() {
                 <span style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 11, color: gold, letterSpacing: '0.25em', textTransform: 'uppercase' }}>Activity</span>
               </div>
               <h2 style={{ fontFamily: "'Clash Display','Syne',sans-serif", fontSize: 'clamp(36px,5vw,60px)', fontWeight: 600, lineHeight: 1.05, letterSpacing: '-0.03em', color: 'var(--text)' }}>
-                GitHub <em style={{ fontFamily: "'Instrument Serif',serif", fontStyle: 'italic', fontWeight: 400, color: gold }}>Dashboard</em>
+                <TypeAnimation
+                  sequence={[
+                    'Hashir Ahmad',
+                    2000,
+                    'GitHub Dashboard',
+                    3000,
+                    'Code Activity',
+                    2000
+                  ]}
+                  wrapper="span"
+                  speed={50}
+                  repeat={Infinity}
+                  style={{ display: 'inline-block', minHeight: '1.2em' }}
+                />
               </h2>
             </div>
 
@@ -180,7 +194,7 @@ export default function GitHubActivity() {
                   </div>
                 </div>
 
-                <div className="md:col-span-2 grid grid-cols-2 gap-4">
+                <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[1, 2, 3, 4].map(idx => (
                     <div key={idx} className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 h-28 animate-pulse flex flex-col justify-between">
                       <div className="h-3 bg-[var(--surface2)] rounded w-1/2" />
@@ -284,30 +298,48 @@ export default function GitHubActivity() {
                 </div>
 
                 {/* Stats Grid */}
-                <div className="md:col-span-2 grid grid-cols-2 gap-4">
+                <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
-                    { label: 'Total Contributions', val: data.stats.totalContributions, suffix: 'last year', color: gold },
-                    { label: 'Current Streak', val: `${data.stats.currentStreak} Days`, suffix: 'consecutive active', color: '#61DAFB' },
-                    { label: 'Longest Streak', val: `${data.stats.longestStreak} Days`, suffix: 'historical record', color: '#00E5A0' },
-                    { label: 'Total Repositories', val: data.stats.totalRepos, suffix: 'public repos', color: '#ffb800' }
+                    { label: 'TOTAL CONTRIBUTIONS', val: data.stats.totalContributions, suffix: 'last year', color: gold },
+                    { label: 'CURRENT STREAK', val: `${data.stats.currentStreak} Days`, suffix: 'consecutive active', color: '#61DAFB' },
+                    { label: 'LONGEST STREAK', val: `${data.stats.longestStreak} Days`, suffix: 'historical record', color: '#00E5A0' },
+                    { label: 'TOTAL REPOSITORIES', val: data.stats.totalRepos, suffix: 'public repos', color: '#ffb800' }
                   ].map((stat, i) => (
-                    <div
+                    <motion.div
                       key={i}
-                      className="glass p-5 flex flex-col justify-between relative overflow-hidden"
+                      whileHover={motionOk ? { 
+                        y: -5, 
+                        boxShadow: `0 6px 20px rgba(0,0,0,0.55), 0 18px 48px rgba(0,0,0,0.35), 0 0 0 1px ${stat.color}22, 0 0 28px ${stat.color}10, inset 0 1px 0 rgba(255,255,255,0.07)`,
+                        borderColor: `${stat.color}28`
+                      } : {}}
+                      className="p-6 flex flex-col justify-between relative overflow-hidden"
                       style={{
                         borderRadius: 20,
-                        boxShadow: 'var(--card-shadow)'
+                        border: '1px solid var(--border)',
+                        background: 'linear-gradient(145deg, rgba(255,255,255,0.025) 0%, rgba(0,0,0,0.06) 100%), var(--surface)',
+                        boxShadow: 'var(--card-shadow)',
+                        transition: 'border-color 0.35s ease'
                       }}
                     >
-                      <div style={{ position: 'absolute', inset: 0, background: `radial-gradient(ellipse 40% 40% at 100% 100%, ${stat.color}05, transparent 60%)`, pointerEvents: 'none' }} />
-                      <div className="text-[10px] font-mono text-[var(--text3)] uppercase tracking-wider">{stat.label}</div>
-                      <div className="my-2">
-                        <div className="text-2xl md:text-3xl font-clash font-semibold text-[var(--text)]" style={{ color: stat.color }}>
+                      {/* Left accent bar */}
+                      <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: 4, background: `linear-gradient(180deg, ${stat.color}, ${stat.color}55)` }} />
+                      
+                      {/* Radial glow */}
+                      <div style={{ position: 'absolute', inset: 0, background: `radial-gradient(ellipse 60% 40% at 0% 0%, ${stat.color}0c, transparent 60%)`, pointerEvents: 'none' }} />
+                      
+                      <div className="text-[11px] font-mono text-[var(--text3)] uppercase tracking-[0.15em] mb-4 pl-2 z-10">
+                        {stat.label}
+                      </div>
+                      
+                      <div className="z-10 pl-2">
+                        <div className="text-4xl font-clash font-bold" style={{ color: stat.color, letterSpacing: '-0.02em', textShadow: `0 2px 10px ${stat.color}33` }}>
                           {stat.val}
                         </div>
-                        <div className="text-[10px] text-[var(--text3)] italic mt-0.5">{stat.suffix}</div>
+                        <div className="text-[12px] text-[var(--text2)] italic mt-1 font-serif">
+                          {stat.suffix}
+                        </div>
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </div>
