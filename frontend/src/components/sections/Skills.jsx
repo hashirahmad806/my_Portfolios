@@ -1,5 +1,24 @@
 import { useScrollReveal } from '../../hooks/useScrollReveal'
 
+// ── Inline SVG icons — no external icon font dependency ──────────────────
+const IconToken = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" />
+  </svg>
+)
+const IconTerminal = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="4 17 10 11 4 5" /><line x1="12" y1="19" x2="20" y2="19" />
+  </svg>
+)
+const IconDatabase = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+  </svg>
+)
+
+const ICON_MAP = { token: IconToken, terminal: IconTerminal, database: IconDatabase }
+
 const motionOk = typeof window !== 'undefined'
   ? !window.matchMedia('(prefers-reduced-motion: reduce)').matches
   : true
@@ -100,7 +119,7 @@ function GroupPanel({ g, idx }) {
     >
       <div className="flex items-center gap-4">
         <div className="p-3 rounded-lg bg-primary-container/10" style={{ color: g.color }}>
-          <span className="material-symbols-outlined text-3xl">{g.icon}</span>
+          {(() => { const Ic = ICON_MAP[g.icon] || IconToken; return <Ic />; })()}
         </div>
         <h3 className="font-headline text-2xl font-bold" style={{ color: 'var(--text)' }}>{g.label}</h3>
       </div>
@@ -170,9 +189,9 @@ export default function Skills() {
 
         {/* Visual Flare Banner */}
         <div className="mt-32 relative h-[300px] rounded-2xl overflow-hidden glass-panel group">
-          <div 
-            className="absolute inset-0 bg-cover bg-center opacity-30 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none" 
-            style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuADwyKT8J23nZYbyiTli3YVgunT223w9fHb_Szh-XDGzYmFPcux-KgCQGBcOYQEzMtYpxMYkhthWvn07Vb9CYVmCCS-ThSjkIkl-GB459KfJXy-JCW0RgElNMJVEDQzMYojh9yDfrOtasUZnrqO1g9TVUGikSnTcbHx5M73wSMj2yWjQqkN5BVvlOjLda51522fQjQspw60ig9kFXhdtUGx79DOGigo7NUamjKER6OWIiNPYpCB0yRucOWYBT0sjtJpQJGAECkfCcc")' }}
+          <div
+            className="absolute inset-0 bg-cover bg-center opacity-30 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none"
+            style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80&auto=format&fit=crop")' }}
           />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, var(--void) 0%, transparent 70%)' }}></div>
           <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">

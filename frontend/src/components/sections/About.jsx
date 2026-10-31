@@ -1,19 +1,38 @@
-import { motion } from 'framer-motion'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
 
 const gold  = '#c9a84c'
-const muted = '#9090a8'
-const dim   = '#5a5a72'
 
 const motionOk = typeof window !== 'undefined'
   ? !window.matchMedia('(prefers-reduced-motion: reduce)').matches
   : true
 
+// ── Inline SVG engineering icons — no emoji, no AI-style imagery ─────────
+const IconFrontend = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" />
+  </svg>
+)
+const IconBackend = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+  </svg>
+)
+const IconDatabase = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+  </svg>
+)
+const IconPerf = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+  </svg>
+)
+
 const cards = [
-  { icon: '🎨', title: 'Frontend Dev',    desc: 'Pixel-perfect React UIs with Tailwind CSS, Framer Motion & modern component architecture.' },
-  { icon: '⚙️', title: 'Backend APIs',    desc: 'Secure Node.js & Express servers with JWT auth, middleware pipelines & clean MVC structure.' },
-  { icon: '🗄️', title: 'MongoDB',         desc: 'Optimized schemas with Mongoose ODM, aggregation pipelines & efficient indexing strategies.' },
-  { icon: '🚀', title: 'Performance',     desc: 'Code-split React builds, lazy loading, caching & production-grade deployment workflows.' },
+  { Icon: IconFrontend, title: 'Frontend Dev',    desc: 'Pixel-perfect React UIs with Tailwind CSS, Framer Motion & modern component architecture.' },
+  { Icon: IconBackend,  title: 'Backend APIs',    desc: 'Secure Node.js & Express servers with JWT auth, middleware pipelines & clean MVC structure.' },
+  { Icon: IconDatabase, title: 'MongoDB',         desc: 'Optimized schemas with Mongoose ODM, aggregation pipelines & efficient indexing strategies.' },
+  { Icon: IconPerf,     title: 'Performance',     desc: 'Code-split React builds, lazy loading, caching & production-grade deployment workflows.' },
 ]
 
 function RevealDiv({ children, delay = 0, style = {} }) {
@@ -58,7 +77,7 @@ export default function About() {
             {[
               <>I'm <strong style={{ color: 'var(--text)' }}>Hashir Ahmad</strong>, a MERN Stack Developer with a passion for crafting modern, high-performance web applications. My journey began with curiosity about how the web works — and evolved into deep expertise across the full JavaScript ecosystem.</>,
               <>I specialize in building <strong style={{ color: 'var(--text)' }}>full-stack applications</strong> that are fast, scalable, and beautifully designed. From RESTful APIs in <strong style={{ color: 'var(--text)' }}>Node.js & Express</strong>, to responsive interfaces in <strong style={{ color: 'var(--text)' }}>React.js</strong>, to optimized <strong style={{ color: 'var(--text)' }}>MongoDB</strong> schemas — I own the entire product lifecycle.</>,
-              <>Currently expanding into <strong style={{ color: gold }}>AI & Machine Learning with Python</strong>, aiming to build the next generation of intelligent web applications that combine modern UX with smart, adaptive systems.</>,
+              <>Currently deepening expertise in <strong style={{ color: gold }}>system architecture, API design patterns</strong> and scalable cloud-native deployments — building software that holds up at production scale.</>,
             ].map((text, i) => (
               <RevealDiv key={i} delay={0.15 + i * 0.1}>
                 <p style={{ fontSize: 15, lineHeight: 1.85, color: 'var(--text2)', marginBottom: 18 }}>{text}</p>
@@ -67,7 +86,7 @@ export default function About() {
 
             <RevealDiv delay={0.45}>
               <div className="flex flex-wrap gap-2.5 mt-6">
-                {['Based in Pakistan 🇵🇰','Open to Remote 🌍','Full Stack Dev 💻','AI Enthusiast 🤖','Available Now ✅'].map(t => (
+                {['Based in Pakistan','Open to Remote','Full Stack Dev','System Design','Available Now'].map(t => (
                   <span
                     key={t}
                     className="dimensional-pill"
@@ -115,7 +134,7 @@ export default function About() {
                     pointerEvents: 'none',
                   }} />
 
-                  {/* Frosted icon chip */}
+                  {/* Frosted icon chip — SVG, no emoji */}
                   <div
                     className="frosted-icon-chip"
                     style={{
@@ -123,9 +142,10 @@ export default function About() {
                       border: `1px solid ${gold}28`,
                       boxShadow: `inset 0 1px 3px rgba(0,0,0,0.45), inset 0 -1px 0 rgba(255,255,255,0.04), 0 2px 6px rgba(0,0,0,0.22)`,
                       marginBottom: 18,
+                      color: gold,
                     }}
                   >
-                    {c.icon}
+                    <c.Icon />
                   </div>
 
                   <div style={{ fontFamily: "'Clash Display','Syne',sans-serif", fontSize: 16, fontWeight: 600, color: 'var(--text)', marginBottom: 10 }}>{c.title}</div>

@@ -17,19 +17,18 @@ const FALLBACK = [
     title: "Intelliwrite-ui",
     category: "frontend",
     description:
-      "A sleek, modern AI Writing Assistant landing page built with React and Tailwind CSS. Includes hero, features, and pricing sections with a glowing futuristic design..",
+      "A sleek, modern writing assistant landing page built with React and Tailwind CSS. Includes hero, features, and pricing sections with a polished futuristic design.",
     tech: ["React.js", "Tailwind CSS", "Framer Motion", "Context API"],
-    emoji: "⚙️",
     gradient: "linear-gradient(135deg,#30cfd0,#330867)",
     githubUrl: "https://github.com/hashirahmad806/Intelliwrite-ui",
     liveUrl: "https://intelliwrite-ui.vercel.app",
   },
   {
     _id: "2",
-    title: "AI Blog Platformar",
+    title: "Blog Platform",
     category: "fullstack",
     description:
-      "AI-Powered Full-Stack Blog Platform with secure backend, admin-controlled blog publishing and comments, AI-assisted content creation, and safe file uploads. Users can read blogs while admins manage posts and moderation, demonstrating a scalable, modern, and secure web application.",
+      "Full-Stack Blog Platform with secure backend, admin-controlled blog publishing and comments, content creation workflows, and safe file uploads. Scalable, modern, and secure.",
     tech: [
       "React.js",
       "Tailwind CSS",
@@ -39,7 +38,6 @@ const FALLBACK = [
       "JWT",
       "Mongoose",
     ],
-    emoji: "✅",
     gradient: "linear-gradient(135deg,#fa709a,#fee140)",
     githubUrl: "https://github.com/hashirahmad806/Quick-Blogs",
     liveUrl: "https://quick-blogs-i4xh.vercel.app/",
@@ -49,7 +47,7 @@ const FALLBACK = [
     title: "Lumina Academic Assistant",
     category: "fullstack",
     description:
-      "Lumina Academic Assistant is an intelligent, full-stack educational companion designed to empower students. Seamlessly integrated with high-performance LLMs via Groq, it offers multimodal capabilities to chat, analyze study resources, and solve problems from uploaded images in real-time.",
+      "Intelligent full-stack educational companion with multimodal capabilities — chat, analyze study resources, and solve problems from uploaded images in real-time via Groq LLM.",
     tech: [
       "React.js",
       "Tailwind CSS",
@@ -60,7 +58,6 @@ const FALLBACK = [
       "Lenis",
       "Gsap",
     ],
-    emoji: "🏥",
     gradient: "linear-gradient(135deg,#667eea,#764ba2)",
     githubUrl: "https://github.com/hashirahmad806/Web_Projectect_Ai_Assistant",
     liveUrl: "https://web-projectect-ai-assistant-x8xz.vercel.app/",
@@ -72,19 +69,17 @@ const FALLBACK = [
     description:
       "Dynamic news aggregation platform for the Malakand region with category navigation, breaking news alerts, search functionality & a full CMS.",
     tech: ["React.js", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
-    emoji: "📰",
     gradient: "linear-gradient(135deg,#f093fb,#f5576c)",
     githubUrl: "https://github.com/hashirahmad806",
     liveUrl: "https://malakand-news.vercel.app/",
   },
   {
     _id: "5",
-    title: "ReelNova-Movie-Web",
+    title: "ReelNova Movie Web",
     category: "fullstack",
     description:
-      "RealNova is a modern movie discovery web app built with React and Tailwind CSS. It features real-time search, favorites, Appwrite authentication, analytics tracking, and a sleek responsive UI. Built for film lovers to explore, save, and enjoy curated movie content effortlessly.",
+      "Modern movie discovery web app with real-time search, favorites, Appwrite authentication, analytics tracking, and a sleek responsive UI.",
     tech: ["React.js", "Node.js", "Express", "MongoDB", "JWT"],
-    emoji: "🎬",
     gradient: "linear-gradient(135deg,#4facfe,#00f2fe)",
     githubUrl: "https://github.com/hashirahmad806/ReelNova-Movie-Web",
     liveUrl: "https://reel-nova-movie.vercel.app/",
@@ -94,14 +89,14 @@ const FALLBACK = [
     title: "BrewManager Pro",
     category: "fullstack",
     description:
-      "BrewManager Pro  as  Cafe Management Application A modern, highly aesthetic dine-in order and management application built using the MERN stack (MongoDB, Express, React, Node.js). It features fluid animations, smooth scrolling, and responsive styling.",
+      "Cafe Management Application — MERN stack dine-in order and management system with fluid animations, smooth scrolling, and responsive styling.",
     tech: ["React.js", "Tailwind CSS", "Node.js", "Express", "MongoDB"],
-    emoji: "🛒",
     gradient: "linear-gradient(135deg,#43e97b,#38f9d7)",
     githubUrl: "https://github.com/hashirahmad806",
     liveUrl: "https://cafe-management-do4l.vercel.app/",
   },
 ];
+
 
 const FILTERS = ["all", "fullstack", "frontend", "backend"];
 
@@ -189,17 +184,20 @@ function ProjectCard({ p, i }) {
           onMouseLeave={e => e.currentTarget.style.opacity = 0.85}
         />
 
-        {/* Emoji Badge overlay on left corner */}
+        {/* Category text label — replaces emoji badge */}
         <div style={{
           position: 'absolute', bottom: 10, left: 10, zIndex: 2,
-          width: 32, height: 32, borderRadius: 8,
-          background: 'rgba(8,8,16,0.65)',
+          height: 24, borderRadius: 5,
+          background: 'rgba(8,8,16,0.72)',
           backdropFilter: 'blur(8px)',
           border: '1px solid rgba(255,255,255,0.08)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: 14,
+          padding: '0 8px',
+          fontFamily: 'JetBrains Mono, monospace',
+          fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase',
+          color: 'rgba(255,255,255,0.55)',
         }}>
-          {p.emoji}
+          {p.category}
         </div>
       </div>
 

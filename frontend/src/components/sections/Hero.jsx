@@ -219,7 +219,10 @@ export default function Hero() {
                   border: '1px solid rgba(251,200,80,0.15)',
                 }}
               >
-                <span style={{ fontSize: 22 }}>⚡</span>
+                {/* MERN badge — clean SVG, no emoji */}
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: gold }}>
+                  <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" />
+                </svg>
                 <div>
                   <div style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 15, fontWeight: 700, color: 'var(--text)', lineHeight: 1 }}>MERN</div>
                   <div style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 10, color: 'var(--text3)', marginTop: 2 }}>Full Stack</div>
@@ -238,7 +241,10 @@ export default function Hero() {
                   border: '1px solid rgba(201,168,76,0.15)',
                 }}
               >
-                <span style={{ fontSize: 22 }}>🚀</span>
+                {/* Projects badge — clean SVG, no emoji */}
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: gold }}>
+                  <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+                </svg>
                 <div>
                   <div style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 15, fontWeight: 700, color: 'var(--text)', lineHeight: 1 }}>10+</div>
                   <div style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 10, color: 'var(--text3)', marginTop: 2 }}>Projects</div>
