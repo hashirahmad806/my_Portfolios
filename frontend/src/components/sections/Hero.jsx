@@ -102,14 +102,17 @@ export default function Hero() {
             </motion.p>
 
             {/* CTAs */}
-            <motion.div variants={stagger.item} className="flex flex-wrap gap-3 mb-10">
-              <Link to="projects" smooth offset={-80}>
+            <motion.div variants={stagger.item} className="flex flex-wrap items-center gap-3 mb-10">
+              <Link to="projects" smooth offset={-100}>
                 <motion.button
                   whileTap={motionOk ? { scale: 0.97 } : {}}
-                  className="tactile-btn-primary"
+                  className="tactile-btn-primary flex items-center gap-3 pr-3 pl-6 py-2.5 rounded-full"
                   style={{ cursor: 'pointer' }}
                 >
-                  View Projects <span>→</span>
+                  <span>Explore Systems</span>
+                  <span className="w-6 h-6 rounded-full bg-black/10 dark:bg-white/20 flex items-center justify-center text-xs">
+                    ↗
+                  </span>
                 </motion.button>
               </Link>
               <motion.a
@@ -117,15 +120,15 @@ export default function Hero() {
                 whileTap={motionOk ? { scale: 0.97 } : {}}
                 className="tactile-btn-secondary"
               >
-                <FiGithub size={15} /> GitHub
+                <FiGithub size={14} /> GitHub
               </motion.a>
-              <Link to="contact" smooth offset={-80}>
+              <Link to="contact" smooth offset={-100}>
                 <motion.button
                   whileTap={motionOk ? { scale: 0.97 } : {}}
                   className="tactile-btn-secondary"
                   style={{ cursor: 'pointer' }}
                 >
-                  Contact Me
+                  Get in Touch
                 </motion.button>
               </Link>
               <motion.a
@@ -133,14 +136,7 @@ export default function Hero() {
                 whileTap={motionOk ? { scale: 0.97 } : {}}
                 className="tactile-btn-secondary"
               >
-                <FiDownload size={15} /> CV
-              </motion.a>
-              <motion.a
-                href="/internship%20Certificate%20%20(1).png" download="Hashir_Ahmad_Certificate.png"
-                whileTap={motionOk ? { scale: 0.97 } : {}}
-                className="tactile-btn-secondary"
-              >
-                <FiDownload size={15} /> Certificate
+                <FiDownload size={14} /> Resume / CV
               </motion.a>
             </motion.div>
 
