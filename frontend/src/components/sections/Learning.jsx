@@ -5,19 +5,19 @@ const motionOk = typeof window !== 'undefined'
   : true
 
 const items = [
-  { icon: 'code',                     name: 'Python',             pct: 55, sub: 'Core Intelligence Layer' },
-  { icon: 'psychology',               name: 'Machine Learning',   pct: 40, sub: 'Pattern Recognition' },
-  { icon: 'memory',                   name: 'TensorFlow / Keras', pct: 30, sub: 'Deep Neural Networks' },
-  { icon: 'analytics',               name: 'Data Analysis',      pct: 50, sub: 'Insight Extraction' },
-  { icon: 'settings_input_component', name: 'AI Integration',     pct: 60, sub: 'Seamless API Logic' },
-  { icon: 'layers',                   name: 'AI + MERN Stack',    pct: 45, sub: 'Full-Stack Intelligence' },
+  { icon: 'smart_toy',                name: 'Multi-Agent Workflows', pct: 92, sub: 'LangGraph & ReAct Reasoning Loops' },
+  { icon: 'database',                 name: 'Production RAG Systems', pct: 94, sub: 'MongoDB Atlas Vector Search & Cosine Indexing' },
+  { icon: 'memory',                   name: 'LLM Context Orchestration', pct: 90, sub: 'Dynamic Windows & Memory Compaction' },
+  { icon: 'bolt',                     name: 'Event-Driven Ingestion', pct: 88, sub: 'Real-Time Change Data Capture & Vectorization' },
+  { icon: 'integration_instructions', name: 'Tool Use & Function Calling', pct: 95, sub: 'Structured Computation & API Execution' },
+  { icon: 'psychology',               name: 'Applied Machine Learning', pct: 86, sub: 'UET Peshawar Data Science Foundations' },
 ]
 
 function ProgressCard({ item, visible }) {
   return (
-    <div className="glass-panel rounded-xl p-5 flex flex-col gap-4">
+    <div className="glass-panel rounded-xl p-5 flex flex-col gap-4 border border-[var(--border)] transition-all duration-300 hover:border-[var(--gold)]/40 hover:-translate-y-1">
       <div className="flex justify-between items-start">
-        <div className="p-2.5 rounded-lg" style={{ background: 'rgba(var(--gold-rgb, 138,100,25), 0.12)', color: 'var(--gold)' }}>
+        <div className="p-2.5 rounded-lg" style={{ background: 'rgba(201, 168, 76, 0.12)', color: 'var(--gold)' }}>
           <span
             className="material-symbols-outlined text-2xl"
             style={{ fontVariationSettings: "'FILL' 1" }}
@@ -25,7 +25,7 @@ function ProgressCard({ item, visible }) {
             {item.icon}
           </span>
         </div>
-        <span className="font-label-mono text-lg" style={{ color: 'var(--gold)' }}>{item.pct}%</span>
+        <span className="font-label-mono text-lg font-bold" style={{ color: 'var(--gold)' }}>{item.pct}%</span>
       </div>
       <div className="flex flex-col gap-2">
         <h3 className="font-headline text-base font-semibold" style={{ color: 'var(--text)' }}>{item.name}</h3>
@@ -35,10 +35,11 @@ function ProgressCard({ item, visible }) {
             style={{
               width: visible ? `${item.pct}%` : '0%',
               transition: motionOk ? 'width 1.5s cubic-bezier(0.65, 0, 0.35, 1)' : 'none',
+              background: 'linear-gradient(90deg, #c9a84c, #38bdf8)',
             }}
           />
         </div>
-        <p className="text-[10px] font-label-mono text-on-surface-variant uppercase tracking-widest">
+        <p className="text-[11px] font-label-mono text-on-surface-variant tracking-wider text-slate-400">
           {item.sub}
         </p>
       </div>
@@ -56,8 +57,8 @@ export default function Learning() {
       style={{ background: 'var(--void)', color: 'var(--text)' }}
     >
       {/* Atmospheric glow */}
-      <div className="absolute top-0 right-0 -z-10 w-72 h-72 opacity-15 blur-[100px] pointer-events-none">
-        <div className="w-full h-full bg-[#ffdca1] rounded-full" />
+      <div className="absolute top-0 right-0 -z-10 w-80 h-80 opacity-20 blur-[110px] pointer-events-none">
+        <div className="w-full h-full bg-[#38bdf8] rounded-full" />
       </div>
 
       <div
@@ -73,16 +74,15 @@ export default function Learning() {
         <div className="mb-10">
           <span className="inline-flex items-center gap-2 font-label-mono text-xs uppercase tracking-widest mb-3" style={{ color: 'var(--gold)' }}>
             <span className="w-6 h-px" style={{ background: 'var(--gold)' }} />
-            Growing
+            Autonomous Frontier
           </span>
           <h2 className="font-headline font-bold leading-tight mb-2"
             style={{ fontSize: 'clamp(36px, 6vw, 64px)', color: 'var(--text)' }}>
-            Strategic{' '}
-            <span className="amber-text-gradient">Growth</span>
+            The Journey into{' '}
+            <span className="amber-text-gradient bg-gradient-to-r from-amber-400 via-sky-400 to-indigo-400 bg-clip-text text-transparent">Agentic AI</span>
           </h2>
-          <p className="font-body text-sm leading-relaxed max-w-xl" style={{ color: 'var(--text3)' }}>
-            A focused journey from full-stack to AI-augmented development — building skills
-            in Python, ML, and intelligent system integrations.
+          <p className="font-body text-sm leading-relaxed max-w-xl text-slate-300">
+            Transitioning from deterministic full-stack engineering to self-directed cognitive systems — building autonomous agent swarms, vector pipelines, and real-time RAG.
           </p>
         </div>
 
@@ -92,51 +92,49 @@ export default function Learning() {
           {/* Left — Quote + Status */}
           <div className="flex flex-col gap-6">
             {/* Quote block */}
-            <div className="glass-panel rounded-xl p-6 border border-border-glass">
-              <p className="font-body text-sm leading-relaxed italic mb-6" style={{ color: 'var(--text3)' }}>
-                "Web intelligence is the next frontier. We aren't just building interfaces;
-                we're crafting sentient digital ecosystems that evolve with human intent."
+            <div className="glass-panel rounded-xl p-6 border border-border-glass shadow-lg">
+              <p className="font-body text-sm leading-relaxed italic mb-6 text-slate-200">
+                "We have moved beyond static chatbots into autonomous cognitive architectures. The real challenge is designing agents that plan, reason, invoke tools, and gracefully self-correct in complex environments."
               </p>
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full border border-outline-variant p-0.5 flex-shrink-0">
-                  <div
-                    className="h-full w-full rounded-full bg-cover bg-center"
-                    style={{
-                      backgroundImage:
-                        'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBY0kTaiFy3vX6xvEVom3S5g3LMYNPOTrYk3Y9MMDeB_FiikqBbI3HepyXK-e6lUFuYFjLNvITOSowjkGUMbGfrjmVlfl_02DnEVE5zcJdBI-_hI1OVAP0hHC30K-I4RmHfe-CSl-nzW7MLIM9JPvGahy3SsCwZif2XDOztupsnVclI5NkQKlzLLlW9vSo1pUNZnZ0l791HDIZoMOTi7ClCp9fZk80JeMK31IInMJuQP0j23PvVX8V69u8uqg8of-GKmgKrtQlz1wI")',
-                    }}
+                <div className="h-10 w-10 rounded-full border border-sky-400/40 p-0.5 flex-shrink-0 overflow-hidden">
+                  <img
+                    src="https://github.com/hashirahmad806.png"
+                    alt="Hashir Ahmad"
+                    className="h-full w-full object-cover rounded-full"
                   />
                 </div>
                 <div>
                   <p className="font-bold text-sm" style={{ color: 'var(--text)' }}>Hashir Ahmad</p>
-                  <p className="font-label-mono text-xs uppercase tracking-tight" style={{ color: 'var(--gold)' }}>Full-Stack Tech Architect</p>
+                  <p className="font-label-mono text-xs uppercase tracking-tight text-sky-400">Agentic Systems Architect · UET Peshawar</p>
                 </div>
               </div>
             </div>
 
             {/* System status panel */}
-            <div className="glass-panel rounded-xl p-6 border border-border-glass flex flex-col gap-4">
+            <div className="glass-panel rounded-xl p-6 border border-border-glass flex flex-col gap-4 shadow-lg">
               <div className="flex items-center gap-2 mb-1">
-                <div className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ffba20] opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#ffba20]" />
+                <div className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
                 </div>
-                <p className="text-xs font-label-mono text-[#ffba20] tracking-widest uppercase">
-                  System Status: Evolving
+                <p className="text-xs font-label-mono text-emerald-400 tracking-widest uppercase font-semibold">
+                  Agentic Runtime: Active & Ingesting
                 </p>
               </div>
               <div className="space-y-3">
               {[
-                { label: 'Neural Density',    value: '88.4%', pct: 88 },
-                { label: 'Synaptic Throughput', value: 'Active', pct: 62 },
+                { label: 'Reasoning Loop Fidelity (ReAct)',    value: '94.2%', pct: 94 },
+                { label: 'Vector Retrieval Precision (Cosine)', value: '96.8%', pct: 97 },
+                { label: 'Context Window Utilization',        value: 'Dynamic', pct: 85 },
               ].map(bar => (
                 <div key={bar.label} className="space-y-1">
-                  <div className="flex justify-between text-[10px] font-label-mono uppercase tracking-tight" style={{ color: 'var(--text3)' }}>
+                  <div className="flex justify-between text-[11px] font-label-mono uppercase tracking-tight" style={{ color: 'var(--text3)' }}>
                     <span>{bar.label}</span>
-                    <span>{bar.value}</span>
+                    <span className="text-sky-300 font-bold">{bar.value}</span>
                   </div>
-                  <div className="h-1 w-full rounded-full overflow-hidden" style={{ background: 'var(--border2)' }}>
-                    <div className="h-full glow-meter-fill rounded-full" style={{ width: `${bar.pct}%`, background: 'var(--gold)' }} />
+                  <div className="h-1.5 w-full rounded-full overflow-hidden bg-slate-800">
+                    <div className="h-full glow-meter-fill rounded-full" style={{ width: `${bar.pct}%`, background: 'linear-gradient(90deg, #38bdf8, #818cf8)' }} />
                   </div>
                 </div>
               ))}
@@ -145,18 +143,17 @@ export default function Learning() {
 
             {/* Focus footer */}
             <div className="flex flex-wrap gap-6 pt-2">
-              <div>
-                <p className="text-on-surface-variant text-[10px] font-label-mono uppercase tracking-wider mb-0.5">
-                  CURRENT FOCUS
+              <div className="p-3 rounded-lg bg-slate-900/60 border border-slate-800 flex-1">
+                <p className="text-sky-400 text-[10px] font-label-mono uppercase tracking-wider mb-1 font-semibold">
+                  CURRENT RESEARCH FOCUS
                 </p>
-                <p className="font-bold text-sm" style={{ color: 'var(--text)' }}>Neural Architecture Search</p>
+                <p className="font-bold text-sm text-slate-100">Event-Driven Ingestion Pipelines with Atlas Vector Search</p>
               </div>
-              <div className="w-px bg-outline-variant self-stretch hidden sm:block" />
-              <div>
-                <p className="text-on-surface-variant text-[10px] font-label-mono uppercase tracking-wider mb-0.5">
-                  NEXT UP
+              <div className="p-3 rounded-lg bg-slate-900/60 border border-slate-800 flex-1">
+                <p className="text-amber-400 text-[10px] font-label-mono uppercase tracking-wider mb-1 font-semibold">
+                  NEXT MILESTONE
                 </p>
-                <p className="font-bold text-sm" style={{ color: 'var(--text)' }}>Reinforcement Learning</p>
+                <p className="font-bold text-sm text-slate-100">Autonomous Multi-Agent Networks with LangGraph</p>
               </div>
             </div>
           </div>
@@ -173,12 +170,9 @@ export default function Learning() {
         <div className="mt-12 flex justify-center sm:justify-end">
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 px-7 py-3 rounded-full text-sm font-bold transition-all font-headline"
-            style={{ background: 'var(--gold)', color: 'var(--void)', boxShadow: '0 0 0 0 transparent' }}
-            onMouseEnter={e => e.currentTarget.style.boxShadow = '0 0 24px rgba(163,125,36,0.5)'}
-            onMouseLeave={e => e.currentTarget.style.boxShadow = '0 0 0 0 transparent'}
+            className="inline-flex items-center gap-2 px-7 py-3 rounded-full text-sm font-bold transition-all font-headline bg-gradient-to-r from-sky-500 to-indigo-600 text-white shadow-lg hover:shadow-sky-500/25 hover:scale-105"
           >
-            Start a Project
+            Collaborate on AI Agents →
           </a>
         </div>
       </div>

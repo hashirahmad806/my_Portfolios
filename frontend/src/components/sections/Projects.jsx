@@ -13,6 +13,28 @@ const motionOk = typeof window !== 'undefined'
 
 const FALLBACK = [
   {
+    _id: "rag-1",
+    title: "Production RAG & Vector Intelligence Pipeline",
+    category: "ai",
+    description:
+      "High-performance Retrieval-Augmented Generation system using LangChain, MongoDB Atlas Vector Search, and OpenAI embeddings with event-driven data ingestion and semantic chunking.",
+    tech: ["Python", "LangChain", "MongoDB Vector Search", "OpenAI", "Atlas Triggers"],
+    gradient: "linear-gradient(135deg,#0284c7,#1e1b4b)",
+    githubUrl: "https://github.com/hashirahmad806/Lang_chain_Learning",
+    liveUrl: "https://github.com/hashirahmad806/Lang_chain_Learning",
+  },
+  {
+    _id: "agentic-2",
+    title: "AI Codebase Memory & Multi-Agent Graph",
+    category: "ai",
+    description:
+      "Persistent memory graph and dynamic context compaction engine enabling multi-agent autonomous reasoning loops (ReAct) to inspect, plan, and execute over large codebases.",
+    tech: ["Python", "LangGraph", "Multi-Agent Swarms", "Vector Store", "Tool Calling"],
+    gradient: "linear-gradient(135deg,#6366f1,#a855f7)",
+    githubUrl: "https://github.com/hashirahmad806/AI_Codebase_Memory",
+    liveUrl: "https://github.com/hashirahmad806/AI_Codebase_Memory",
+  },
+  {
     _id: "1",
     title: "Intelliwrite-ui",
     category: "frontend",
@@ -98,7 +120,7 @@ const FALLBACK = [
 ];
 
 
-const FILTERS = ["all", "fullstack", "frontend", "backend"];
+const FILTERS = ["all", "ai", "fullstack", "frontend", "backend"];
 
 function ProjectCard({ p, i }) {
   const { ref, visible } = useScrollReveal(0.05);
@@ -149,40 +171,58 @@ function ProjectCard({ p, i }) {
           alignItems: "center",
           justifyContent: "center",
           overflow: "hidden",
-          background: "rgba(0,0,0,0.2)"
+          background: p.gradient || "rgba(0,0,0,0.2)"
         }}
       >
+        {/* Fallback Graphic Behind Microlink Screenshot */}
         <div
           style={{
             position: "absolute",
             inset: 0,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "16px",
+            textAlign: "center",
             background: p.gradient,
-            opacity: 0.18,
+            opacity: 0.95,
           }}
-        />
+        >
+          <div style={{ fontFamily: "'Clash Display', sans-serif", fontSize: 18, fontWeight: 700, color: '#fff', letterSpacing: '-0.02em', marginBottom: 4 }}>
+            {p.title}
+          </div>
+          <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'rgba(255,255,255,0.85)', letterSpacing: '0.05em' }}>
+            {p.tech.slice(0, 3).join(' • ')}
+          </div>
+        </div>
 
         {/* Top edge glow wash */}
         <div style={{
           position: 'absolute', top: 0, left: 0, right: 0, height: 40,
           background: `linear-gradient(180deg, ${startColor}15 0%, transparent 100%)`,
           pointerEvents: 'none',
+          zIndex: 2,
         }} />
 
-        <img
-          src={`https://api.microlink.io/?url=${p.liveUrl}&screenshot=true&meta=false&embed=screenshot.url`}
-          alt={p.title}
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            position: "relative",
-            zIndex: 1,
-            opacity: 0.85,
-            transition: 'opacity 0.3s ease',
-          }}
-          onMouseEnter={e => e.currentTarget.style.opacity = 1}
-          onMouseLeave={e => e.currentTarget.style.opacity = 0.85}
-        />
+        {p.liveUrl && !p.liveUrl.includes('github.com') ? (
+          <img
+            src={`https://api.microlink.io/?url=${p.liveUrl}&screenshot=true&meta=false&embed=screenshot.url`}
+            alt={p.title}
+            onError={e => { e.currentTarget.style.display = 'none'; }}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              position: "relative",
+              zIndex: 1,
+              opacity: 0.88,
+              transition: 'opacity 0.3s ease',
+            }}
+            onMouseEnter={e => e.currentTarget.style.opacity = 1}
+            onMouseLeave={e => e.currentTarget.style.opacity = 0.88}
+          />
+        ) : null}
 
         {/* Category text label — replaces emoji badge */}
         <div style={{

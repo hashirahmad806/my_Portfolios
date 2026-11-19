@@ -16,14 +16,32 @@ const IconDatabase = () => (
     <ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
   </svg>
 )
+const IconBrain = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 2a4 4 0 0 0-4 4c0 1.1.4 2.1 1.2 2.8A4.5 4.5 0 0 0 7 13.5c0 1.2.5 2.3 1.3 3.1A4.5 4.5 0 0 0 12 22a4.5 4.5 0 0 0 3.7-5.4c.8-.8 1.3-1.9 1.3-3.1 0-2-1.3-3.7-3.2-4.3.8-.7 1.2-1.7 1.2-2.8a4 4 0 0 0-4-4Z"/>
+    <path d="M12 2v20"/>
+  </svg>
+)
 
-const ICON_MAP = { token: IconToken, terminal: IconTerminal, database: IconDatabase }
+const ICON_MAP = { token: IconToken, terminal: IconTerminal, database: IconDatabase, brain: IconBrain }
 
 const motionOk = typeof window !== 'undefined'
   ? !window.matchMedia('(prefers-reduced-motion: reduce)').matches
   : true
 
 const groups = [
+  {
+    label: 'Agentic AI & LLMs',
+    icon: 'brain',
+    color: '#38bdf8',
+    skills: [
+      { name: 'LangChain & LangGraph', pct: 94, color: '#38bdf8' },
+      { name: 'RAG & Vector Search (Atlas)', pct: 95, color: '#47A248' },
+      { name: 'Multi-Agent Orchestration', pct: 90, color: '#818cf8' },
+      { name: 'OpenAI, Groq & Open LLMs', pct: 92, color: '#f59e0b' },
+      { name: 'Python AI Stack (PyTorch/ML)', pct: 88, color: '#3776AB' },
+    ],
+  },
   {
     label: 'Frontend',
     icon: 'token',

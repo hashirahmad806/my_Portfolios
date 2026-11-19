@@ -61,7 +61,7 @@ export default function Hero() {
             <motion.div variants={stagger.item} className="flex items-center gap-3 mb-4">
               <div style={{ width: 28, height: 1, background: gold }} />
               <span style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 11, color: gold, letterSpacing: '0.25em', textTransform: 'uppercase' }}>
-                MERN Stack Developer
+                AI Agent & Full-Stack Systems Engineer
               </span>
             </motion.div>
 
@@ -72,7 +72,7 @@ export default function Hero() {
             >
               <span style={{ color: 'var(--text)', display: 'block' }}>Hashir</span>
               <span style={{ fontFamily: "'Instrument Serif',serif", fontStyle: 'italic', fontWeight: 400, color: gold, display: 'block', fontSize: '1.05em' }}>Ahmad</span>
-              <span style={{ color: 'var(--text3)', display: 'block' }}>builds the web.</span>
+              <span style={{ color: 'var(--text3)', display: 'block' }}>engineers intelligence.</span>
             </motion.h1>
 
             {/* Type animation */}
@@ -80,7 +80,14 @@ export default function Hero() {
               <span style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 14, color: 'var(--text2)' }}>
                 &gt;&nbsp;
                 <TypeAnimation
-                  sequence={['React.js Developer', 2000, 'Node.js Engineer', 2000, 'Full Stack MERN', 2000, 'MongoDB Architect', 2000, 'API Builder', 2000]}
+                  sequence={[
+                    'Autonomous Agent Architect', 2200,
+                    'LangChain & LangGraph Engineer', 2200,
+                    'Event-Driven RAG Builder', 2200,
+                    'MongoDB Vector Search Specialist', 2200,
+                    'Data Science @ UET Peshawar', 2200,
+                    'Full-Stack Systems Engineer', 2200
+                  ]}
                   wrapper="span"
                   repeat={Infinity}
                   style={{ color: gold2 }}
@@ -90,9 +97,8 @@ export default function Hero() {
 
             {/* Bio */}
             <motion.p variants={stagger.item} style={{ fontSize: 16, lineHeight: 1.8, color: 'var(--text2)', maxWidth: 520, marginBottom: 44 }}>
-              I craft <strong style={{ color: 'var(--text)' }}>scalable, modern web applications</strong> using the MERN stack —
-              blending pixel-perfect React UIs with robust Node.js & Express backends,
-              powered by MongoDB. Every project is built to perform, scale, and impress.
+              I architect <strong style={{ color: 'var(--text)' }}>autonomous AI agents, production RAG pipelines, and scalable full-stack applications</strong>. 
+              Bridging cognitive architectures (LangChain, LangGraph, Vector Search) with robust, high-performance software engineering.
             </motion.p>
 
             {/* CTAs */}
@@ -219,13 +225,14 @@ export default function Hero() {
                   border: '1px solid rgba(251,200,80,0.15)',
                 }}
               >
-                {/* MERN badge — clean SVG, no emoji */}
+                {/* Agentic AI badge */}
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: gold }}>
-                  <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" />
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                 </svg>
                 <div>
-                  <div style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 15, fontWeight: 700, color: 'var(--text)', lineHeight: 1 }}>MERN</div>
-                  <div style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 10, color: 'var(--text3)', marginTop: 2 }}>Full Stack</div>
+                  <div style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 15, fontWeight: 700, color: 'var(--text)', lineHeight: 1 }}>AI Agents</div>
+                  <div style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 10, color: 'var(--text3)', marginTop: 2 }}>LangChain · RAG</div>
                 </div>
               </motion.div>
 
@@ -241,13 +248,15 @@ export default function Hero() {
                   border: '1px solid rgba(201,168,76,0.15)',
                 }}
               >
-                {/* Projects badge — clean SVG, no emoji */}
+                {/* Vectors & Full Stack badge */}
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: gold }}>
-                  <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+                  <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                  <polyline points="2 17 12 22 22 17" />
+                  <polyline points="2 12 12 17 22 12" />
                 </svg>
                 <div>
-                  <div style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 15, fontWeight: 700, color: 'var(--text)', lineHeight: 1 }}>10+</div>
-                  <div style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 10, color: 'var(--text3)', marginTop: 2 }}>Projects</div>
+                  <div style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 15, fontWeight: 700, color: 'var(--text)', lineHeight: 1 }}>Full Stack</div>
+                  <div style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 10, color: 'var(--text3)', marginTop: 2 }}>Vector Systems</div>
                 </div>
               </motion.div>
 
