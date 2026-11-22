@@ -6,31 +6,40 @@ import hashirPhoto from '../../assets/hashir.jpg'
 
 const EVOLUTION_STAGES = [
   {
-    phase: 'STAGE 01',
-    period: '2022 – 2023',
-    title: 'Deterministic Full-Stack Foundations',
-    subtitle: 'MERN & Systems Architecture',
-    desc: 'Mastered production web engineering: NoSQL schema modeling, relational indexing, REST API design, JWT security middleware, and responsive React component hierarchies.',
+    phase: 'STEP 01',
+    period: 'The Foundation',
+    title: 'Full-Stack Web Development',
+    subtitle: 'MERN Stack (MongoDB, Express, React, Node.js)',
+    desc: 'Started by building complete, real-world web applications. Learned how to create clean user interfaces with React, build fast backend APIs with Node.js and Express, and save data securely in MongoDB databases.',
     stack: ['React.js', 'Node.js', 'Express', 'MongoDB', 'Tailwind CSS'],
-    keyTakeaway: 'Built deterministic software pipelines with 99.9% uptime and production reliability.',
+    keyTakeaway: 'Built strong engineering skills to create fast, reliable websites and APIs from start to finish.',
   },
   {
-    phase: 'STAGE 02',
-    period: '2024 – 2025',
-    title: 'Vector Intelligence & Production RAG',
-    subtitle: 'Semantic Search & Embeddings',
-    desc: 'Pioneered semantic knowledge retrieval: text-embedding-3 vectors, MongoDB Atlas Vector Search indexing, cosine similarity scoring, hierarchical chunking, and real-time CDC triggers.',
-    stack: ['MongoDB Atlas', 'Vector Search', 'Cosine ANN', 'Python', 'OpenAI'],
-    keyTakeaway: 'Achieved sub-40ms vector retrieval over domain-specific corpora with grounded citations.',
+    phase: 'STEP 02',
+    period: 'The Math & Models',
+    title: 'Machine Learning & Deep Learning',
+    subtitle: 'Data Science @ UET Peshawar',
+    desc: 'Studied how computers learn patterns from data. Built and trained neural networks, worked with mathematical models, and learned how AI understands text, numbers, and predictions.',
+    stack: ['Python', 'PyTorch', 'Data Science', 'Neural Networks', 'Scikit-Learn'],
+    keyTakeaway: 'Gained deep understanding of how AI works under the hood, not just how to call an API.',
   },
   {
-    phase: 'STAGE 03',
-    period: '2025 – 2026+',
-    title: 'Autonomous Multi-Agent Networks',
-    subtitle: 'Cognitive Swarms & LangGraph',
-    desc: 'Engineering stateful cognitive architectures: cyclic agent graphs, ReAct reasoning loops, dynamic tool calling, self-healing reflection, and long-term memory compaction.',
-    stack: ['LangGraph', 'LangChain', 'Multi-Agent Swarms', 'Groq / Llama 3', 'Pydantic'],
-    keyTakeaway: 'Deploying autonomous agent loops that solve open-ended workflows with verified tool feedback.',
+    phase: 'STEP 03',
+    period: 'The Knowledge Connection',
+    title: 'Generative AI & RAG Applications',
+    subtitle: 'Vector Search & Smart Knowledge',
+    desc: 'Connected Large Language Models (like GPT) to private company data. Used MongoDB Atlas Vector Search so the AI can read documents and give accurate, fact-checked answers without making things up.',
+    stack: ['MongoDB Atlas', 'Vector Search', 'Embeddings', 'OpenAI', 'RAG'],
+    keyTakeaway: 'Built smart systems that answer questions using your exact business data with zero guesswork.',
+  },
+  {
+    phase: 'STEP 04',
+    period: 'Autonomous Action',
+    title: 'Agentic AI with LangChain & LangGraph',
+    subtitle: 'Self-Directed AI Agents',
+    desc: 'Created autonomous AI agents that do not just chat — they take action. They plan steps, use real software tools (like databases and calculators), check their own work, and correct mistakes automatically.',
+    stack: ['LangGraph', 'LangChain', 'AI Agents', 'Tool Calling', 'Self-Correction'],
+    keyTakeaway: 'Created autonomous AI teammates that can complete complex business jobs on their own.',
   },
 ]
 
@@ -194,7 +203,7 @@ export default function Learning() {
                 className="text-sm md:text-base max-w-2xl leading-relaxed"
                 style={{ color: 'var(--text2)' }}
               >
-                Transitioning from deterministic full-stack engineering to self-directed cognitive systems. Explore the live reasoning loop, evolutionary stages, and core agent capabilities.
+                How I grew from building web applications to creating autonomous AI agents. Here is my exact four-step journey, interactive agent loop, and core capabilities in clear, simple terms.
               </p>
             </div>
 
@@ -404,7 +413,7 @@ export default function Learning() {
         {/* ── TAB 2: EVOLUTIONARY TRAJECTORY STAGES ── */}
         {activeTab === 'evolution' && (
           <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {EVOLUTION_STAGES.map((stage) => (
                 <div
                   key={stage.phase}
