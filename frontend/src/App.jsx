@@ -4,6 +4,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import { ThemeProvider }  from './context/ThemeContext'
 import Cursor      from './components/ui/Cursor'
 import BlueprintGrid from './components/ui/BlueprintGrid'
+import SystemHUD     from './components/ui/SystemHUD'
+import AgentTerminal from './components/ui/AgentTerminal'
 import Loader      from './components/ui/Loader'
 import Navbar      from './components/ui/Navbar'
 import Footer      from './components/ui/Footer'
@@ -19,7 +21,23 @@ import Contact         from './components/sections/Contact'
 
 export default function App() {
   const [loading, setLoading] = useState(true)
+  const [terminalOpen, setTerminalOpen] = useState(false)
+
   useEffect(() => { const t = setTimeout(() => setLoading(false), 2400); return () => clearTimeout(t) }, [])
+
+  // Global shortcut to toggle Agent Terminal with ~ or Ctrl+K
+  useEffect(() => {
+    const handleGlobalKey = (e) => {
+      // Don't intercept if user is typing in an input or textarea
+      if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return
+      if (e.key === '`' || e.key === '~' || ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k')) {
+        e.preventDefault()
+        setTerminalOpen((prev) => !prev)
+      }
+    }
+    window.addEventListener('keydown', handleGlobalKey)
+    return () => window.removeEventListener('keydown', handleGlobalKey)
+  }, [])
 
   return (
     <ThemeProvider>
@@ -32,6 +50,8 @@ export default function App() {
         <main className="relative z-10">
           <Hero /><About /><Skills /><Projects /><Experience /><Learning /><Certifications /><GitHubActivity /><Contact />
         </main>
+        <SystemHUD onOpenTerminal={() => setTerminalOpen(true)} />
+        <AgentTerminal isOpen={terminalOpen} onClose={() => setTerminalOpen(false)} />
         <Footer />
         <ToastContainer position="bottom-right" autoClose={4000} toastStyle={{ background:'var(--surface2)', border:'1px solid var(--border)', color:'var(--text)', fontSize:14 }} />
       </div>
