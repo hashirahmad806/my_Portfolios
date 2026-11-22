@@ -20,6 +20,10 @@ _Avoid_: Blank background, plain background
 The dual-state color and contrast architecture ensuring WCAG AAA compliance and high optical fidelity across both Dark and Light modes.
 _Avoid_: Inverted colors, washed-out theme
 
+**Precision Fluid Cursor**:
+A zero-layout-reflow cursor tracking system with 1:1 hardware GPU compositing, delegated hover states, and input-aware visibility.
+_Avoid_: Lagging custom cursor, double pointer
+
 **System Telemetry HUD**:
 A persistent heads-up display anchored to the viewport presenting real-time system metrics, CAD coordinates, and console triggers.
 _Avoid_: Status bar, footer banner
