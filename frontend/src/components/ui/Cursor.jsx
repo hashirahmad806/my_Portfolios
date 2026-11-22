@@ -31,11 +31,11 @@ export default function Cursor() {
 
     const big = () => {
       if (dotRef.current)  { dotRef.current.style.width = '14px';  dotRef.current.style.height = '14px' }
-      if (ringRef.current) { ringRef.current.style.width = '56px'; ringRef.current.style.height = '56px'; ringRef.current.style.borderColor = 'rgba(201,168,76,0.9)' }
+      if (ringRef.current) { ringRef.current.style.width = '56px'; ringRef.current.style.height = '56px'; ringRef.current.style.borderColor = 'rgba(var(--gold-rgb), 0.9)' }
     }
     const small = () => {
       if (dotRef.current)  { dotRef.current.style.width = '8px';   dotRef.current.style.height = '8px' }
-      if (ringRef.current) { ringRef.current.style.width = '38px'; ringRef.current.style.height = '38px'; ringRef.current.style.borderColor = 'rgba(201,168,76,0.5)' }
+      if (ringRef.current) { ringRef.current.style.width = '38px'; ringRef.current.style.height = '38px'; ringRef.current.style.borderColor = 'rgba(var(--gold-rgb), 0.5)' }
     }
 
     document.querySelectorAll('a,button,[data-cursor]').forEach(el => {
@@ -58,8 +58,8 @@ export default function Cursor() {
 
   return (
     <>
-      <div ref={dotRef} style={{ ...base, width: 8, height: 8, background: '#ffdca1', boxShadow: '0 0 10px rgba(255,220,161,0.8)' }} />
-      <div ref={ringRef} style={{ ...base, width: 38, height: 38, border: '1.5px solid rgba(255,220,161,0.5)', zIndex: 9998 }} />
+      <div ref={dotRef} style={{ ...base, width: 8, height: 8, background: 'var(--gold)', boxShadow: '0 0 10px rgba(var(--gold-rgb), 0.8)' }} />
+      <div ref={ringRef} style={{ ...base, width: 38, height: 38, border: '1.5px solid rgba(var(--gold-rgb), 0.5)', zIndex: 9998 }} />
     </>
   )
 }

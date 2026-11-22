@@ -22,13 +22,22 @@ const motionOk = typeof window !== 'undefined'
 export default function Hero() {
   return (
     <section id="hero" style={{ minHeight: '100vh', paddingTop: 120, paddingBottom: 80, position: 'relative', overflow: 'hidden' }}>
-      {/* Sleek architectural ambient backdrop — smooth studio lighting, no harsh container blocks */}
+      {/* Sleek architectural ambient backdrop */}
       <div
         className="pointer-events-none absolute inset-0 z-0"
         style={{
           background: 'radial-gradient(ellipse 80% 60% at 50% 15%, rgba(var(--gold-rgb), 0.08), transparent 75%)',
         }}
       />
+
+      {/* Architectural CAD Coordinates */}
+      <div className="absolute top-28 left-6 md:left-12 hidden xl:flex items-center gap-2.5 font-mono text-[10px] text-[var(--gold)] opacity-70 tracking-widest uppercase pointer-events-none z-10">
+        <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--gold)]" style={{ boxShadow: '0 0 8px var(--gold)' }} />
+        <span>SYS.CAD :: 0x01 // 34.01° N</span>
+      </div>
+      <div className="absolute top-28 right-6 md:right-12 hidden xl:flex items-center gap-2.5 font-mono text-[10px] text-[var(--text3)] opacity-70 tracking-widest uppercase pointer-events-none z-10">
+        <span>ARCH :: BLUEPRINT.V2 // 200 OK</span>
+      </div>
 
       <div className="max-w-6xl mx-auto px-6 md:px-12 relative z-10">
         <motion.div
@@ -177,6 +186,21 @@ export default function Hero() {
             className="hidden lg:flex justify-center"
           >
             <div className="relative" style={{ width: 380 }}>
+              {/* Architectural Wireframe Tech Accent Frames */}
+              <div
+                className="absolute -inset-4 rounded-3xl -rotate-2 pointer-events-none transition-transform duration-500"
+                style={{
+                  border: '1px solid rgba(var(--gold-rgb), 0.28)',
+                  boxShadow: '0 0 25px rgba(var(--gold-rgb), 0.08)',
+                }}
+              />
+              <div
+                className="absolute -inset-4 rounded-3xl rotate-3 pointer-events-none transition-transform duration-500"
+                style={{
+                  border: '1px solid var(--border)',
+                }}
+              />
+
               {/* Refined ambient aura behind photo */}
               <div style={{
                 position: 'absolute', inset: -14,
