@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
-import { FiGithub, FiExternalLink, FiCpu, FiCheckCircle, FiLayers, FiX } from 'react-icons/fi'
+import { FiGithub, FiExternalLink, FiCpu, FiCheckCircle, FiLayers, FiX, FiShield, FiZap, FiActivity } from 'react-icons/fi'
 import { projectsAPI } from '../../utils/api'
 
 const FALLBACK_PROJECTS = [
@@ -9,19 +9,20 @@ const FALLBACK_PROJECTS = [
     _id: 'client-1',
     title: 'Triostep Footwear E-Commerce',
     category: 'client',
-    tag: 'Live Client Delivery',
+    tag: 'Commercial Client Delivery',
+    domain: 'triostepdkhyber.vercel.app',
     isClient: true,
     clientName: 'Triostep Heritage Footwear',
-    shortDesc: 'A luxury e-commerce store for artisan handcrafted shoes with responsive cart drawer, instant product search, and WhatsApp order concierge.',
-    fullDesc: 'Delivered a complete client e-commerce platform built for high-end artisan leather shoes. Designed luxury lookbook carousels, instant client-side search, smooth slide-out cart drawers, and direct WhatsApp concierge ordering for international customers.',
+    shortDesc: 'A luxury e-commerce store for handcrafted artisan footwear with real-time product filtering, responsive cart drawer, and WhatsApp order concierge.',
+    fullDesc: 'Engineered a complete commercial e-commerce platform for high-end artisan leather shoes. Designed luxury lookbook galleries, instant client-side catalog search, smooth slide-out cart drawers, and direct WhatsApp concierge ordering for international customers.',
+    metrics: ['⚡ Sub-second load', '🛒 WhatsApp Checkout'],
     highlights: [
-      'Sub-second page load times with Astro and Tailwind CSS',
+      'Built with Astro & Tailwind for ultra-fast performance',
       'Instant search and filter by size, material, and price',
       'One-click WhatsApp concierge checkout integration',
     ],
     tech: ['Astro', 'Tailwind CSS', 'JavaScript', 'E-Commerce', 'Responsive UI'],
-    gradient: 'linear-gradient(135deg, #c9a84c, #1e1e24)',
-    accentColor: 'var(--gold)',
+    gradient: 'linear-gradient(135deg, #c9a84c 0%, #1e1e24 100%)',
     githubUrl: 'https://github.com/hashirahmad806/triostepdkhyber',
     liveUrl: 'https://triostepdkhyber.vercel.app/',
     featured: true,
@@ -30,19 +31,20 @@ const FALLBACK_PROJECTS = [
     _id: 'client-2',
     title: 'Dr. Hassan BDS Dental Clinic',
     category: 'client',
-    tag: 'Live Client Delivery',
+    tag: 'Healthcare Client Delivery',
+    domain: 'hassanbds.info',
     isClient: true,
     clientName: 'Dr. Hassan Dental Surgery',
-    shortDesc: 'A clinical aesthetics website featuring online appointment booking, smile makeover galleries, and treatment consultation workflows.',
+    shortDesc: 'A modern dental clinic website featuring online appointment booking, smile makeover before/after galleries, and patient consultation workflows.',
     fullDesc: 'Designed and engineered a healthcare platform for Dr. Hassan BDS. Streamlined patient onboarding with an interactive booking system, before/after dental treatment galleries, patient consultation request workflows, and clinic location maps.',
+    metrics: ['📅 Online Booking', '🦷 Smile Gallery'],
     highlights: [
       'Interactive appointment booking with instant form validation',
       'Before & After smile makeover comparison gallery',
       'Mobile-first responsive architecture built with React & Vite',
     ],
     tech: ['React.js', 'Tailwind CSS', 'Vite', 'Framer Motion', 'Healthcare UI'],
-    gradient: 'linear-gradient(135deg, #0284c7, #0f172a)',
-    accentColor: '#38bdf8',
+    gradient: 'linear-gradient(135deg, #0284c7 0%, #0f172a 100%)',
     githubUrl: 'https://github.com/hashirahmad806/Hassan_Web',
     liveUrl: 'https://hassanbds.info',
     featured: true,
@@ -52,17 +54,18 @@ const FALLBACK_PROJECTS = [
     title: 'Production RAG & Vector Intelligence Pipeline',
     category: 'ai',
     tag: 'Enterprise AI & Vectors',
+    domain: 'sys.rag // atlas-vector:0x01',
     isClient: false,
     shortDesc: 'High-speed knowledge retrieval system using MongoDB Atlas Vector Search and OpenAI to answer complex questions from private documents with zero guessing.',
     fullDesc: 'An enterprise-grade Retrieval-Augmented Generation (RAG) system. Chunks and vectorizes large document libraries into MongoDB Atlas Vector Search, retrieves accurate facts in under 20ms using cosine similarity, and streams grounded, verified answers with zero hallucination.',
+    metrics: ['⏱ < 18ms Latency', '🎯 0% Hallucination'],
     highlights: [
       'Sub-20ms Cosine ANN vector retrieval across thousands of chunks',
       'Real-time database vectorization using MongoDB Atlas triggers',
       '100% grounded answers with source document citations',
     ],
     tech: ['Python', 'LangChain', 'MongoDB Vector Search', 'OpenAI', 'Atlas Triggers'],
-    gradient: 'linear-gradient(135deg, #10b981, #064e3b)',
-    accentColor: '#34d399',
+    gradient: 'linear-gradient(135deg, #10b981 0%, #064e3b 100%)',
     githubUrl: 'https://github.com/hashirahmad806/Lang_chain_Learning',
     liveUrl: 'https://github.com/hashirahmad806/Lang_chain_Learning',
     featured: true,
@@ -72,17 +75,18 @@ const FALLBACK_PROJECTS = [
     title: 'AI Codebase Memory & Multi-Agent Graph',
     category: 'ai',
     tag: 'Autonomous Multi-Agent',
+    domain: 'agent.graph // langgraph:v2',
     isClient: false,
     shortDesc: 'Autonomous multi-agent system built with LangGraph that can read entire codebases, plan multi-file refactors, and execute code changes on its own.',
     fullDesc: 'A stateful cognitive multi-agent architecture. Employs LangGraph cyclic state machines, ReAct reasoning loops, long-term memory compaction, and dynamic tool calls to autonomously navigate, analyze, and implement code modifications across complex repositories.',
+    metrics: ['🤖 Multi-Agent Graph', '🧠 Persistent Memory'],
     highlights: [
       'Cyclic LangGraph state machine with automatic self-correction',
       'Persistent memory checkpoints that track execution across turns',
       'Deterministic tool calling with Pydantic validation boundaries',
     ],
     tech: ['Python', 'LangGraph', 'Multi-Agent Swarms', 'Vector Store', 'Tool Calling'],
-    gradient: 'linear-gradient(135deg, #8b5cf6, #3b0764)',
-    accentColor: '#c084fc',
+    gradient: 'linear-gradient(135deg, #8b5cf6 0%, #3b0764 100%)',
     githubUrl: 'https://github.com/hashirahmad806/AI_Codebase_Memory',
     liveUrl: 'https://github.com/hashirahmad806/AI_Codebase_Memory',
     featured: true,
@@ -92,17 +96,18 @@ const FALLBACK_PROJECTS = [
     title: 'Lumina Academic Multimodal Assistant',
     category: 'fullstack',
     tag: 'Multimodal AI App',
+    domain: 'lumina-assistant.vercel.app',
     isClient: false,
     shortDesc: 'Intelligent full-stack study companion that analyzes study notes and solves problems directly from uploaded textbook images via Groq LLM.',
     fullDesc: 'A complete full-stack educational web application with multimodal vision and reasoning. Students upload textbook diagrams or study problems to receive step-by-step problem-solving explanations with real-time streaming inference powered by Groq.',
+    metrics: ['👁 Groq Vision', '⚡ Sub-Second Stream'],
     highlights: [
-      'Multimodal image-to-text analysis for mathematical and scientific queries',
+      'Multimodal image-to-text analysis for mathematical queries',
       'Sub-second streaming token responses via Groq inference engine',
       'MERN stack backend with user chat history and study material storage',
     ],
     tech: ['React.js', 'Node.js', 'Express', 'MongoDB', 'Groq Vision', 'Tailwind CSS'],
-    gradient: 'linear-gradient(135deg, #f59e0b, #78350f)',
-    accentColor: '#fbbf24',
+    gradient: 'linear-gradient(135deg, #f59e0b 0%, #78350f 100%)',
     githubUrl: 'https://github.com/hashirahmad806/Web_Projectect_Ai_Assistant',
     liveUrl: 'https://web-projectect-ai-assistant-x8xz.vercel.app/',
     featured: false,
@@ -112,17 +117,18 @@ const FALLBACK_PROJECTS = [
     title: 'QuickBlogs Full-Stack Platform',
     category: 'fullstack',
     tag: 'Full-Stack MERN CMS',
+    domain: 'quickblogs.vercel.app',
     isClient: false,
     shortDesc: 'Secure publishing platform with JWT authentication, rich-text markdown blogging, image uploads, and interactive comment moderation.',
     fullDesc: 'End-to-end full-stack blogging system built with the MERN stack. Features role-based user authentication, admin content management, cloud image uploads, tag-based article categorization, and responsive reading layouts.',
+    metrics: ['🔒 JWT Auth', '📝 Markdown CMS'],
     highlights: [
       'Secure authentication pipeline using JWT and bcrypt encryption',
       'Mongoose aggregation pipelines for popular post metrics',
       'Fast client-side rendering with Tailwind responsive design',
     ],
     tech: ['React.js', 'Tailwind CSS', 'Node.js', 'Express', 'MongoDB', 'JWT'],
-    gradient: 'linear-gradient(135deg, #ec4899, #831843)',
-    accentColor: '#f472b6',
+    gradient: 'linear-gradient(135deg, #ec4899 0%, #831843 100%)',
     githubUrl: 'https://github.com/hashirahmad806/Quick-Blogs',
     liveUrl: 'https://quick-blogs-i4xh.vercel.app/',
     featured: false,
@@ -132,17 +138,18 @@ const FALLBACK_PROJECTS = [
     title: 'IntelliWrite AI Landing Architecture',
     category: 'frontend',
     tag: 'Frontend Systems & UI',
+    domain: 'intelliwrite-ui.vercel.app',
     isClient: false,
     shortDesc: 'A futuristic landing page for an AI writing companion with fluid interactive pricing, feature spotlights, and polished micro-animations.',
     fullDesc: 'High-craft frontend design engineering demonstration built with React 18 and Tailwind CSS. Showcases modular layout design, fluid spring animations, interactive product tier switchers, and dark mode contrast calibration.',
+    metrics: ['🎨 120Hz Physics', '♿ WCAG AAA'],
     highlights: [
       'Framer Motion spring physics and staggered reveal orchestrations',
       'Strict WCAG contrast compliance and accessible screen-reader markup',
       'Fluid interactive pricing calculator with instant state switching',
     ],
     tech: ['React.js', 'Tailwind CSS', 'Framer Motion', 'UI Engineering'],
-    gradient: 'linear-gradient(135deg, #06b6d4, #164e63)',
-    accentColor: '#22d3ee',
+    gradient: 'linear-gradient(135deg, #06b6d4 0%, #164e63 100%)',
     githubUrl: 'https://github.com/hashirahmad806/Intelliwrite-ui',
     liveUrl: 'https://intelliwrite-ui.vercel.app',
     featured: false,
@@ -152,17 +159,18 @@ const FALLBACK_PROJECTS = [
     title: 'ReelNova Movie Discovery Platform',
     category: 'fullstack',
     tag: 'Media Application',
+    domain: 'reel-nova-movie.vercel.app',
     isClient: false,
     shortDesc: 'Movie discovery web app with real-time movie search, personal watchlists, Appwrite authentication, and trending film analytics.',
     fullDesc: 'Modern movie discovery application that queries cinema databases with real-time debounced search, custom user watchlists, genre categorization, and responsive carousel previews.',
+    metrics: ['🎬 Instant Search', '⭐ Personal Watchlist'],
     highlights: [
       'Real-time search debouncing with zero layout jitter',
       'Cloud user profiles and favorites list persistence',
       'Modern glassmorphic interface with mobile gesture controls',
     ],
     tech: ['React.js', 'Tailwind CSS', 'Appwrite', 'REST API', 'JavaScript'],
-    gradient: 'linear-gradient(135deg, #3b82f6, #1e3a8a)',
-    accentColor: '#60a5fa',
+    gradient: 'linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%)',
     githubUrl: 'https://github.com/hashirahmad806/ReelNova-Movie-Web',
     liveUrl: 'https://reel-nova-movie.vercel.app/',
     featured: false,
@@ -176,6 +184,214 @@ const FILTER_TABS = [
   { id: 'fullstack', label: 'Full-Stack MERN' },
 ]
 
+function ProjectCard({ project, onInspect }) {
+  const [mousePos, setMousePos] = useState({ x: -100, y: -100 })
+  const cardRef = useRef(null)
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return
+    const rect = cardRef.current.getBoundingClientRect()
+    setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top })
+  }
+
+  const handleMouseLeave = () => {
+    setMousePos({ x: -100, y: -100 })
+  }
+
+  return (
+    <motion.div
+      ref={cardRef}
+      layout
+      initial={{ opacity: 0, scale: 0.96 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.96 }}
+      transition={{ duration: 0.3 }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="group rounded-2xl border flex flex-col justify-between overflow-hidden transition-all duration-300 hover:-translate-y-2 relative"
+      style={{
+        background: `radial-gradient(400px circle at ${mousePos.x}px ${mousePos.y}px, rgba(var(--gold-rgb), 0.1), transparent 80%), var(--surface)`,
+        borderColor: 'var(--border)',
+        boxShadow: 'var(--card-shadow)',
+      }}
+    >
+      <div>
+        {/* CAD Browser Mockup Window Header */}
+        <div
+          className="flex items-center justify-between px-4 py-2.5 border-b backdrop-blur-md text-[10px] font-mono select-none"
+          style={{ background: 'rgba(0,0,0,0.5)', borderColor: 'rgba(255,255,255,0.08)' }}
+        >
+          {/* Traffic Light Dots */}
+          <div className="flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-red-500/70" />
+            <span className="w-2 h-2 rounded-full bg-amber-500/70" />
+            <span className="w-2 h-2 rounded-full bg-emerald-500/70" />
+          </div>
+
+          {/* URL Pill */}
+          <div
+            className="px-2.5 py-0.5 rounded-full text-zinc-300 truncate max-w-[170px] border border-white/10"
+            style={{ background: 'rgba(255,255,255,0.06)' }}
+          >
+            {project.domain}
+          </div>
+
+          {/* Status Indicator */}
+          <div className="flex items-center gap-1 text-[9px] uppercase tracking-wider font-semibold">
+            {project.isClient ? (
+              <span className="text-emerald-400 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                DELIVERED
+              </span>
+            ) : (
+              <span className="text-[var(--gold)]">AI.SYS</span>
+            )}
+          </div>
+        </div>
+
+        {/* Card Visual Banner */}
+        <div
+          className="relative h-44 p-5 flex flex-col justify-between overflow-hidden"
+          style={{ background: project.gradient }}
+        >
+          {/* Subtle Vector Drafting Grid Overlay */}
+          <div
+            className="absolute inset-0 opacity-15 pointer-events-none"
+            style={{
+              backgroundImage: 'linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px)',
+              backgroundSize: '24px 24px',
+            }}
+          />
+
+          {/* Top Tag Badges */}
+          <div className="flex items-center justify-between z-10">
+            <span
+              className="px-2.5 py-1 rounded-md text-[10px] font-mono font-bold tracking-wider uppercase border backdrop-blur-md"
+              style={{
+                background: 'rgba(0,0,0,0.65)',
+                borderColor: 'rgba(255,255,255,0.15)',
+                color: '#fff',
+              }}
+            >
+              {project.tag}
+            </span>
+
+            {/* Quick Metrics Badges */}
+            <div className="flex items-center gap-1.5">
+              {project.metrics?.map((m) => (
+                <span
+                  key={m}
+                  className="px-2 py-0.5 rounded-full text-[9px] font-mono border backdrop-blur-md"
+                  style={{
+                    background: 'rgba(0,0,0,0.5)',
+                    borderColor: 'rgba(255,255,255,0.15)',
+                    color: '#ffdca1',
+                  }}
+                >
+                  {m}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Banner Title & Subtitle */}
+          <div className="z-10 text-white">
+            <div className="font-bold text-lg md:text-xl leading-snug drop-shadow-md">
+              {project.title}
+            </div>
+            <div className="font-mono text-[11px] opacity-85 mt-1">
+              {project.clientName ? `Client: ${project.clientName}` : project.tech.slice(0, 3).join(' • ')}
+            </div>
+          </div>
+
+          {/* Soft Dark Bottom Vignette */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none" />
+        </div>
+
+        {/* Card Body */}
+        <div className="p-6 space-y-4">
+          <p className="text-xs md:text-sm leading-relaxed" style={{ color: 'var(--text2)' }}>
+            {project.shortDesc}
+          </p>
+
+          {/* Key Deliverables Highlights */}
+          <div className="space-y-1.5 pt-2 border-t" style={{ borderColor: 'var(--border2)' }}>
+            {project.highlights.slice(0, 2).map((h) => (
+              <div key={h} className="flex items-start gap-2 text-xs" style={{ color: 'var(--text3)' }}>
+                <FiCheckCircle size={13} className="text-emerald-400 flex-shrink-0 mt-0.5" />
+                <span className="line-clamp-1">{h}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Tech Pills */}
+          <div className="flex flex-wrap gap-1.5 pt-2">
+            {project.tech.map((t) => (
+              <span
+                key={t}
+                className="px-2 py-0.5 rounded text-[10px] font-mono border"
+                style={{
+                  background: 'var(--surface2)',
+                  borderColor: 'var(--border2)',
+                  color: 'var(--text2)',
+                }}
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Card Action Footer */}
+      <div className="p-6 pt-0 flex items-center gap-2">
+        <button
+          onClick={() => onInspect(project)}
+          className="flex-1 py-2 px-3 rounded-lg border font-mono text-xs font-semibold text-center transition-all hover:border-[var(--gold)] hover:text-[var(--gold)]"
+          style={{
+            background: 'var(--surface2)',
+            borderColor: 'var(--border)',
+            color: 'var(--text)',
+          }}
+        >
+          Inspect Architecture
+        </button>
+
+        <a
+          href={project.liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="py-2 px-4 rounded-lg font-mono text-xs font-bold flex items-center justify-center gap-1.5 transition-all hover:scale-105 active:scale-95"
+          style={{
+            background: 'var(--gold)',
+            color: '#000',
+          }}
+          title="Open Live Application"
+        >
+          <span>Live</span>
+          <FiExternalLink size={13} />
+        </a>
+
+        {project.githubUrl && (
+          <a
+            href={project.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 rounded-lg border text-[var(--text2)] hover:text-[var(--text)] hover:border-[var(--text)] transition-colors"
+            style={{
+              background: 'var(--surface2)',
+              borderColor: 'var(--border)',
+            }}
+            title="Inspect Source Code on GitHub"
+          >
+            <FiGithub size={15} />
+          </a>
+        )}
+      </div>
+    </motion.div>
+  )
+}
+
 export default function Projects() {
   const [filter, setFilter] = useState('all')
   const [projects, setProjects] = useState(FALLBACK_PROJECTS)
@@ -187,7 +403,6 @@ export default function Projects() {
       .getAll()
       .then((r) => {
         if (r.data?.data && Array.isArray(r.data.data) && r.data.data.length > 0) {
-          // Merge API data with rich fallbacks so client tags & highlights are preserved
           setProjects(FALLBACK_PROJECTS)
         }
       })
@@ -223,7 +438,7 @@ export default function Projects() {
           <div className="flex items-center gap-3 mb-3">
             <span className="w-8 h-px bg-[var(--gold)]" />
             <span className="font-mono text-xs uppercase tracking-widest text-[var(--gold)]">
-              FEATURED PORTFOLIO & CLIENT DELIVERIES
+              FEATURED PORTFOLIO & COMMERCIAL DELIVERIES
             </span>
           </div>
 
@@ -293,149 +508,11 @@ export default function Projects() {
         <AnimatePresence mode="popLayout">
           <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" layout>
             {filteredProjects.map((p) => (
-              <motion.div
+              <ProjectCard
                 key={p._id}
-                layout
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.96 }}
-                transition={{ duration: 0.3 }}
-                className="group rounded-2xl border flex flex-col justify-between overflow-hidden transition-all duration-300 hover:-translate-y-1.5"
-                style={{
-                  background: 'var(--surface)',
-                  borderColor: 'var(--border)',
-                  boxShadow: 'var(--card-shadow)',
-                }}
-              >
-                <div>
-                  {/* Card Visual Banner */}
-                  <div
-                    className="relative h-44 p-5 flex flex-col justify-between overflow-hidden"
-                    style={{ background: p.gradient }}
-                  >
-                    {/* Top Accent Badges */}
-                    <div className="flex items-center justify-between z-10">
-                      <span
-                        className="px-2.5 py-1 rounded-md text-[10px] font-mono font-bold tracking-wider uppercase border backdrop-blur-md"
-                        style={{
-                          background: 'rgba(0,0,0,0.65)',
-                          borderColor: 'rgba(255,255,255,0.15)',
-                          color: '#fff',
-                        }}
-                      >
-                        {p.tag}
-                      </span>
-
-                      {p.isClient && (
-                        <span
-                          className="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider flex items-center gap-1.5 backdrop-blur-md"
-                          style={{
-                            background: 'rgba(6, 32, 18, 0.9)',
-                            border: '1px solid rgba(52, 211, 153, 0.5)',
-                            color: '#34d399',
-                          }}
-                        >
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                          <span>Delivered</span>
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Banner Title & Tech Stack */}
-                    <div className="z-10 text-white">
-                      <div className="font-bold text-lg leading-snug drop-shadow-md">
-                        {p.title}
-                      </div>
-                      <div className="font-mono text-[11px] opacity-80 mt-1">
-                        {p.clientName ? p.clientName : p.tech.slice(0, 3).join(' • ')}
-                      </div>
-                    </div>
-
-                    {/* Gradient overlay for text contrast */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none" />
-                  </div>
-
-                  {/* Card Content Body */}
-                  <div className="p-6 space-y-4">
-                    <p className="text-xs md:text-sm leading-relaxed" style={{ color: 'var(--text2)' }}>
-                      {p.shortDesc}
-                    </p>
-
-                    {/* Key Highlights */}
-                    <div className="space-y-1.5 pt-2 border-t" style={{ borderColor: 'var(--border2)' }}>
-                      {p.highlights.slice(0, 2).map((h) => (
-                        <div key={h} className="flex items-start gap-2 text-xs" style={{ color: 'var(--text3)' }}>
-                          <FiCheckCircle size={13} className="text-emerald-400 flex-shrink-0 mt-0.5" />
-                          <span className="line-clamp-1">{h}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Tech Pills */}
-                    <div className="flex flex-wrap gap-1.5 pt-2">
-                      {p.tech.map((t) => (
-                        <span
-                          key={t}
-                          className="px-2 py-0.5 rounded text-[10px] font-mono border"
-                          style={{
-                            background: 'var(--surface2)',
-                            borderColor: 'var(--border2)',
-                            color: 'var(--text2)',
-                          }}
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Card Action Footer */}
-                <div className="p-6 pt-0 flex items-center gap-2">
-                  <button
-                    onClick={() => setSelectedProject(p)}
-                    className="flex-1 py-2 px-3 rounded-lg border font-mono text-xs font-semibold text-center transition-all hover:border-[var(--gold)] hover:text-[var(--gold)]"
-                    style={{
-                      background: 'var(--surface2)',
-                      borderColor: 'var(--border)',
-                      color: 'var(--text)',
-                    }}
-                  >
-                    Architecture Details
-                  </button>
-
-                  <a
-                    href={p.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="py-2 px-4 rounded-lg font-mono text-xs font-bold flex items-center justify-center gap-1.5 transition-all hover:scale-105 active:scale-95"
-                    style={{
-                      background: 'var(--gold)',
-                      color: '#000',
-                    }}
-                    title="Open Live Website / Application"
-                  >
-                    <span>Live</span>
-                    <FiExternalLink size={13} />
-                  </a>
-
-                  {p.githubUrl && (
-                    <a
-                      href={p.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 rounded-lg border text-[var(--text2)] hover:text-[var(--text)] hover:border-[var(--text)] transition-colors"
-                      style={{
-                        background: 'var(--surface2)',
-                        borderColor: 'var(--border)',
-                      }}
-                      title="Inspect Source Code on GitHub"
-                    >
-                      <FiGithub size={15} />
-                    </a>
-                  )}
-                </div>
-              </motion.div>
+                project={p}
+                onInspect={(proj) => setSelectedProject(proj)}
+              />
             ))}
           </motion.div>
         </AnimatePresence>
