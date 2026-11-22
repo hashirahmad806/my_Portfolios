@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { ThemeProvider }  from './context/ThemeContext'
-import Cursor      from './components/ui/Cursor'
 import BlueprintGrid from './components/ui/BlueprintGrid'
 import SystemHUD     from './components/ui/SystemHUD'
 import AgentTerminal from './components/ui/AgentTerminal'
@@ -45,7 +44,6 @@ export default function App() {
         {/* Global architectural blueprint grid & interactive canvas */}
         <BlueprintGrid />
         {loading && <Loader />}
-        <Cursor />
         <Navbar />
         <main className="relative z-10">
           <Hero /><About /><Skills /><Projects /><Experience /><Learning /><Certifications /><GitHubActivity /><Contact />
