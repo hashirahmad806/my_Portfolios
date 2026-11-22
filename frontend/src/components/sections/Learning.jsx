@@ -1,182 +1,507 @@
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
+import { FiCpu, FiDatabase, FiLayers, FiRepeat, FiPlay, FiCheckCircle, FiCompass, FiTerminal, FiZap } from 'react-icons/fi'
 import hashirPhoto from '../../assets/hashir.jpg'
 
-const motionOk = typeof window !== 'undefined'
-  ? !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  : true
-
-const items = [
-  { icon: 'smart_toy',                name: 'Multi-Agent Workflows', pct: 92, sub: 'LangGraph & ReAct Reasoning Loops' },
-  { icon: 'database',                 name: 'Production RAG Systems', pct: 94, sub: 'MongoDB Atlas Vector Search & Cosine Indexing' },
-  { icon: 'memory',                   name: 'LLM Context Orchestration', pct: 90, sub: 'Dynamic Windows & Memory Compaction' },
-  { icon: 'bolt',                     name: 'Event-Driven Ingestion', pct: 88, sub: 'Real-Time Change Data Capture & Vectorization' },
-  { icon: 'integration_instructions', name: 'Tool Use & Function Calling', pct: 95, sub: 'Structured Computation & API Execution' },
-  { icon: 'psychology',               name: 'Applied Machine Learning', pct: 86, sub: 'UET Peshawar Data Science Foundations' },
+const EVOLUTION_STAGES = [
+  {
+    phase: 'STAGE 01',
+    period: '2022 – 2023',
+    title: 'Deterministic Full-Stack Foundations',
+    subtitle: 'MERN & Systems Architecture',
+    desc: 'Mastered production web engineering: NoSQL schema modeling, relational indexing, REST API design, JWT security middleware, and responsive React component hierarchies.',
+    stack: ['React.js', 'Node.js', 'Express', 'MongoDB', 'Tailwind CSS'],
+    keyTakeaway: 'Built deterministic software pipelines with 99.9% uptime and production reliability.',
+  },
+  {
+    phase: 'STAGE 02',
+    period: '2024 – 2025',
+    title: 'Vector Intelligence & Production RAG',
+    subtitle: 'Semantic Search & Embeddings',
+    desc: 'Pioneered semantic knowledge retrieval: text-embedding-3 vectors, MongoDB Atlas Vector Search indexing, cosine similarity scoring, hierarchical chunking, and real-time CDC triggers.',
+    stack: ['MongoDB Atlas', 'Vector Search', 'Cosine ANN', 'Python', 'OpenAI'],
+    keyTakeaway: 'Achieved sub-40ms vector retrieval over domain-specific corpora with grounded citations.',
+  },
+  {
+    phase: 'STAGE 03',
+    period: '2025 – 2026+',
+    title: 'Autonomous Multi-Agent Networks',
+    subtitle: 'Cognitive Swarms & LangGraph',
+    desc: 'Engineering stateful cognitive architectures: cyclic agent graphs, ReAct reasoning loops, dynamic tool calling, self-healing reflection, and long-term memory compaction.',
+    stack: ['LangGraph', 'LangChain', 'Multi-Agent Swarms', 'Groq / Llama 3', 'Pydantic'],
+    keyTakeaway: 'Deploying autonomous agent loops that solve open-ended workflows with verified tool feedback.',
+  },
 ]
 
-function ProgressCard({ item, visible }) {
-  return (
-    <div className="glass-panel rounded-xl p-5 flex flex-col gap-4 border border-[var(--border)] transition-all duration-300 hover:border-[var(--gold)]/40 hover:-translate-y-1">
-      <div className="flex justify-between items-start">
-        <div className="p-2.5 rounded-lg" style={{ background: 'rgba(201, 168, 76, 0.12)', color: 'var(--gold)' }}>
-          <span
-            className="material-symbols-outlined text-2xl"
-            style={{ fontVariationSettings: "'FILL' 1" }}
-          >
-            {item.icon}
-          </span>
-        </div>
-        <span className="font-label-mono text-lg font-bold" style={{ color: 'var(--gold)' }}>{item.pct}%</span>
-      </div>
-      <div className="flex flex-col gap-2">
-        <h3 className="font-headline text-base font-semibold" style={{ color: 'var(--text)' }}>{item.name}</h3>
-        <div className="glow-meter-bg">
-          <div
-            className="glow-meter-fill"
-            style={{
-              width: visible ? `${item.pct}%` : '0%',
-              transition: motionOk ? 'width 1.5s cubic-bezier(0.65, 0, 0.35, 1)' : 'none',
-              background: 'linear-gradient(90deg, #c9a84c, #38bdf8)',
-            }}
-          />
-        </div>
-        <p className="text-[11px] font-label-mono text-on-surface-variant tracking-wider text-slate-400">
-          {item.sub}
-        </p>
-      </div>
-    </div>
-  )
-}
+const AGENT_LOOP_STEPS = [
+  {
+    id: 1,
+    name: '01. Ingestion & Perception',
+    role: 'State Initialization',
+    desc: 'Captures user prompt, decodes intent, and pulls conversational memory threads from persistent state checkpoint.',
+    tech: 'LangGraph MemorySaver',
+    metric: '4.2ms parse latency',
+    color: '#38bdf8',
+  },
+  {
+    id: 2,
+    name: '02. Vector Retrieval',
+    role: 'Context Grounding',
+    desc: 'Executes Cosine ANN similarity search against MongoDB Atlas vector index to retrieve k=3 grounded semantic chunks.',
+    tech: 'MongoDB Vector Search',
+    metric: '18.4ms ANN latency (0.94 score)',
+    color: 'var(--gold)',
+  },
+  {
+    id: 3,
+    name: '03. ReAct Reasoning',
+    role: 'Plan & Routing',
+    desc: 'LLM evaluates context against available tools. Conditional router chooses between database query or direct synthesis.',
+    tech: 'LangChain Agent Core',
+    metric: 'Zero-shot tool routing',
+    color: '#c084fc',
+  },
+  {
+    id: 4,
+    name: '04. Tool Execution',
+    role: 'Dynamic Action',
+    desc: 'Invokes external REST APIs and database procedures with structured Pydantic schema validation.',
+    tech: 'Deterministic Tool Wrappers',
+    metric: '100% schema compliance',
+    color: '#34d399',
+  },
+  {
+    id: 5,
+    name: '05. Synthesis & Reflection',
+    role: 'Grounded Output',
+    desc: 'Evaluates output against source chunks to prevent hallucination; compacts context window and delivers verified response.',
+    tech: 'Self-Correction Loop',
+    metric: 'Zero-hallucination verified',
+    color: '#10b981',
+  },
+]
+
+const CAPABILITIES = [
+  {
+    icon: FiRepeat,
+    name: 'Multi-Agent Workflows',
+    sub: 'LangGraph & ReAct Reasoning Loops',
+    detail: 'Cyclic state machines with conditional branching, subagent delegation, and human-in-the-loop checkpoints.',
+    tag: 'LangGraph',
+    metric: '99.4% Graph Determinism',
+  },
+  {
+    icon: FiDatabase,
+    name: 'Production RAG Systems',
+    sub: 'Atlas Vector Search & Cosine Indexing',
+    detail: 'Semantic ANN search pipelines with dynamic chunking, multi-query expansion, and re-ranking.',
+    tag: 'MongoDB Atlas',
+    metric: '< 25ms Vector Latency',
+  },
+  {
+    icon: FiLayers,
+    name: 'LLM Context Orchestration',
+    sub: 'Dynamic Windows & Memory Compaction',
+    detail: 'Summarization trees and sliding token windows that prevent context degradation over long tasks.',
+    tag: 'Context Engineering',
+    metric: '128k Token Windows',
+  },
+  {
+    icon: FiZap,
+    name: 'Event-Driven Ingestion',
+    sub: 'Real-Time CDC & Vectorization',
+    detail: 'Database triggers and stream workers that vectorize updated records automatically in real time.',
+    tag: 'Atlas Triggers',
+    metric: 'Real-Time Sync',
+  },
+  {
+    icon: FiTerminal,
+    name: 'Tool Use & Function Calling',
+    sub: 'Structured Computation & API Execution',
+    detail: 'Equipping agent graphs with deterministic tool calls, calculators, and verified database querying.',
+    tag: 'Tool Calling',
+    metric: 'Pydantic Validated',
+  },
+  {
+    icon: FiCpu,
+    name: 'Applied Machine Learning',
+    sub: 'UET Peshawar Data Science',
+    detail: 'Rigorous statistical foundations, supervised regression/classification, and deep learning architectures.',
+    tag: 'Data Science',
+    metric: 'UET Peshawar CS',
+  },
+]
 
 export default function Learning() {
   const { ref: sectionRef, visible: sectionVis } = useScrollReveal()
+  const [activeTab, setActiveTab] = useState('loop') // 'loop' | 'evolution' | 'capabilities'
+  const [activeLoopStep, setActiveLoopStep] = useState(1)
+  const [isPlayingLoop, setIsPlayingLoop] = useState(false)
+
+  // Auto-play the agent loop simulation
+  useEffect(() => {
+    let timer
+    if (isPlayingLoop) {
+      timer = setInterval(() => {
+        setActiveLoopStep((prev) => (prev >= AGENT_LOOP_STEPS.length ? 1 : prev + 1))
+      }, 1600)
+    }
+    return () => clearInterval(timer)
+  }, [isPlayingLoop])
+
+  const selectedStep = AGENT_LOOP_STEPS.find((s) => s.id === activeLoopStep) || AGENT_LOOP_STEPS[0]
 
   return (
     <section
       id="learning"
-      className="py-20 relative overflow-hidden"
+      className="py-24 relative overflow-hidden"
       style={{ background: 'var(--void)', color: 'var(--text)' }}
     >
-      {/* Atmospheric glow */}
-      <div className="absolute top-0 right-0 -z-10 w-80 h-80 opacity-20 blur-[110px] pointer-events-none">
-        <div className="w-full h-full bg-[#38bdf8] rounded-full" />
-      </div>
+      <div className="max-w-6xl mx-auto px-6 md:px-12">
+        {/* Section Header */}
+        <div
+          ref={sectionRef}
+          className="mb-12"
+          style={{
+            opacity: sectionVis ? 1 : 0,
+            transform: sectionVis ? 'translateY(0)' : 'translateY(24px)',
+            transition: 'opacity .7s ease, transform .7s ease',
+          }}
+        >
+          <div className="flex items-center gap-3 mb-3">
+            <span className="w-8 h-px bg-[var(--gold)]" />
+            <span className="font-mono text-xs uppercase tracking-widest text-[var(--gold)]">
+              COGNITIVE ARCHITECTURE & TRAJECTORY
+            </span>
+          </div>
 
-      <div
-        ref={sectionRef}
-        className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12"
-        style={{
-          opacity: sectionVis ? 1 : 0,
-          transform: sectionVis ? 'translateY(0)' : 'translateY(28px)',
-          transition: 'opacity .8s ease, transform .8s ease',
-        }}
-      >
-        {/* ── Header ── */}
-        <div className="mb-10">
-          <span className="inline-flex items-center gap-2 font-label-mono text-xs uppercase tracking-widest mb-3" style={{ color: 'var(--gold)' }}>
-            <span className="w-6 h-px" style={{ background: 'var(--gold)' }} />
-            Autonomous Frontier
-          </span>
-          <h2 className="font-headline font-bold leading-tight mb-2"
-            style={{ fontSize: 'clamp(36px, 6vw, 64px)', color: 'var(--text)' }}>
-            The Journey into{' '}
-            <span className="amber-text-gradient bg-gradient-to-r from-amber-400 via-sky-400 to-indigo-400 bg-clip-text text-transparent">Agentic AI</span>
-          </h2>
-          <p className="font-body text-sm leading-relaxed max-w-xl" style={{ color: 'var(--text2)' }}>
-            Transitioning from deterministic full-stack engineering to self-directed cognitive systems — building autonomous agent swarms, vector pipelines, and real-time RAG.
-          </p>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+              <h2
+                className="font-bold tracking-tight mb-3"
+                style={{
+                  fontFamily: "'Clash Display','Cabinet Grotesk',sans-serif",
+                  fontSize: 'clamp(36px, 5vw, 56px)',
+                  lineHeight: 1.05,
+                  color: 'var(--text)',
+                }}
+              >
+                The Journey into{' '}
+                <span className="text-[var(--gold)]">Agentic AI</span>
+              </h2>
+              <p
+                className="text-sm md:text-base max-w-2xl leading-relaxed"
+                style={{ color: 'var(--text2)' }}
+              >
+                Transitioning from deterministic full-stack engineering to self-directed cognitive systems. Explore the live reasoning loop, evolutionary stages, and core agent capabilities.
+              </p>
+            </div>
+
+            {/* Interactive View Switcher */}
+            <div
+              className="flex items-center gap-1 p-1 rounded-xl border font-mono text-xs self-start md:self-auto"
+              style={{ background: 'var(--surface2)', borderColor: 'var(--border)' }}
+            >
+              <button
+                onClick={() => setActiveTab('loop')}
+                className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
+                  activeTab === 'loop'
+                    ? 'bg-[var(--gold)] text-black font-semibold'
+                    : 'text-[var(--text2)] hover:text-[var(--text)]'
+                }`}
+              >
+                <FiRepeat size={12} />
+                <span>Live Agent Loop</span>
+              </button>
+              <button
+                onClick={() => setActiveTab('evolution')}
+                className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
+                  activeTab === 'evolution'
+                    ? 'bg-[var(--gold)] text-black font-semibold'
+                    : 'text-[var(--text2)] hover:text-[var(--text)]'
+                }`}
+              >
+                <FiCompass size={12} />
+                <span>Evolutionary Stages</span>
+              </button>
+              <button
+                onClick={() => setActiveTab('capabilities')}
+                className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
+                  activeTab === 'capabilities'
+                    ? 'bg-[var(--gold)] text-black font-semibold'
+                    : 'text-[var(--text2)] hover:text-[var(--text)]'
+                }`}
+              >
+                <FiLayers size={12} />
+                <span>Capabilities</span>
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* ── Main two-column layout ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+        {/* ── TAB 1: LIVE AGENT REASONING LOOP SIMULATOR ── */}
+        {activeTab === 'loop' && (
+          <div className="space-y-8">
+            {/* Interactive Cycle Strip */}
+            <div
+              className="p-6 md:p-8 rounded-2xl border space-y-6"
+              style={{
+                background: 'var(--surface)',
+                borderColor: 'var(--border)',
+                boxShadow: 'var(--card-shadow)',
+              }}
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b pb-4" style={{ borderColor: 'var(--border2)' }}>
+                <div>
+                  <div className="font-mono text-xs uppercase tracking-wider text-[var(--gold)]">
+                    COGNITIVE STATE MACHINE // REAL-TIME DISPATCH
+                  </div>
+                  <h3 className="font-bold text-lg md:text-xl text-[var(--text)] mt-0.5">
+                    Interactive ReAct Agent Cycle
+                  </h3>
+                </div>
 
-          {/* Left — Quote + Status */}
-          <div className="flex flex-col gap-6">
-            {/* Quote block */}
-            <div className="glass-panel rounded-xl p-6 border border-border-glass shadow-lg">
-              <p className="font-body text-sm leading-relaxed italic mb-6" style={{ color: 'var(--text)' }}>
-                "We have moved beyond static chatbots into autonomous cognitive architectures. The real challenge is designing agents that plan, reason, invoke tools, and gracefully self-correct in complex environments."
-              </p>
-              <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full border border-[var(--border2)] p-0.5 flex-shrink-0 overflow-hidden">
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setIsPlayingLoop(!isPlayingLoop)}
+                    className="px-3.5 py-1.5 rounded-lg border font-mono text-xs font-semibold flex items-center gap-2 transition-all"
+                    style={{
+                      background: isPlayingLoop ? 'var(--surface2)' : 'var(--gold)',
+                      color: isPlayingLoop ? 'var(--text)' : '#000',
+                      borderColor: 'var(--border)',
+                    }}
+                  >
+                    <FiPlay size={12} className={isPlayingLoop ? 'animate-spin' : ''} />
+                    <span>{isPlayingLoop ? 'Pause Simulation' : 'Auto-Play Simulation ▶'}</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* 5-Step Loop Pipeline Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+                {AGENT_LOOP_STEPS.map((step) => {
+                  const isActive = step.id === activeLoopStep
+                  return (
+                    <button
+                      key={step.id}
+                      onClick={() => {
+                        setIsPlayingLoop(false)
+                        setActiveLoopStep(step.id)
+                      }}
+                      className="p-3.5 rounded-xl border text-left transition-all duration-200 relative"
+                      style={{
+                        background: isActive ? 'var(--surface2)' : 'var(--obsidian)',
+                        borderColor: isActive ? 'var(--gold)' : 'var(--border2)',
+                        boxShadow: isActive ? '0 0 16px rgba(var(--gold-rgb), 0.15)' : 'none',
+                        transform: isActive ? 'scale(1.02)' : 'scale(1)',
+                      }}
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-mono text-[10px] text-[var(--text3)] uppercase">
+                          NODE 0{step.id}
+                        </span>
+                        <span
+                          className="w-2 h-2 rounded-full transition-colors"
+                          style={{
+                            background: isActive ? 'var(--gold)' : 'var(--border2)',
+                            boxShadow: isActive ? '0 0 8px var(--gold)' : 'none',
+                          }}
+                        />
+                      </div>
+                      <div className="font-bold text-xs text-[var(--text)] line-clamp-1 mb-1">
+                        {step.name.split('. ')[1]}
+                      </div>
+                      <div className="font-mono text-[10px] text-[var(--gold)]">
+                        {step.role}
+                      </div>
+                    </button>
+                  )
+                })}
+              </div>
+
+              {/* Node Inspector Telemetry Box */}
+              <div
+                className="p-6 rounded-xl border space-y-4"
+                style={{
+                  background: 'var(--obsidian)',
+                  borderColor: 'rgba(var(--gold-rgb), 0.35)',
+                }}
+              >
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b pb-3" style={{ borderColor: 'var(--border2)' }}>
+                  <div className="flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[var(--gold)] animate-pulse" />
+                    <span className="font-bold text-base text-[var(--text)]">{selectedStep.name}</span>
+                    <span className="font-mono text-xs text-[var(--gold)] ml-2">[{selectedStep.role}]</span>
+                  </div>
+                  <span className="font-mono text-xs px-2.5 py-1 rounded bg-[var(--surface2)] text-emerald-400 border border-[var(--border)]">
+                    {selectedStep.metric}
+                  </span>
+                </div>
+
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--text2)' }}>
+                  {selectedStep.desc}
+                </p>
+
+                <div className="flex items-center justify-between pt-2 text-xs font-mono text-[var(--text3)]">
+                  <span>Underlying Stack: <strong className="text-[var(--gold)]">{selectedStep.tech}</strong></span>
+                  <span className="text-emerald-400">● STATE NOMINAL</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Architecture Quote & Proof Card */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div
+                className="p-6 rounded-2xl border space-y-4 md:col-span-2"
+                style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
+              >
+                <p className="font-body text-sm leading-relaxed italic" style={{ color: 'var(--text)' }}>
+                  "We have transitioned beyond static prompts and brittle chat interfaces. The authentic engineering frontier is constructing resilient, cyclic state graphs that continuously reason, execute tools, verify boundaries, and autonomously self-correct in complex real-world data environments."
+                </p>
+                <div className="flex items-center gap-3 pt-2">
                   <img
                     src={hashirPhoto}
                     alt="Hashir Ahmad"
-                    className="h-full w-full object-cover rounded-full"
-                    onError={(e) => { e.currentTarget.src = "https://github.com/hashirahmad806.png"; }}
+                    className="w-10 h-10 rounded-full object-cover border border-[var(--border2)]"
+                    onError={(e) => { e.currentTarget.src = 'https://github.com/hashirahmad806.png' }}
                   />
+                  <div>
+                    <div className="font-bold text-sm text-[var(--text)]">Hashir Ahmad</div>
+                    <div className="font-mono text-xs text-[var(--gold)]">AI Agent & Full-Stack Systems Engineer · UET Peshawar</div>
+                  </div>
                 </div>
+              </div>
+
+              <div
+                className="p-6 rounded-2xl border flex flex-col justify-between"
+                style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
+              >
                 <div>
-                  <p className="font-bold text-sm" style={{ color: 'var(--text)' }}>Hashir Ahmad</p>
-                  <p className="font-label-mono text-xs uppercase tracking-tight" style={{ color: 'var(--gold)' }}>Agentic Systems Architect · UET Peshawar</p>
+                  <div className="font-mono text-xs uppercase tracking-wider text-[var(--gold)] mb-1">
+                    TARGET INFRASTRUCTURE
+                  </div>
+                  <div className="font-bold text-base text-[var(--text)]">
+                    LangGraph + Atlas Vector Search
+                  </div>
+                  <p className="text-xs text-[var(--text2)] mt-2 leading-relaxed">
+                    Event-driven RAG pipelines with sub-40ms vector recall and multi-agent coordination loops.
+                  </p>
                 </div>
+
+                <a
+                  href="#contact"
+                  className="mt-4 px-4 py-2.5 rounded-lg border text-center font-mono text-xs font-semibold hover:border-[var(--gold)] hover:text-[var(--gold)] transition-colors"
+                  style={{ background: 'var(--surface2)', borderColor: 'var(--border)' }}
+                >
+                  Collaborate on Agents ↗
+                </a>
               </div>
             </div>
+          </div>
+        )}
 
-            {/* System status panel */}
-            <div className="glass-panel rounded-xl p-6 border border-border-glass flex flex-col gap-4 shadow-lg">
-              <div className="flex items-center gap-2 mb-1">
-                <div className="relative flex h-2.5 w-2.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
-                </div>
-                <p className="text-xs font-label-mono text-emerald-500 dark:text-emerald-400 tracking-widest uppercase font-semibold">
-                  Agentic Runtime: Active & Ingesting
-                </p>
-              </div>
-              <div className="space-y-3">
-              {[
-                { label: 'Reasoning Loop Fidelity (ReAct)',    value: '94.2%', pct: 94 },
-                { label: 'Vector Retrieval Precision (Cosine)', value: '96.8%', pct: 97 },
-                { label: 'Context Window Utilization',        value: 'Dynamic', pct: 85 },
-              ].map(bar => (
-                <div key={bar.label} className="space-y-1">
-                  <div className="flex justify-between text-[11px] font-label-mono uppercase tracking-tight" style={{ color: 'var(--text3)' }}>
-                    <span>{bar.label}</span>
-                    <span className="font-bold" style={{ color: 'var(--gold)' }}>{bar.value}</span>
+        {/* ── TAB 2: EVOLUTIONARY TRAJECTORY STAGES ── */}
+        {activeTab === 'evolution' && (
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {EVOLUTION_STAGES.map((stage) => (
+                <div
+                  key={stage.phase}
+                  className="p-6 rounded-2xl border flex flex-col justify-between space-y-5 transition-all hover:scale-[1.01]"
+                  style={{
+                    background: 'var(--surface)',
+                    borderColor: 'var(--border)',
+                    boxShadow: 'var(--card-shadow)',
+                  }}
+                >
+                  <div>
+                    <div className="flex items-center justify-between font-mono text-xs mb-3">
+                      <span className="text-[var(--gold)] font-bold">{stage.phase}</span>
+                      <span className="text-[var(--text3)]">{stage.period}</span>
+                    </div>
+
+                    <h3 className="font-bold text-lg text-[var(--text)] mb-1">
+                      {stage.title}
+                    </h3>
+                    <div className="font-mono text-xs text-[var(--gold)] mb-3">
+                      {stage.subtitle}
+                    </div>
+
+                    <p className="text-xs md:text-sm leading-relaxed" style={{ color: 'var(--text2)' }}>
+                      {stage.desc}
+                    </p>
                   </div>
-                  <div className="h-1.5 w-full rounded-full overflow-hidden" style={{ background: 'var(--border2)' }}>
-                    <div className="h-full glow-meter-fill rounded-full" style={{ width: `${bar.pct}%`, background: 'linear-gradient(90deg, var(--gold), var(--gold2))' }} />
+
+                  <div>
+                    <div className="p-3 rounded-xl mb-3 text-xs leading-relaxed" style={{ background: 'var(--surface2)', color: 'var(--text)' }}>
+                      <strong className="text-[var(--gold)]">Key Outcome:</strong> {stage.keyTakeaway}
+                    </div>
+
+                    <div className="flex flex-wrap gap-1.5">
+                      {stage.stack.map((t) => (
+                        <span
+                          key={t}
+                          className="px-2 py-0.5 rounded text-[10px] font-mono border"
+                          style={{
+                            background: 'var(--obsidian)',
+                            borderColor: 'var(--border2)',
+                            color: 'var(--text2)',
+                          }}
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               ))}
-              </div>
-            </div>
-
-            {/* Focus footer */}
-            <div className="flex flex-wrap gap-4 pt-2">
-              <div className="p-4 rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-sm flex-1">
-                <p className="text-[10px] font-label-mono uppercase tracking-wider mb-1 font-semibold" style={{ color: 'var(--gold)' }}>
-                  CURRENT RESEARCH FOCUS
-                </p>
-                <p className="font-bold text-sm" style={{ color: 'var(--text)' }}>Event-Driven Ingestion Pipelines with Atlas Vector Search</p>
-              </div>
-              <div className="p-4 rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-sm flex-1">
-                <p className="text-[10px] font-label-mono uppercase tracking-wider mb-1 font-semibold" style={{ color: 'var(--gold)' }}>
-                  NEXT MILESTONE
-                </p>
-                <p className="font-bold text-sm" style={{ color: 'var(--text)' }}>Autonomous Multi-Agent Networks with LangGraph</p>
-              </div>
             </div>
           </div>
+        )}
 
-          {/* Right — Progress cards grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {items.map(item => (
-              <ProgressCard key={item.name} item={item} visible={sectionVis} />
+        {/* ── TAB 3: FRONTIER CAPABILITIES MATRIX ── */}
+        {activeTab === 'capabilities' && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {CAPABILITIES.map((item) => (
+              <div
+                key={item.name}
+                className="p-6 rounded-2xl border flex flex-col justify-between space-y-4 transition-all duration-300 hover:border-[var(--gold)] hover:-translate-y-1"
+                style={{
+                  background: 'var(--surface)',
+                  borderColor: 'var(--border)',
+                  boxShadow: 'var(--card-shadow)',
+                }}
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-2.5 rounded-xl bg-[var(--surface2)] text-[var(--gold)]">
+                      <item.icon size={20} />
+                    </div>
+                    <span className="font-mono text-[11px] px-2.5 py-1 rounded-md border text-emerald-400" style={{ background: 'var(--surface2)', borderColor: 'var(--border)' }}>
+                      {item.metric}
+                    </span>
+                  </div>
+
+                  <h3 className="font-bold text-base text-[var(--text)] mb-1">
+                    {item.name}
+                  </h3>
+                  <div className="font-mono text-xs text-[var(--gold)] mb-2">
+                    {item.sub}
+                  </div>
+                  <p className="text-xs leading-relaxed" style={{ color: 'var(--text2)' }}>
+                    {item.detail}
+                  </p>
+                </div>
+
+                <div className="pt-3 border-t flex items-center justify-between font-mono text-[11px] text-[var(--text3)]" style={{ borderColor: 'var(--border2)' }}>
+                  <span>STACK:</span>
+                  <span className="text-[var(--text)] font-semibold">{item.tag}</span>
+                </div>
+              </div>
             ))}
           </div>
-        </div>
-
-        {/* CTA */}
-        <div className="mt-12 flex justify-center sm:justify-end">
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 px-7 py-3 rounded-full text-sm font-bold transition-all font-headline bg-gradient-to-r from-sky-500 to-indigo-600 text-white shadow-lg hover:shadow-sky-500/25 hover:scale-105"
-          >
-            Collaborate on AI Agents →
-          </a>
-        </div>
+        )}
       </div>
     </section>
   )

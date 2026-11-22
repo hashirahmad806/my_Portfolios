@@ -20,6 +20,10 @@ _Avoid_: Blank background, plain background
 An interactive technical competency audit interface coupling live telemetry metrics, production code nodes, and real-time benchmark simulation.
 _Avoid_: Skills progress bar, percentage chart
 
+**Cognitive Loop Simulator**:
+An interactive state machine visualization rendering the 5-node ReAct execution cycle (Ingestion, Vector Retrieval, Reasoning, Tool Dispatch, and Synthesis).
+_Avoid_: AI diagram, generic flowchart
+
 **Dynamic Theme Elevation**:
 The dual-state color and contrast architecture ensuring WCAG AAA compliance and high optical fidelity across both Dark and Light modes.
 _Avoid_: Inverted colors, washed-out theme
