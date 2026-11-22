@@ -1,173 +1,318 @@
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
+import { FiCpu, FiDatabase, FiLayout, FiCheckCircle, FiArrowRight, FiActivity, FiZap } from 'react-icons/fi'
 
-const gold  = '#ffdca1'
-const sky   = '#38bdf8'
-
-const motionOk = typeof window !== 'undefined'
-  ? !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  : true
-
-// ── Inline SVG precision engineering icons — zero emoji, pure tactile craft ─────────
-const IconAgent = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-    <line x1="12" y1="15" x2="12" y2="17" />
-  </svg>
-)
-const IconVector = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <polygon points="12 2 2 7 12 12 22 7 12 2" />
-    <polyline points="2 17 12 22 22 17" />
-    <polyline points="2 12 12 17 22 12" />
-  </svg>
-)
-const IconFullstack = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" />
-  </svg>
-)
-const IconML = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 2a4 4 0 0 0-4 4c0 1.1.4 2.1 1.2 2.8A4.5 4.5 0 0 0 7 13.5c0 1.2.5 2.3 1.3 3.1A4.5 4.5 0 0 0 12 22a4.5 4.5 0 0 0 3.7-5.4c.8-.8 1.3-1.9 1.3-3.1 0-2-1.3-3.7-3.2-4.3.8-.7 1.2-1.7 1.2-2.8a4 4 0 0 0-4-4Z"/>
-  </svg>
-)
-
-const cards = [
-  { Icon: IconAgent,    title: 'Autonomous Agents', desc: 'LangGraph state machines, ReAct loops, deterministic tool calling, and self-evaluating workflows.' },
-  { Icon: IconVector,   title: 'Production RAG',    desc: 'MongoDB Atlas Vector Search, semantic chunking, dynamic context windows, and real-time CDC ingestion.' },
-  { Icon: IconFullstack,title: 'Full-Stack Systems',desc: 'High-performance React/Next.js interfaces, Node.js microservices, and end-to-end product delivery.' },
-  { Icon: IconML,       title: 'Data Science @ UET',desc: 'Rigorous foundation in statistical modeling, neural representations, and machine learning pipelines.' },
+const PILLARS = [
+  {
+    id: 'agents',
+    title: 'Autonomous AI Agents',
+    subtitle: 'AI that plans and takes real action',
+    tag: 'LangGraph & LangChain',
+    badge: 'Self-Correcting',
+    simpleExplain: 'Most AI only generates text. I build agents that can think through multi-step plans, call real software tools, and fix their own mistakes automatically.',
+    highlights: ['Multi-step task planning', 'Automated tool & API calling', 'Self-evaluating error recovery'],
+    icon: FiCpu,
+  },
+  {
+    id: 'rag',
+    title: 'Production RAG Systems',
+    subtitle: 'Connecting AI to real business data',
+    tag: 'MongoDB Atlas Vector Search',
+    badge: '< 20ms Search',
+    simpleExplain: 'I connect language models to private databases using vector search. The AI reads company documents and answers questions with 100% accuracy and zero guessing.',
+    highlights: ['Sub-20ms semantic vector search', 'Zero-hallucination factual grounding', 'Real-time database sync'],
+    icon: FiDatabase,
+  },
+  {
+    id: 'fullstack',
+    title: 'Full-Stack Engineering',
+    subtitle: 'From frontend UI to cloud backend',
+    tag: 'MERN Stack & Vite',
+    badge: 'Production Ready',
+    simpleExplain: 'I create complete, fast web applications from scratch. Clean interactive screens in React, secure API backends in Node.js, and scalable database schemas in MongoDB.',
+    highlights: ['Fast responsive React interfaces', 'Secure Node.js & Express REST APIs', 'Production deployments on cloud'],
+    icon: FiLayout,
+  },
+  {
+    id: 'datascience',
+    title: 'Data Science Foundations',
+    subtitle: 'Understanding the math behind AI',
+    tag: 'UET Peshawar CS',
+    badge: 'Deep Learning',
+    simpleExplain: 'Studying Data Science at UET Peshawar gave me deep mathematical and neural network training. I understand how AI learns from data under the hood.',
+    highlights: ['Neural network architectures', 'Statistical modeling & metrics', 'PyTorch & Python ML stacks'],
+    icon: FiActivity,
+  },
 ]
 
-function RevealDiv({ children, delay = 0, style = {} }) {
-  const { ref, visible } = useScrollReveal()
-  return (
-    <div
-      ref={ref}
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(28px)',
-        transition: `opacity .7s ease ${delay}s, transform .7s ease ${delay}s`,
-        ...style,
-      }}
-    >
-      {children}
-    </div>
-  )
-}
-
 export default function About() {
+  const { ref: headRef, visible: headVis } = useScrollReveal()
+  const [activePillarId, setActivePillarId] = useState('agents')
+  const [activeMode, setActiveMode] = useState('think') // 'think' | 'execute'
+
+  const activePillar = PILLARS.find((p) => p.id === activePillarId) || PILLARS[0]
+
   return (
-    <section id="about" style={{ padding: '120px 0' }}>
+    <section
+      id="about"
+      className="py-24 relative overflow-hidden"
+      style={{ background: 'var(--obsidian)', color: 'var(--text)' }}
+    >
       <div className="max-w-6xl mx-auto px-6 md:px-12">
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
-
-          {/* Left — text */}
-          <div>
-            <RevealDiv>
-              <div className="flex items-center gap-3 mb-6">
-                <div style={{ width: 28, height: 1, background: sky }} />
-                <span style={{ fontFamily: 'JetBrains Mono,monospace', fontSize: 11, color: sky, letterSpacing: '0.25em', textTransform: 'uppercase' }}>Philosophy & Background</span>
-              </div>
-            </RevealDiv>
-
-            <RevealDiv delay={0.1}>
-              <h2 style={{ fontFamily: "'Clash Display','Syne',sans-serif", fontSize: 'clamp(36px,5vw,60px)', fontWeight: 600, lineHeight: 1.05, letterSpacing: '-0.03em', color: 'var(--text)', marginBottom: 28 }}>
-                Architecting systems that<br />
-                <em style={{ fontFamily: "'Instrument Serif',serif", fontStyle: 'italic', fontWeight: 400, color: sky }}>think and execute</em>
-              </h2>
-            </RevealDiv>
-
-            {[
-              <>I am <strong style={{ color: 'var(--text)' }}>Hashir Ahmad</strong>, a Data Science scholar at <strong style={{ color: 'var(--text)' }}>UET Peshawar</strong> and an autonomous systems builder. My work bridges disciplined software engineering with cognitive agent architectures.</>,
-              <>Rather than treating LLMs as standalone chat interfaces, I build <strong style={{ color: 'var(--text)' }}>deterministic agent environments</strong>: wiring language models to sandboxed code execution, live database indices via <strong style={{ color: 'var(--text)' }}>MongoDB Atlas Vector Search</strong>, and structured tool workflows via <strong style={{ color: 'var(--text)' }}>LangChain & LangGraph</strong>.</>,
-              <>With a deep grounding in the modern JavaScript and Python ecosystems, I engineer software that is fast, resilient, and capable of operating autonomously under real-world conditions.</>,
-            ].map((text, i) => (
-              <RevealDiv key={i} delay={0.15 + i * 0.1}>
-                <p style={{ fontSize: 15, lineHeight: 1.85, color: 'var(--text2)', marginBottom: 18 }}>{text}</p>
-              </RevealDiv>
-            ))}
-
-            <RevealDiv delay={0.45}>
-              <div className="flex flex-wrap gap-2.5 mt-6">
-                {['UET Peshawar', 'Agentic Workflows', 'Vector Databases', 'LangChain', 'Production RAG', 'Full-Stack TypeScript'].map(t => (
-                  <span
-                    key={t}
-                    className="dimensional-pill"
-                    style={{
-                      padding: '6px 14px',
-                      borderRadius: 100,
-                      fontSize: 12,
-                      fontFamily: 'JetBrains Mono, monospace',
-                      background: 'rgba(56,189,248,0.06)',
-                      border: '1px solid rgba(56,189,248,0.2)',
-                      color: 'var(--text2)',
-                    }}
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </RevealDiv>
+        {/* Header Tag */}
+        <div
+          ref={headRef}
+          className="mb-14"
+          style={{
+            opacity: headVis ? 1 : 0,
+            transform: headVis ? 'translateY(0)' : 'translateY(24px)',
+            transition: 'opacity .7s ease, transform .7s ease',
+          }}
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <span className="w-8 h-px bg-[var(--gold)]" />
+            <span className="font-mono text-xs uppercase tracking-widest text-[var(--gold)]">
+              PHILOSOPHY & SYSTEMS ARCHITECTURE
+            </span>
           </div>
 
-          {/* Right — cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {cards.map((c, i) => (
-              <RevealDiv key={c.title} delay={0.1 + i * 0.08}>
-                <div
-                  onMouseEnter={ev => {
-                    const el = ev.currentTarget;
-                    if (motionOk) el.style.transform = 'translateY(-4px)';
-                    el.style.boxShadow = 'var(--card-shadow-hover)';
-                    el.style.borderColor = 'rgba(var(--gold-rgb), 0.35)';
-                  }}
-                  onMouseLeave={ev => {
-                    const el = ev.currentTarget;
-                    el.style.transform = 'translateY(0)';
-                    el.style.boxShadow = 'var(--card-shadow)';
-                    el.style.borderColor = 'var(--border)';
-                  }}
-                  style={{
-                    padding: '26px 22px',
-                    borderRadius: 18,
-                    border: '1px solid var(--border)',
-                    background: 'var(--surface)',
-                    boxShadow: 'var(--card-shadow)',
-                    position: 'relative',
-                    overflow: 'hidden',
-                    transition: motionOk ? 'transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s' : 'border-color 0.3s',
-                  }}
-                >
-                  {/* Subtle top edge highlight */}
-                  <div style={{
-                    position: 'absolute', top: 0, left: 16, right: 16,
-                    height: 1, background: `linear-gradient(90deg, transparent, rgba(56,189,248,0.3), transparent)`,
-                    pointerEvents: 'none',
-                  }} />
+          <h2
+            className="font-bold tracking-tight mb-4"
+            style={{
+              fontFamily: "'Clash Display','Cabinet Grotesk',sans-serif",
+              fontSize: 'clamp(36px, 5.5vw, 64px)',
+              lineHeight: 1.05,
+              letterSpacing: '-0.03em',
+              color: 'var(--text)',
+            }}
+          >
+            Architecting systems that{' '}
+            <span
+              style={{
+                fontFamily: "'Instrument Serif', serif",
+                fontStyle: 'italic',
+                fontWeight: 400,
+                color: 'var(--gold)',
+              }}
+            >
+              think and execute
+            </span>
+          </h2>
+          <p
+            className="text-base md:text-lg max-w-2xl leading-relaxed"
+            style={{ color: 'var(--text2)' }}
+          >
+            I am <strong style={{ color: 'var(--text)' }}>Hashir Ahmad</strong>, a Full-Stack and AI Systems Engineer studying Data Science at <strong style={{ color: 'var(--text)' }}>UET Peshawar</strong>. I build software that bridges human intent with autonomous machine execution.
+          </p>
+        </div>
 
-                  {/* Frosted icon chip */}
-                  <div
-                    style={{
-                      width: 40, height: 40,
-                      borderRadius: 12,
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      background: 'rgba(56,189,248,0.1)',
-                      border: '1px solid rgba(56,189,248,0.2)',
-                      marginBottom: 16,
-                      color: sky,
-                    }}
-                  >
-                    <c.Icon />
+        {/* Interactive Dual-Mode Showcase: "How It Thinks" vs "How It Executes" */}
+        <div
+          className="p-6 md:p-8 rounded-2xl border mb-14"
+          style={{
+            background: 'var(--surface)',
+            borderColor: 'var(--border)',
+            boxShadow: 'var(--card-shadow)',
+          }}
+        >
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b pb-5 mb-6" style={{ borderColor: 'var(--border2)' }}>
+            <div>
+              <div className="font-mono text-xs uppercase tracking-wider text-[var(--gold)]">
+                CORE OPERATING PRINCIPLE
+              </div>
+              <h3 className="font-bold text-lg md:text-xl text-[var(--text)] mt-0.5">
+                What does &quot;Think and Execute&quot; actually mean?
+              </h3>
+            </div>
+
+            <div
+              className="flex items-center gap-1 p-1 rounded-xl border font-mono text-xs self-start sm:self-auto"
+              style={{ background: 'var(--surface2)', borderColor: 'var(--border2)' }}
+            >
+              <button
+                onClick={() => setActiveMode('think')}
+                className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
+                  activeMode === 'think'
+                    ? 'bg-[var(--gold)] text-black font-bold'
+                    : 'text-[var(--text2)] hover:text-[var(--text)]'
+                }`}
+              >
+                <FiCpu size={12} />
+                <span>1. How It Thinks</span>
+              </button>
+              <button
+                onClick={() => setActiveMode('execute')}
+                className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
+                  activeMode === 'execute'
+                    ? 'bg-[var(--gold)] text-black font-bold'
+                    : 'text-[var(--text2)] hover:text-[var(--text)]'
+                }`}
+              >
+                <FiZap size={12} />
+                <span>2. How It Executes</span>
+              </button>
+            </div>
+          </div>
+
+          <AnimatePresence mode="wait">
+            {activeMode === 'think' ? (
+              <motion.div
+                key="think"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.25 }}
+                className="grid grid-cols-1 md:grid-cols-3 gap-6"
+              >
+                <div className="p-4 rounded-xl border space-y-2" style={{ background: 'var(--surface2)', borderColor: 'var(--border2)' }}>
+                  <div className="font-mono text-xs text-[var(--gold)] font-bold">01 // Understanding Intent</div>
+                  <div className="font-semibold text-sm text-[var(--text)]">Breaking Down the Goal</div>
+                  <p className="text-xs text-[var(--text2)] leading-relaxed">
+                    Instead of guessing, the agent splits your high-level goal into logical, step-by-step tasks using LangChain and LangGraph.
+                  </p>
+                </div>
+                <div className="p-4 rounded-xl border space-y-2" style={{ background: 'var(--surface2)', borderColor: 'var(--border2)' }}>
+                  <div className="font-mono text-xs text-[var(--gold)] font-bold">02 // Finding Truth</div>
+                  <div className="font-semibold text-sm text-[var(--text)]">Searching Private Data</div>
+                  <p className="text-xs text-[var(--text2)] leading-relaxed">
+                    Queries MongoDB Atlas Vector Search to pull exact facts, past user context, and relevant business documents in sub-20ms.
+                  </p>
+                </div>
+                <div className="p-4 rounded-xl border space-y-2" style={{ background: 'var(--surface2)', borderColor: 'var(--border2)' }}>
+                  <div className="font-mono text-xs text-[var(--gold)] font-bold">03 // Self-Checking</div>
+                  <div className="font-semibold text-sm text-[var(--text)]">Preventing Hallucinations</div>
+                  <p className="text-xs text-[var(--text2)] leading-relaxed">
+                    The agent evaluates its own plan. If a step looks uncertain, it self-corrects the reasoning path before taking any action.
+                  </p>
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="execute"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.25 }}
+                className="grid grid-cols-1 md:grid-cols-3 gap-6"
+              >
+                <div className="p-4 rounded-xl border space-y-2" style={{ background: 'var(--surface2)', borderColor: 'var(--border2)' }}>
+                  <div className="font-mono text-xs text-emerald-400 font-bold">01 // Tool Calling</div>
+                  <div className="font-semibold text-sm text-[var(--text)]">Invoking Real Software</div>
+                  <p className="text-xs text-[var(--text2)] leading-relaxed">
+                    The agent calls real APIs, databases, calculations, and internal tools with structured, validated inputs.
+                  </p>
+                </div>
+                <div className="p-4 rounded-xl border space-y-2" style={{ background: 'var(--surface2)', borderColor: 'var(--border2)' }}>
+                  <div className="font-mono text-xs text-emerald-400 font-bold">02 // Handling Errors</div>
+                  <div className="font-semibold text-sm text-[var(--text)]">Automatic Self-Healing</div>
+                  <p className="text-xs text-[var(--text2)] leading-relaxed">
+                    If an API fails or a tool returns an error, the agent catches it, analyzes what went wrong, and retries with a new plan.
+                  </p>
+                </div>
+                <div className="p-4 rounded-xl border space-y-2" style={{ background: 'var(--surface2)', borderColor: 'var(--border2)' }}>
+                  <div className="font-mono text-xs text-emerald-400 font-bold">03 // Full-Stack Delivery</div>
+                  <div className="font-semibold text-sm text-[var(--text)]">Real Product Integration</div>
+                  <p className="text-xs text-[var(--text2)] leading-relaxed">
+                    Results are delivered directly through fast React web interfaces, email, or database updates that users can interact with.
+                  </p>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* ── 4 Pillars Architecture Grid ── */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+          {PILLARS.map((p) => {
+            const isSelected = p.id === activePillarId
+            const Icon = p.icon
+            return (
+              <div
+                key={p.id}
+                onClick={() => setActivePillarId(p.id)}
+                className="p-6 rounded-2xl border flex flex-col justify-between transition-all duration-300 cursor-pointer relative"
+                style={{
+                  background: isSelected ? 'var(--surface2)' : 'var(--surface)',
+                  borderColor: isSelected ? 'var(--gold)' : 'var(--border)',
+                  boxShadow: isSelected
+                    ? '0 0 25px rgba(var(--gold-rgb), 0.18)'
+                    : 'var(--card-shadow)',
+                  transform: isSelected ? 'translateY(-3px)' : 'none',
+                }}
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div
+                      className="w-10 h-10 rounded-xl flex items-center justify-center border"
+                      style={{
+                        background: 'rgba(var(--gold-rgb), 0.1)',
+                        borderColor: 'rgba(var(--gold-rgb), 0.25)',
+                        color: 'var(--gold)',
+                      }}
+                    >
+                      <Icon size={18} />
+                    </div>
+                    <span
+                      className="font-mono text-[10px] px-2 py-0.5 rounded border font-semibold"
+                      style={{
+                        background: 'var(--obsidian)',
+                        borderColor: 'var(--border2)',
+                        color: 'var(--gold)',
+                      }}
+                    >
+                      {p.badge}
+                    </span>
                   </div>
 
-                  <div style={{ fontFamily: "'Clash Display','Syne',sans-serif", fontSize: 16, fontWeight: 600, color: 'var(--text)', marginBottom: 8 }}>{c.title}</div>
-                  <div style={{ fontSize: 13, lineHeight: 1.65, color: 'var(--text3)' }}>{c.desc}</div>
+                  <h3 className="font-bold text-lg text-[var(--text)] mb-1">
+                    {p.title}
+                  </h3>
+                  <div className="font-mono text-xs text-[var(--gold)] mb-3">
+                    {p.subtitle}
+                  </div>
+
+                  <p className="text-xs md:text-sm leading-relaxed mb-4" style={{ color: 'var(--text2)' }}>
+                    {p.simpleExplain}
+                  </p>
                 </div>
-              </RevealDiv>
-            ))}
-          </div>
+
+                <div className="pt-3 border-t space-y-1.5" style={{ borderColor: 'var(--border2)' }}>
+                  {p.highlights.map((h) => (
+                    <div key={h} className="flex items-center gap-2 text-xs" style={{ color: 'var(--text2)' }}>
+                      <FiCheckCircle size={12} className="text-emerald-400 flex-shrink-0" />
+                      <span>{h}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+
+        {/* Quick Tag Pills */}
+        <div className="flex flex-wrap items-center justify-center gap-2.5 mt-14">
+          {[
+            'MERN Stack',
+            'LangGraph State Machines',
+            'MongoDB Atlas Vector Search',
+            'UET Peshawar Data Science',
+            'Python ML',
+            'Autonomous ReAct Loops',
+            'Tailwind CSS & React 18',
+          ].map((tag) => (
+            <span
+              key={tag}
+              className="px-4 py-2 rounded-full border font-mono text-xs font-medium"
+              style={{
+                background: 'var(--surface2)',
+                borderColor: 'var(--border2)',
+                color: 'var(--text2)',
+              }}
+            >
+              {tag}
+            </span>
+          ))}
         </div>
       </div>
     </section>

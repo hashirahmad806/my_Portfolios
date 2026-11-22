@@ -35,3 +35,7 @@ _Avoid_: Custom dot cursor, lagging ring, fake pointer
 **System Telemetry HUD**:
 A persistent heads-up display anchored to the viewport presenting real-time system metrics, CAD coordinates, and console triggers.
 _Avoid_: Status bar, footer banner
+
+**Think & Execute Architecture**:
+The systems design paradigm where autonomous cognitive reasoning loops (planning, vector retrieval, self-correction) are paired directly with deterministic full-stack software execution (APIs, databases, user interfaces).
+_Avoid_: AI chatbot, wrapper script
