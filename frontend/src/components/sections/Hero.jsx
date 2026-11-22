@@ -10,10 +10,10 @@ const stagger = {
   item: { hidden: { y: 32, opacity: 0 }, show: { y: 0, opacity: 1, transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] } } },
 }
 
-const gold = '#c9a84c'
-const gold2 = '#e8c97a'
-const muted = '#9090a8'
-const muted2 = '#5a5a72'
+const gold = '#ffdca1'
+const gold2 = '#ffba20'
+const muted = '#d5c4ab'
+const muted2 = '#9e8f78'
 
 const motionOk = typeof window !== 'undefined'
   ? !window.matchMedia('(prefers-reduced-motion: reduce)').matches

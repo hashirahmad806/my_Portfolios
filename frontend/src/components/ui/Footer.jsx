@@ -3,7 +3,7 @@ import { Link } from "react-scroll";
 import { FiGithub, FiLinkedin, FiMail, FiArrowUp } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 
-const gold = "#c9a84c";
+const gold = "#ffdca1";
 
 const navLinks = [
   "about", "skills", "projects", "experience",

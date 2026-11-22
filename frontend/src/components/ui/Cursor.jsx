@@ -58,8 +58,8 @@ export default function Cursor() {
 
   return (
     <>
-      <div ref={dotRef} style={{ ...base, width: 8, height: 8, background: '#c9a84c', boxShadow: '0 0 8px rgba(201,168,76,0.7)' }} />
-      <div ref={ringRef} style={{ ...base, width: 38, height: 38, border: '1.5px solid rgba(201,168,76,0.5)', zIndex: 9998 }} />
+      <div ref={dotRef} style={{ ...base, width: 8, height: 8, background: '#ffdca1', boxShadow: '0 0 10px rgba(255,220,161,0.8)' }} />
+      <div ref={ringRef} style={{ ...base, width: 38, height: 38, border: '1.5px solid rgba(255,220,161,0.5)', zIndex: 9998 }} />
     </>
   )
 }

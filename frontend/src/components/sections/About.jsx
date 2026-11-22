@@ -1,6 +1,6 @@
 import { useScrollReveal } from '../../hooks/useScrollReveal'
 
-const gold  = '#c9a84c'
+const gold  = '#ffdca1'
 const sky   = '#38bdf8'
 
 const motionOk = typeof window !== 'undefined'

@@ -3,7 +3,7 @@ import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from
 
 /* ── Constants ─────────────────────────────────────────────────────────── */
 const BG        = '#0a0a0b'          // always-dark cinematic void
-const GOLD      = '#c9a84c'
+const GOLD      = '#ffdca1'
 const GOLD_DIM  = 'rgba(201,168,76,0.18)'
 const MUTED     = 'rgba(255,255,255,0.22)'
 const VERY_DIM  = 'rgba(255,255,255,0.06)'

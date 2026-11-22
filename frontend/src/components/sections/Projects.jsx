@@ -4,7 +4,7 @@ import { useScrollReveal } from "../../hooks/useScrollReveal";
 import { FiGithub, FiExternalLink } from "react-icons/fi";
 import { projectsAPI } from "../../utils/api";
 
-const gold = "#c9a84c";
+const gold = "#ffdca1";
 const dim = "#5a5a72";
 
 const motionOk = typeof window !== 'undefined'

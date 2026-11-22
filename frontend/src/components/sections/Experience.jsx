@@ -1,8 +1,8 @@
 import { useScrollReveal } from '../../hooks/useScrollReveal'
 
-const gold = '#c9a84c'
-const dim  = '#5a5a72'
-const muted = '#9090a8'
+const gold = '#ffdca1'
+const dim  = '#9e8f78'
+const muted = '#d5c4ab'
 
 const experiences = [
   {

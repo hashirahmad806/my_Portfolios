@@ -7,7 +7,7 @@ import { useTheme } from '../../context/ThemeContext'
 const motionOk = typeof window !== 'undefined'
   ? !window.matchMedia('(prefers-reduced-motion: reduce)').matches
   : true
-const gold = '#c9a84c'
+const gold = '#ffdca1'
 
 const links = [
   { to: 'about',           label: 'About'          },

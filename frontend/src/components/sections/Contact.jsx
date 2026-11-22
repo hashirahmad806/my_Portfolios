@@ -6,7 +6,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { contactAPI } from "../../utils/api";
 
-const gold = "#c9a84c";
+const gold = "#ffdca1";
 const motionOk = typeof window !== "undefined"
   ? !window.matchMedia("(prefers-reduced-motion: reduce)").matches
   : true;

@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
 import { githubAPI } from '../../utils/api'
 
-const gold = '#c9a84c'
+const gold = '#ffdca1'
 const motionOk = typeof window !== 'undefined'
   ? !window.matchMedia('(prefers-reduced-motion: reduce)').matches
   : true
