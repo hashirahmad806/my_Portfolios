@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sketch 001 — Interactive Technical Section Variants</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #131314;
+      --surface: #1e1e21;
+      --surface2: #28282c;
+      --border: rgba(255, 255, 255, 0.08);
+      --gold: #ffdca1;
+      --gold-rgb: 255, 220, 161;
+      --text: #ffffff;
+      --text2: #a1a1aa;
+    }
+    .light {
+      --bg: #fafafc;
+      --surface: #ffffff;
+      --surface2: #f4f4f7;
+      --border: rgba(0, 0, 0, 0.08);
+      --gold: #9a6700;
+      --gold-rgb: 154, 103, 0;
+      --text: #09090b;
+      --text2: #52525b;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background-color 0.25s, color 0.25s;
+    }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="p-6 md:p-12 min-h-screen">
+
+  <!-- Top Bar: Variant Switcher & Theme Toggle -->
+  <header class="max-w-6xl mx-auto mb-10 flex flex-wrap items-center justify-between gap-4 border-b pb-6" style="border-color: var(--border);">
+    <div>
+      <div class="font-mono text-xs uppercase tracking-widest text-[var(--gold)] mb-1">
+        GSD:SKETCH // EXPLORATION 001
+      </div>
+      <h1 class="text-2xl font-bold">Interactive Real-Time Technical Section</h1>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <!-- Variant Tabs -->
+      <div class="flex items-center gap-1 p-1 rounded-xl border text-xs font-mono" style="background: var(--surface2); border-color: var(--border);">
+        <button onclick="switchVariant('a')" id="btn-var-a" class="px-3 py-1.5 rounded-lg bg-[var(--gold)] text-black font-semibold transition-all">
+          A: Capability Inspector
+        </button>
+        <button onclick="switchVariant('b')" id="btn-var-b" class="px-3 py-1.5 rounded-lg text-[var(--text2)] hover:text-[var(--text)] transition-all">
+          B: Benchmark Sandbox
+        </button>
+        <button onclick="switchVariant('c')" id="btn-var-c" class="px-3 py-1.5 rounded-lg text-[var(--text2)] hover:text-[var(--text)] transition-all">
+          C: CAD Data Pipeline
+        </button>
+      </div>
+
+      <!-- Theme Switcher -->
+      <button onclick="toggleTheme()" class="px-3 py-1.5 rounded-xl border text-xs font-mono text-[var(--text2)] hover:text-[var(--text)]" style="background: var(--surface); border-color: var(--border);">
+        🌗 Toggle Mode
+      </button>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto">
+
+    <!-- ========================================== -->
+    <!-- VARIANT A: SYSTEM TOPOLOGY & CAPABILITY INSPECTOR -->
+    <!-- ========================================== -->
+    <section id="variant-a" class="space-y-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <span class="font-mono text-xs text-[var(--gold)] tracking-widest uppercase">
+            // TELEMETRY & CAPABILITY MATRIX
+          </span>
+          <h2 class="text-3xl font-bold mt-1">Autonomous Systems Architecture</h2>
+          <p class="text-sm text-[var(--text2)] max-w-xl mt-1">
+            Click any core engineering competency to inspect production telemetry, verified code nodes, and deployed artifacts.
+          </p>
+        </div>
+        <div class="flex items-center gap-2 font-mono text-xs text-[var(--text2)]">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>LATENCY: ~24ms (NOMINAL)</span>
+        </div>
+      </div>
+
+      <!-- Two-column interactive layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <!-- Left: Interactive Skill Cards Grid -->
+        <div class="lg:col-span-7 space-y-6">
+          <!-- Category 1: AI & Cognitive Orchestration -->
+          <div class="p-5 rounded-2xl border" style="background: var(--surface); border-color: var(--border);">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold text-[var(--gold)] uppercase tracking-wider">
+                01 // Cognitive & Agent Systems
+              </span>
+              <span class="text-xs text-[var(--text2)] font-mono">5 Modules</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="skills-list-ai">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <!-- Category 2: Full-Stack Systems & Data -->
+          <div class="p-5 rounded-2xl border" style="background: var(--surface); border-color: var(--border);">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold text-[var(--gold)] uppercase tracking-wider">
+                02 // Distributed Systems & Infrastructure
+              </span>
+              <span class="text-xs text-[var(--text2)] font-mono">5 Modules</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="skills-list-fs">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Dynamic Real-Time Capability Inspector -->
+        <div class="lg:col-span-5 sticky top-8 p-6 rounded-2xl border space-y-5 shadow-2xl" style="background: var(--surface); border-color: rgba(var(--gold-rgb), 0.35);">
+          <div class="flex items-center justify-between border-b pb-4" style="border-color: var(--border);">
+            <div class="flex items-center gap-2 font-mono text-xs">
+              <span class="w-2.5 h-2.5 rounded-full bg-[var(--gold)] animate-ping"></span>
+              <span class="font-bold text-[var(--gold)]" id="inspect-title">LangChain & LangGraph</span>
+            </div>
+            <span class="font-mono text-[11px] px-2 py-0.5 rounded border text-[var(--gold)]" style="background: var(--surface2); border-color: var(--border);">
+              VERIFIED 2026
+            </span>
+          </div>
+
+          <!-- Telemetry Badges -->
+          <div class="grid grid-cols-3 gap-2 font-mono text-center">
+            <div class="p-2.5 rounded-xl border" style="background: var(--surface2); border-color: var(--border);">
+              <div class="text-[10px] text-[var(--text2)] uppercase">Maturity</div>
+              <div class="text-sm font-bold text-[var(--gold)]" id="inspect-maturity">Production</div>
+            </div>
+            <div class="p-2.5 rounded-xl border" style="background: var(--surface2); border-color: var(--border);">
+              <div class="text-[10px] text-[var(--text2)] uppercase">Latency</div>
+              <div class="text-sm font-bold text-emerald-400" id="inspect-latency">&lt; 40ms</div>
+            </div>
+            <div class="p-2.5 rounded-xl border" style="background: var(--surface2); border-color: var(--border);">
+              <div class="text-[10px] text-[var(--text2)] uppercase">Experience</div>
+              <div class="text-sm font-bold" id="inspect-exp">3+ Years</div>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div>
+            <div class="font-mono text-xs text-[var(--text2)] uppercase mb-1">Architecture Role</div>
+            <p class="text-xs leading-relaxed" id="inspect-desc">
+              State machine agent loop orchestration with cyclic graph execution, memory checkpoints, and dynamic tool retrieval.
+            </p>
+          </div>
+
+          <!-- Live Code / Graph Spec -->
+          <div>
+            <div class="flex items-center justify-between font-mono text-[11px] text-[var(--text2)] mb-1.5">
+              <span>Execution Node</span>
+              <span class="text-[var(--gold)]">Python 3.11</span>
+            </div>
+            <pre class="p-3.5 rounded-xl border font-mono text-[11px] overflow-x-auto leading-relaxed" style="background: var(--bg); border-color: var(--border); color: var(--gold);" id="inspect-code">
+workflow = StateGraph(AgentState)
+workflow.add_node("agent", call_model)
+workflow.add_node("action", call_tool)
+workflow.set_entry_point("agent")
+app = workflow.compile()</pre>
+          </div>
+
+          <!-- Verified Projects Link -->
+          <div class="pt-2 border-t flex items-center justify-between" style="border-color: var(--border);">
+            <span class="text-xs text-[var(--text2)] font-mono">Proof of Delivery:</span>
+            <a href="#projects" class="text-xs font-mono font-semibold text-[var(--gold)] hover:underline flex items-center gap-1" id="inspect-link">
+              <span>Triostep & Production RAG</span> ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- VARIANT B: LIVE BENCHMARK SANDBOX -->
+    <!-- ========================================== -->
+    <section id="variant-b" class="hidden space-y-8">
+      <div class="p-8 rounded-2xl border text-center space-y-4" style="background: var(--surface); border-color: var(--border);">
+        <span class="font-mono text-xs text-[var(--gold)] tracking-widest uppercase">
+          VARIANT B // LIVE BENCHMARK RUNNER
+        </span>
+        <h2 class="text-3xl font-bold">Interactive Capability Benchmarking</h2>
+        <p class="text-sm text-[var(--text2)] max-w-xl mx-auto">
+          Execute automated synthetic stress tests directly in the browser to evaluate real-time vector retrieval, token streaming, and API latency.
+        </p>
+
+        <!-- Benchmark Terminal Mockup -->
+        <div class="max-w-2xl mx-auto mt-6 text-left font-mono text-xs rounded-xl p-5 border" style="background: var(--bg); border-color: var(--border);">
+          <div class="flex items-center justify-between pb-3 border-b mb-3" style="border-color: var(--border);">
+            <span class="text-[var(--gold)]">bench --run-all</span>
+            <button onclick="runBench()" class="px-3 py-1 rounded bg-[var(--gold)] text-black font-bold hover:brightness-110">
+              Run Benchmark ▶
+            </button>
+          </div>
+          <div id="bench-output" class="space-y-1.5 text-zinc-400">
+            <div>[BENCH] Press "Run Benchmark" to execute live capability tests...</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- VARIANT C: CAD DATA PIPELINE -->
+    <!-- ========================================== -->
+    <section id="variant-c" class="hidden space-y-8">
+      <div class="p-8 rounded-2xl border space-y-6" style="background: var(--surface); border-color: var(--border);">
+        <div class="text-center">
+          <span class="font-mono text-xs text-[var(--gold)] tracking-widest uppercase">
+            VARIANT C // ARCHITECTURAL FLOW PIPELINE
+          </span>
+          <h2 class="text-3xl font-bold mt-1">End-to-End System Schematic</h2>
+        </div>
+
+        <!-- Pipeline Nodes -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-4">
+          <div class="p-4 rounded-xl border text-center space-y-2 hover:border-[var(--gold)] transition-colors" style="background: var(--surface2); border-color: var(--border);">
+            <div class="font-mono text-xs text-[var(--gold)]">STAGE 01</div>
+            <div class="font-bold">Ingestion & CDC</div>
+            <p class="text-xs text-[var(--text2)]">Atlas Event Triggers, WebSocket ingestion</p>
+          </div>
+          <div class="p-4 rounded-xl border text-center space-y-2 hover:border-[var(--gold)] transition-colors" style="background: var(--surface2); border-color: var(--border);">
+            <div class="font-mono text-xs text-[var(--gold)]">STAGE 02</div>
+            <div class="font-bold">Vector Storage</div>
+            <p class="text-xs text-[var(--text2)]">MongoDB Vector Search, Cosine ANN Index</p>
+          </div>
+          <div class="p-4 rounded-xl border text-center space-y-2 hover:border-[var(--gold)] transition-colors" style="background: var(--surface2); border-color: var(--border);">
+            <div class="font-mono text-xs text-[var(--gold)]">STAGE 03</div>
+            <div class="font-bold">LangGraph Loop</div>
+            <p class="text-xs text-[var(--text2)]">State graph traversal, dynamic tool calls</p>
+          </div>
+          <div class="p-4 rounded-xl border text-center space-y-2 hover:border-[var(--gold)] transition-colors" style="background: var(--surface2); border-color: var(--border);">
+            <div class="font-mono text-xs text-[var(--gold)]">STAGE 04</div>
+            <div class="font-bold">React UI Tier</div>
+            <p class="text-xs text-[var(--text2)]">Vite, Tailwind, Framer Motion, 120Hz smooth</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const SKILLS_DATA = {
+      'langchain': {
+        title: 'LangChain & LangGraph',
+        cat: 'ai',
+        maturity: 'Production',
+        latency: '38ms',
+        exp: '3+ Years',
+        desc: 'Cyclic multi-agent state machines, ReAct reasoning loops, long-term memory compaction, and tool dispatching.',
+        code: `graph = StateGraph(AgentState)\ngraph.add_node("agent", plan_step)\ngraph.add_node("tools", execute_tool)\ngraph.add_conditional_edges("agent", should_continue)\napp = graph.compile()`,
+        link: 'Production RAG & Vector Intelligence Pipeline'
+      },
+      'vector': {
+        title: 'MongoDB Atlas Vector Search',
+        cat: 'ai',
+        maturity: 'Enterprise',
+        latency: '18ms',
+        exp: '2+ Years',
+        desc: 'Semantic ANN cosine index design, hybrid full-text/vector retrieval, chunking strategy, and real-time triggers.',
+        code: `pipeline = [\n  {\n    "$vectorSearch": {\n      "index": "vector_index",\n      "path": "embedding",\n      "queryVector": query_vec,\n      "numCandidates": 100, "limit": 5\n    }\n  }\n]`,
+        link: 'Production RAG System'
+      },
+      'react': {
+        title: 'React.js & Architecture',
+        cat: 'fs',
+        maturity: 'Expert',
+        latency: '0.4ms',
+        exp: '4+ Years',
+        desc: 'Custom hooks, high-performance context architecture, strict layout containment, and micro-animations.',
+        code: `export const useTelemetry = () => {\n  const [state, dispatch] = useReducer(reducer, init);\n  useEffect(() => {\n    const sub = engine.subscribe(dispatch);\n    return () => sub.unsubscribe();\n  }, []);\n  return state;\n};`,
+        link: 'Triostep & Dr. Hassan BDS'
+      },
+      'node': {
+        title: 'Node.js & Express REST',
+        cat: 'fs',
+        maturity: 'Production',
+        latency: '12ms',
+        exp: '3+ Years',
+        desc: 'Robust RESTful API design, JWT auth middleware pipelines, rate limiting, and schema-level validation.',
+        code: `router.post('/infer', verifyJwt, rateLimiter, async (req, res) => {\n  const result = await agentOrchestrator.execute(req.body);\n  res.json({ status: 200, data: result });\n});`,
+        link: 'Full-Stack MERN Portfolio'
+      }
+    };
+
+    function renderSkills() {
+      const aiList = document.getElementById('skills-list-ai');
+      const fsList = document.getElementById('skills-list-fs');
+
+      const items = [
+        { key: 'langchain', name: 'LangChain & LangGraph', tag: 'Agent Loops', active: true },
+        { key: 'vector', name: 'Atlas Vector Search', tag: 'Cosine ANN', active: false },
+        { key: 'multiagent', name: 'Multi-Agent Swarms', tag: 'Orchestration', active: false },
+        { key: 'rag', name: 'Event-Driven RAG', tag: 'CDC Pipelines', active: false },
+        { key: 'react', name: 'React.js & Systems', tag: 'Component UI', active: false },
+        { key: 'node', name: 'Node.js / Express', tag: 'RESTful APIs', active: false },
+        { key: 'mongo', name: 'MongoDB & Mongoose', tag: 'NoSQL Aggregation', active: false },
+        { key: 'tailwind', name: 'Tailwind & Framer', tag: 'Micro-Physics', active: false }
+      ];
+
+      items.forEach((item, idx) => {
+        const btn = document.createElement('button');
+        btn.className = `p-3 rounded-xl border text-left flex items-center justify-between transition-all hover:border-[var(--gold)] hover:scale-[1.02] ${
+          item.active ? 'border-[var(--gold)] bg-[var(--surface2)]' : 'border-[var(--border)] bg-[var(--surface)]'
+        }`;
+        btn.innerHTML = `
+          <div>
+            <div class="font-semibold text-xs">${item.name}</div>
+            <div class="text-[10px] text-[var(--text2)] font-mono">${item.tag}</div>
+          </div>
+          <span class="w-2 h-2 rounded-full ${item.active ? 'bg-[var(--gold)]' : 'bg-zinc-600'}"></span>
+        `;
+        btn.onclick = () => selectSkill(item.key, btn);
+
+        if (idx < 4) aiList.appendChild(btn);
+        else fsList.appendChild(btn);
+      });
+    }
+
+    function selectSkill(key, el) {
+      document.querySelectorAll('#skills-list-ai button, #skills-list-fs button').forEach(b => {
+        b.classList.remove('border-[var(--gold)]', 'bg-[var(--surface2)]');
+        b.classList.add('border-[var(--border)]', 'bg-[var(--surface)]');
+        b.querySelector('span:last-child').className = 'w-2 h-2 rounded-full bg-zinc-600';
+      });
+
+      el.classList.add('border-[var(--gold)]', 'bg-[var(--surface2)]');
+      el.classList.remove('border-[var(--border)]', 'bg-[var(--surface)]');
+      el.querySelector('span:last-child').className = 'w-2 h-2 rounded-full bg-[var(--gold)]';
+
+      const data = SKILLS_DATA[key] || SKILLS_DATA['langchain'];
+      document.getElementById('inspect-title').textContent = data.title;
+      document.getElementById('inspect-maturity').textContent = data.maturity;
+      document.getElementById('inspect-latency').textContent = data.latency;
+      document.getElementById('inspect-exp').textContent = data.exp;
+      document.getElementById('inspect-desc').textContent = data.desc;
+      document.getElementById('inspect-code').textContent = data.code;
+      document.getElementById('inspect-link').innerHTML = `<span>${data.link}</span> ↗`;
+    }
+
+    function switchVariant(v) {
+      document.getElementById('variant-a').classList.add('hidden');
+      document.getElementById('variant-b').classList.add('hidden');
+      document.getElementById('variant-c').classList.add('hidden');
+      document.getElementById(`variant-${v}`).classList.remove('hidden');
+
+      ['a', 'b', 'c'].forEach(id => {
+        const btn = document.getElementById(`btn-var-${id}`);
+        if (id === v) {
+          btn.className = 'px-3 py-1.5 rounded-lg bg-[var(--gold)] text-black font-semibold transition-all';
+        } else {
+          btn.className = 'px-3 py-1.5 rounded-lg text-[var(--text2)] hover:text-[var(--text)] transition-all';
+        }
+      });
+    }
+
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+      document.documentElement.classList.toggle('light');
+    }
+
+    function runBench() {
+      const out = document.getElementById('bench-output');
+      out.innerHTML = '<div class="text-[var(--gold)] animate-pulse">[TEST] Initiating ANN Vector retrieval benchmark...</div>';
+      setTimeout(() => {
+        out.innerHTML += '<div class="text-sky-400">[01] Embedding query vector (1536 dim): 12.4ms</div>';
+      }, 500);
+      setTimeout(() => {
+        out.innerHTML += '<div class="text-emerald-400">[02] MongoDB Atlas ANN cosine similarity (k=5): 18.2ms [SCORE: 0.941]</div>';
+      }, 1000);
+      setTimeout(() => {
+        out.innerHTML += '<div class="text-purple-400">[03] LangGraph state node dispatch: 4.1ms</div>';
+        out.innerHTML += '<div class="text-[var(--gold)] font-bold mt-2">✓ ALL 3 SYSTEMS VERIFIED NOMINAL (34.7ms total loop)</div>';
+      }, 1600);
+    }
+
+    renderSkills();
+  </script>
+</body>
+</html>
