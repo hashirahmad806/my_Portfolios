@@ -23,11 +23,28 @@ export default function App() {
   return (
     <ThemeProvider>
       <div className="relative min-h-screen" style={{ background:'var(--obsidian)', color:'var(--text)', transition: 'background-color 0.3s ease, color 0.3s ease' }}>
+        {/* Global architectural ambient canvas — cohesive across the entire page */}
         <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-          <div style={{ position:'absolute', width:600, height:600, top:-150, right:-150, borderRadius:'50%', background:'radial-gradient(circle, rgba(201,168,76,0.1) 0%, transparent 70%)', filter:'blur(80px)', animation:'floatOrb 8s ease-in-out infinite' }} />
-          <div style={{ position:'absolute', width:450, height:450, bottom:'20%', left:-100, borderRadius:'50%', background:'radial-gradient(circle, rgba(0,212,255,0.06) 0%, transparent 70%)', filter:'blur(80px)', animation:'floatOrb 11s ease-in-out infinite reverse' }} />
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '100vw',
+            maxWidth: '1280px',
+            height: '600px',
+            background: 'radial-gradient(ellipse 70% 500px at 50% 0%, rgba(var(--gold-rgb), 0.075), transparent 75%)',
+          }} />
+          <div style={{
+            position: 'absolute',
+            bottom: '15%',
+            right: '-10%',
+            width: '600px',
+            height: '600px',
+            background: 'radial-gradient(circle, rgba(var(--gold-rgb), 0.035) 0%, transparent 70%)',
+            filter: 'blur(90px)',
+          }} />
         </div>
-        <style>{`@keyframes floatOrb{0%,100%{transform:translateY(0)}50%{transform:translateY(-28px)}}`}</style>
         {loading && <Loader />}
         <Cursor />
         <Navbar />

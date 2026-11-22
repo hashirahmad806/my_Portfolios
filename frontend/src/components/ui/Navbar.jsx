@@ -45,7 +45,9 @@ export default function Navbar() {
               ? (dark ? 'rgba(14,14,15,0.85)' : 'rgba(255,255,255,0.85)')
               : (dark ? 'rgba(14,14,15,0.65)' : 'rgba(255,255,255,0.65)'),
             backdropFilter: 'blur(24px)',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.1)',
+            boxShadow: dark
+              ? '0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06)'
+              : '0 8px 32px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.03), inset 0 1px 0 rgba(255,255,255,0.9)',
             maxWidth: '940px',
             width: '100%',
           }}
@@ -56,7 +58,7 @@ export default function Navbar() {
               className="text-lg font-bold tracking-tight"
               style={{ fontFamily: "'Clash Display','Syne',sans-serif", color: 'var(--text)' }}
             >
-              Hashir<span style={{ color: '#38bdf8' }}>.</span>
+              Hashir<span style={{ color: gold }}>.</span>
             </span>
           </Link>
 

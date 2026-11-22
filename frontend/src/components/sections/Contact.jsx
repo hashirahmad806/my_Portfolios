@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
 import { FiGithub, FiLinkedin, FiMail, FiMapPin, FiSend, FiPaperclip, FiCheckCircle } from "react-icons/fi";
@@ -175,7 +175,7 @@ export default function Contact() {
                       display: "flex", alignItems: "center", gap: 14,
                       padding: "14px 16px", borderRadius: 14,
                       border: "1px solid var(--border)",
-                      background: "linear-gradient(145deg, rgba(255,255,255,0.03), rgba(0,0,0,0.08)), var(--surface)",
+                      background: "var(--surface)",
                       boxShadow: "var(--card-shadow)",
                       transition: "border-color 0.3s, box-shadow 0.3s",
                       cursor: href ? "pointer" : "default",
@@ -209,7 +209,7 @@ export default function Contact() {
 
           {/* RIGHT: Form */}
           <div className="lg:col-span-3">
-            <div style={{ padding: "clamp(24px,4vw,40px)", borderRadius: 24, border: "1px solid var(--border)", background: "linear-gradient(145deg, rgba(255,255,255,0.025), rgba(0,0,0,0.06)), var(--surface)", boxShadow: "var(--card-shadow)", position: "relative" }}>
+            <div style={{ padding: "clamp(24px,4vw,40px)", borderRadius: 24, border: "1px solid var(--border)", background: "var(--surface)", boxShadow: "var(--card-shadow)", position: "relative" }}>
               {/* Top edge glow */}
               <div style={{ position: "absolute", top: 0, left: 32, right: 32, height: 1, background: `linear-gradient(90deg, transparent, ${gold}25, transparent)`, pointerEvents: "none" }} />
 
@@ -284,9 +284,9 @@ export default function Contact() {
                         Attachment (Optional)
                       </label>
                       <div
-                        style={{ position: "relative", padding: "20px 18px", borderRadius: 12, background: "rgba(0,0,0,0.2)", border: errors.file ? "1px dashed #ef4444" : file ? `1px dashed ${gold}50` : "1px dashed rgba(255,255,255,0.1)", display: "flex", alignItems: "center", gap: 12, cursor: "pointer", transition: "border-color 0.3s" }}
-                        onMouseEnter={e => { if (!errors.file) e.currentTarget.style.borderColor = `${gold}40`; }}
-                        onMouseLeave={e => { if (!errors.file && !file) e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }}
+                        style={{ position: "relative", padding: "20px 18px", borderRadius: 12, background: "var(--surface2)", border: errors.file ? "1px dashed #ef4444" : file ? "1px dashed var(--gold)" : "1px dashed var(--border2)", display: "flex", alignItems: "center", gap: 12, cursor: "pointer", transition: "border-color 0.3s" }}
+                        onMouseEnter={e => { if (!errors.file) e.currentTarget.style.borderColor = "var(--gold)"; }}
+                        onMouseLeave={e => { if (!errors.file && !file) e.currentTarget.style.borderColor = "var(--border2)"; }}
                       >
                         <input type="file" onChange={handleFileChange} accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" style={{ position: "absolute", inset: 0, opacity: 0, cursor: "pointer" }} />
                         <FiPaperclip size={18} style={{ color: file ? "#00e5a0" : gold, flexShrink: 0 }} />

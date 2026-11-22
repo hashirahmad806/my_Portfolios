@@ -82,7 +82,7 @@ export default function Learning() {
             The Journey into{' '}
             <span className="amber-text-gradient bg-gradient-to-r from-amber-400 via-sky-400 to-indigo-400 bg-clip-text text-transparent">Agentic AI</span>
           </h2>
-          <p className="font-body text-sm leading-relaxed max-w-xl text-slate-300">
+          <p className="font-body text-sm leading-relaxed max-w-xl" style={{ color: 'var(--text2)' }}>
             Transitioning from deterministic full-stack engineering to self-directed cognitive systems — building autonomous agent swarms, vector pipelines, and real-time RAG.
           </p>
         </div>
@@ -94,11 +94,11 @@ export default function Learning() {
           <div className="flex flex-col gap-6">
             {/* Quote block */}
             <div className="glass-panel rounded-xl p-6 border border-border-glass shadow-lg">
-              <p className="font-body text-sm leading-relaxed italic mb-6 text-slate-200">
+              <p className="font-body text-sm leading-relaxed italic mb-6" style={{ color: 'var(--text)' }}>
                 "We have moved beyond static chatbots into autonomous cognitive architectures. The real challenge is designing agents that plan, reason, invoke tools, and gracefully self-correct in complex environments."
               </p>
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full border border-sky-400/40 p-0.5 flex-shrink-0 overflow-hidden">
+                <div className="h-10 w-10 rounded-full border border-[var(--border2)] p-0.5 flex-shrink-0 overflow-hidden">
                   <img
                     src={hashirPhoto}
                     alt="Hashir Ahmad"
@@ -108,7 +108,7 @@ export default function Learning() {
                 </div>
                 <div>
                   <p className="font-bold text-sm" style={{ color: 'var(--text)' }}>Hashir Ahmad</p>
-                  <p className="font-label-mono text-xs uppercase tracking-tight text-sky-400">Agentic Systems Architect · UET Peshawar</p>
+                  <p className="font-label-mono text-xs uppercase tracking-tight" style={{ color: 'var(--gold)' }}>Agentic Systems Architect · UET Peshawar</p>
                 </div>
               </div>
             </div>
@@ -120,7 +120,7 @@ export default function Learning() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
                 </div>
-                <p className="text-xs font-label-mono text-emerald-400 tracking-widest uppercase font-semibold">
+                <p className="text-xs font-label-mono text-emerald-500 dark:text-emerald-400 tracking-widest uppercase font-semibold">
                   Agentic Runtime: Active & Ingesting
                 </p>
               </div>
@@ -133,10 +133,10 @@ export default function Learning() {
                 <div key={bar.label} className="space-y-1">
                   <div className="flex justify-between text-[11px] font-label-mono uppercase tracking-tight" style={{ color: 'var(--text3)' }}>
                     <span>{bar.label}</span>
-                    <span className="text-sky-300 font-bold">{bar.value}</span>
+                    <span className="font-bold" style={{ color: 'var(--gold)' }}>{bar.value}</span>
                   </div>
-                  <div className="h-1.5 w-full rounded-full overflow-hidden bg-slate-800">
-                    <div className="h-full glow-meter-fill rounded-full" style={{ width: `${bar.pct}%`, background: 'linear-gradient(90deg, #38bdf8, #818cf8)' }} />
+                  <div className="h-1.5 w-full rounded-full overflow-hidden" style={{ background: 'var(--border2)' }}>
+                    <div className="h-full glow-meter-fill rounded-full" style={{ width: `${bar.pct}%`, background: 'linear-gradient(90deg, var(--gold), var(--gold2))' }} />
                   </div>
                 </div>
               ))}
@@ -144,18 +144,18 @@ export default function Learning() {
             </div>
 
             {/* Focus footer */}
-            <div className="flex flex-wrap gap-6 pt-2">
-              <div className="p-3 rounded-lg bg-slate-900/60 border border-slate-800 flex-1">
-                <p className="text-sky-400 text-[10px] font-label-mono uppercase tracking-wider mb-1 font-semibold">
+            <div className="flex flex-wrap gap-4 pt-2">
+              <div className="p-4 rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-sm flex-1">
+                <p className="text-[10px] font-label-mono uppercase tracking-wider mb-1 font-semibold" style={{ color: 'var(--gold)' }}>
                   CURRENT RESEARCH FOCUS
                 </p>
-                <p className="font-bold text-sm text-slate-100">Event-Driven Ingestion Pipelines with Atlas Vector Search</p>
+                <p className="font-bold text-sm" style={{ color: 'var(--text)' }}>Event-Driven Ingestion Pipelines with Atlas Vector Search</p>
               </div>
-              <div className="p-3 rounded-lg bg-slate-900/60 border border-slate-800 flex-1">
-                <p className="text-amber-400 text-[10px] font-label-mono uppercase tracking-wider mb-1 font-semibold">
+              <div className="p-4 rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-sm flex-1">
+                <p className="text-[10px] font-label-mono uppercase tracking-wider mb-1 font-semibold" style={{ color: 'var(--gold)' }}>
                   NEXT MILESTONE
                 </p>
-                <p className="font-bold text-sm text-slate-100">Autonomous Multi-Agent Networks with LangGraph</p>
+                <p className="font-bold text-sm" style={{ color: 'var(--text)' }}>Autonomous Multi-Agent Networks with LangGraph</p>
               </div>
             </div>
           </div>

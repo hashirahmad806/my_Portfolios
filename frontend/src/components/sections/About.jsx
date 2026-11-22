@@ -119,9 +119,9 @@ export default function About() {
                 <div
                   onMouseEnter={ev => {
                     const el = ev.currentTarget;
-                    if (motionOk) el.style.transform = 'translateY(-5px)';
-                    el.style.boxShadow = `0 12px 30px rgba(0,0,0,0.4), 0 0 0 1px rgba(56,189,248,0.25)`;
-                    el.style.borderColor = 'rgba(56,189,248,0.3)';
+                    if (motionOk) el.style.transform = 'translateY(-4px)';
+                    el.style.boxShadow = 'var(--card-shadow-hover)';
+                    el.style.borderColor = 'rgba(var(--gold-rgb), 0.35)';
                   }}
                   onMouseLeave={ev => {
                     const el = ev.currentTarget;
@@ -133,7 +133,7 @@ export default function About() {
                     padding: '26px 22px',
                     borderRadius: 18,
                     border: '1px solid var(--border)',
-                    background: 'linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.1) 100%), var(--surface)',
+                    background: 'var(--surface)',
                     boxShadow: 'var(--card-shadow)',
                     position: 'relative',
                     overflow: 'hidden',

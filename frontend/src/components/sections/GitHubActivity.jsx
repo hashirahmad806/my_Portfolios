@@ -380,7 +380,7 @@ export default function GitHubActivity() {
                       style={{
                         borderRadius: 20,
                         border: '1px solid var(--border)',
-                        background: 'linear-gradient(145deg, rgba(255,255,255,0.025) 0%, rgba(0,0,0,0.06) 100%), var(--surface)',
+                        background: 'var(--surface)',
                         boxShadow: 'var(--card-shadow)',
                         transition: 'border-color 0.35s ease'
                       }}

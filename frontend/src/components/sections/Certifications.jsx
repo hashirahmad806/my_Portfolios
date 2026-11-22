@@ -93,7 +93,8 @@ function CertCard({ cert, idx, className, style }) {
               target="_blank"
               rel="noopener noreferrer"
               download
-              className="bg-[#ffdca1] text-[#412d00] px-6 py-2 rounded-xl font-bold flex items-center gap-2 hover:scale-95 transition-transform text-label-mono text-sm"
+              className="tactile-btn-primary px-6 py-2 rounded-xl text-label-mono text-sm"
+              style={{ cursor: 'pointer' }}
             >
               <span>View Certificate</span>
               <span className="material-symbols-outlined text-[18px]">workspace_premium</span>
@@ -137,15 +138,15 @@ function CertCard({ cert, idx, className, style }) {
           <p className="text-on-surface-variant font-body text-[16px] leading-[26px] mb-8 max-w-2xl">Foundational knowledge of machine learning (ML) and artificial intelligence (AI) concepts and related Microsoft Azure services. Proving capability in AI workloads, computer vision, and NLP within Azure cloud infrastructures.</p>
           <div className="flex flex-wrap gap-4 mb-8">
             <div className="bg-surface-container-highest/50 px-4 py-2 rounded-xl border border-border-glass flex items-center gap-2">
-              <span className="material-symbols-outlined text-[#ffdca1] text-[18px]">cloud</span>
+              <span className="material-symbols-outlined text-[18px]" style={{ color: 'var(--gold)' }}>cloud</span>
               <span className="text-label-mono text-xs">Azure Cloud</span>
             </div>
             <div className="bg-surface-container-highest/50 px-4 py-2 rounded-xl border border-border-glass flex items-center gap-2">
-              <span className="material-symbols-outlined text-[#ffdca1] text-[18px]">psychology</span>
+              <span className="material-symbols-outlined text-[18px]" style={{ color: 'var(--gold)' }}>psychology</span>
               <span className="text-label-mono text-xs">AI Models</span>
             </div>
             <div className="bg-surface-container-highest/50 px-4 py-2 rounded-xl border border-border-glass flex items-center gap-2">
-              <span className="material-symbols-outlined text-[#ffdca1] text-[18px]">verified</span>
+              <span className="material-symbols-outlined text-[18px]" style={{ color: 'var(--gold)' }}>verified</span>
               <span className="text-label-mono text-xs">Enterprise Validated</span>
             </div>
           </div>
@@ -176,7 +177,7 @@ function CertCard({ cert, idx, className, style }) {
                   href={cert.verifyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-[#ffb800] text-[#0e0e0f] px-8 py-3 rounded-xl font-bold flex items-center gap-2 hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-[#ffb800]/10 text-label-mono text-sm"
+                  className="tactile-btn-primary px-8 py-3 rounded-xl text-label-mono text-sm"
                 >
                   <span>Verify Credential</span>
                   <span className="material-symbols-outlined text-[20px]">verified_user</span>
@@ -265,7 +266,7 @@ export default function Certifications() {
             </div>
             <div className="flex items-center gap-4 bg-surface-container px-6 py-4 rounded-2xl border border-border-glass">
               <div className="bg-primary-container/20 p-3 rounded-xl">
-                <span className="material-symbols-outlined text-[#ffdca1]" style={{ fontVariationSettings: "'FILL' 1" }}>workspace_premium</span>
+                <span className="material-symbols-outlined" style={{ color: 'var(--gold)', fontVariationSettings: "'FILL' 1" }}>workspace_premium</span>
               </div>
               <div>
                 <div className="font-headline text-[24px] text-on-surface leading-none">{certifications.length}</div>

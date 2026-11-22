@@ -170,8 +170,8 @@ export default function Skills() {
           transition: 'opacity .7s ease, transform .7s ease',
         }}>
           <div className="flex items-center gap-4 mb-4">
-            <div className="h-1 w-12 bg-primary-container rounded-full"></div>
-            <span className="text-secondary-fixed font-label-mono uppercase tracking-widest text-xs">Full Stack Mastery</span>
+            <div className="h-1 w-12 rounded-full" style={{ background: 'var(--gold)' }}></div>
+            <span className="font-label-mono uppercase tracking-widest text-xs" style={{ color: 'var(--gold)' }}>Full Stack Mastery</span>
           </div>
           <h2 className="font-headline text-5xl md:text-6xl font-bold mb-6" style={{ color: 'var(--text)' }}>Technical Ecosystem</h2>
           <p className="text-on-surface-variant text-lg max-w-2xl leading-relaxed font-body">

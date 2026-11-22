@@ -40,9 +40,9 @@ function ExpCard({ e, idx }) {
 
   const handleEnter = (ev) => {
     const el = ev.currentTarget
-    if (motionOk) el.style.transform = 'translateY(-5px)'
-    el.style.boxShadow = `0 6px 20px rgba(0,0,0,0.55), 0 18px 48px rgba(0,0,0,0.35), 0 0 0 1px ${e.color}22, 0 0 28px ${e.color}10, inset 0 1px 0 rgba(255,255,255,0.07)`
-    el.style.borderColor = `${e.color}28`
+    if (motionOk) el.style.transform = 'translateY(-4px)'
+    el.style.boxShadow = 'var(--card-shadow-hover)'
+    el.style.borderColor = `${e.color}55`
   }
 
   const handleLeave = (ev) => {
@@ -61,7 +61,7 @@ function ExpCard({ e, idx }) {
         padding: '32px 28px 32px 36px',
         borderRadius: 20,
         border: '1px solid var(--border)',
-        background: 'linear-gradient(145deg, rgba(255,255,255,0.025) 0%, rgba(0,0,0,0.06) 100%), var(--surface)',
+        background: 'var(--surface)',
         boxShadow: 'var(--card-shadow)',
         position: 'relative',
         overflow: 'hidden',

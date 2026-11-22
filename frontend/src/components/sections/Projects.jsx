@@ -157,8 +157,8 @@ function ProjectCard({ p, i }) {
   const handleEnter = (ev) => {
     const el = ev.currentTarget;
     if (motionOk) el.style.transform = 'translateY(-5px)';
-    el.style.boxShadow = `0 6px 20px rgba(0,0,0,0.55), 0 18px 48px rgba(0,0,0,0.35), 0 0 0 1px ${startColor}22, 0 0 28px ${startColor}10, inset 0 1px 0 rgba(255,255,255,0.07)`;
-    el.style.borderColor = `${startColor}28`;
+    el.style.boxShadow = 'var(--card-shadow-hover)';
+    el.style.borderColor = startColor ? `${startColor}55` : 'rgba(var(--gold-rgb), 0.35)';
   };
 
   const handleLeave = (ev) => {
@@ -175,7 +175,7 @@ function ProjectCard({ p, i }) {
       style={{
         borderRadius: 20,
         border: "1px solid var(--border)",
-        background: "linear-gradient(145deg, rgba(255,255,255,0.025) 0%, rgba(0,0,0,0.06) 100%), var(--surface)",
+        background: "var(--surface)",
         boxShadow: "var(--card-shadow)",
         overflow: "hidden",
         cursor: "default",

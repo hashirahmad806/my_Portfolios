@@ -22,14 +22,13 @@ const motionOk = typeof window !== 'undefined'
 export default function Hero() {
   return (
     <section id="hero" style={{ minHeight: '100vh', paddingTop: 120, paddingBottom: 80, position: 'relative', overflow: 'hidden' }}>
-      {/* Grid bg */}
-      <div style={{
-        position: 'absolute', inset: 0, zIndex: 0,
-        backgroundImage: 'linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px)',
-        backgroundSize: '80px 80px',
-        maskImage: 'radial-gradient(ellipse 75% 55% at 50% 50%, black 0%, transparent 100%)',
-        WebkitMaskImage: 'radial-gradient(ellipse 75% 55% at 50% 50%, black 0%, transparent 100%)',
-      }} />
+      {/* Sleek architectural ambient backdrop — smooth studio lighting, no harsh container blocks */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          background: 'radial-gradient(ellipse 80% 60% at 50% 15%, rgba(var(--gold-rgb), 0.08), transparent 75%)',
+        }}
+      />
 
       <div className="max-w-6xl mx-auto px-6 md:px-12 relative z-10">
         <motion.div
@@ -154,16 +153,10 @@ export default function Hero() {
                   key={href} href={href} target="_blank" rel="noopener noreferrer"
                   whileTap={motionOk ? { scale: 0.95 } : {}}
                   className="frosted-icon-chip"
-                  style={{
-                    border: '1px solid var(--border)',
-                    color: 'var(--text2)',
-                    background: 'linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01))',
-                    transition: 'all 0.25s ease',
-                    textDecoration: 'none'
-                  }}
+                  style={{ textDecoration: 'none' }}
                   onMouseEnter={e => {
-                    e.currentTarget.style.borderColor = 'rgba(201,168,76,0.35)'
-                    e.currentTarget.style.color = gold
+                    e.currentTarget.style.borderColor = 'rgba(var(--gold-rgb), 0.45)'
+                    e.currentTarget.style.color = 'var(--gold)'
                     if (motionOk) e.currentTarget.style.transform = 'translateY(-2px)'
                   }}
                   onMouseLeave={e => {
@@ -184,15 +177,13 @@ export default function Hero() {
             className="hidden lg:flex justify-center"
           >
             <div className="relative" style={{ width: 380 }}>
-              {/* Decorative frame behind */}
+              {/* Refined ambient aura behind photo */}
               <div style={{
-                position: 'absolute', top: -14, left: -14, right: 14, bottom: 14,
-                border: '1px solid rgba(201,168,76,0.18)', borderRadius: 28,
-                background: 'linear-gradient(135deg,rgba(201,168,76,0.04),transparent)',
-              }} />
-              <div style={{
-                position: 'absolute', top: 14, left: 14, right: -14, bottom: -14,
-                border: '1px solid var(--border)', borderRadius: 28,
+                position: 'absolute', inset: -14,
+                borderRadius: 36,
+                background: 'radial-gradient(circle at 50% 40%, rgba(var(--gold-rgb), 0.16), transparent 70%)',
+                filter: 'blur(20px)',
+                pointerEvents: 'none',
               }} />
 
               {/* Photo */}
@@ -205,7 +196,7 @@ export default function Hero() {
                   width: '100%', aspectRatio: '4/5', objectFit: 'cover',
                   borderRadius: 22, position: 'relative', zIndex: 1,
                   filter: 'contrast(1.05) saturate(0.95)',
-                  boxShadow: '0 32px 80px rgba(0,0,0,0.7)',
+                  boxShadow: '0 24px 60px -12px rgba(0,0,0,0.35), 0 0 0 1px var(--border)',
                 }}
               />
 
