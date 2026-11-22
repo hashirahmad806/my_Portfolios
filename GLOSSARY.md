@@ -32,6 +32,10 @@ _Avoid_: Inverted colors, washed-out theme
 The interaction paradigm where the native hardware OS cursor is preserved, and user spatial presence is communicated through interactive canvas lighting and magnetic element feedback rather than simulated cursor elements.
 _Avoid_: Custom dot cursor, lagging ring, fake pointer
 
+**Interactive Project Showcase**:
+A project presentation system featuring filter pill counts, verified client delivery badges, and an architecture inspection modal detailing system overviews and engineering highlights in simple English.
+_Avoid_: Static card grid, portfolio gallery
+
 **System Telemetry HUD**:
 A persistent heads-up display anchored to the viewport presenting real-time system metrics, CAD coordinates, and console triggers.
 _Avoid_: Status bar, footer banner
