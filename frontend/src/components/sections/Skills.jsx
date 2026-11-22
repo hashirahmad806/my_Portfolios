@@ -124,7 +124,7 @@ function GroupPanel({ g, idx }) {
   }
 
   return (
-    <section 
+    <div 
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -152,7 +152,7 @@ function GroupPanel({ g, idx }) {
           />
         ))}
       </div>
-    </section>
+    </div>
   )
 }
 

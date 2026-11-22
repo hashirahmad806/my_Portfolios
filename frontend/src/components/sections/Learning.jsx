@@ -1,4 +1,5 @@
 import { useScrollReveal } from '../../hooks/useScrollReveal'
+import hashirPhoto from '../../assets/hashir.jpg'
 
 const motionOk = typeof window !== 'undefined'
   ? !window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -99,9 +100,10 @@ export default function Learning() {
               <div className="flex items-center gap-3">
                 <div className="h-10 w-10 rounded-full border border-sky-400/40 p-0.5 flex-shrink-0 overflow-hidden">
                   <img
-                    src="https://github.com/hashirahmad806.png"
+                    src={hashirPhoto}
                     alt="Hashir Ahmad"
                     className="h-full w-full object-cover rounded-full"
+                    onError={(e) => { e.currentTarget.src = "https://github.com/hashirahmad806.png"; }}
                   />
                 </div>
                 <div>

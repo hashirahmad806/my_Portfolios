@@ -215,7 +215,7 @@ export default function Hero() {
                 transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
                 className="soft-depth-card"
                 style={{
-                  position: 'absolute', top: 28, left: -40, zIndex: 2,
+                  position: 'absolute', top: 28, left: -24, zIndex: 2,
                   padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10,
                   boxShadow: 'var(--card-shadow), 0 0 16px rgba(201,168,76,0.06)',
                   border: '1px solid rgba(251,200,80,0.15)',
@@ -238,7 +238,7 @@ export default function Hero() {
                 transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1.8 }}
                 className="soft-depth-card"
                 style={{
-                  position: 'absolute', bottom: 48, right: -36, zIndex: 2,
+                  position: 'absolute', bottom: 48, right: -24, zIndex: 2,
                   padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10,
                   boxShadow: 'var(--card-shadow), 0 0 16px rgba(201,168,76,0.06)',
                   border: '1px solid rgba(201,168,76,0.15)',
@@ -261,7 +261,7 @@ export default function Hero() {
                 position: 'absolute', bottom: -28, left: '50%', transform: 'translateX(-50%)',
                 display: 'flex', gap: 32, whiteSpace: 'nowrap', zIndex: 2,
               }}>
-                {[['10+', 'Projects'], ['2+', 'Years'], ['4', 'Core Tech']].map(([n, l]) => (
+                {[['10+', 'Projects'], ['3+', 'Years'], ['4', 'Core Tech']].map(([n, l]) => (
                   <div key={l} style={{ textAlign: 'center' }}>
                     <div style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 28, fontWeight: 700, color: 'var(--text)', lineHeight: 1 }}>
                       {n.replace('+', '')}<span style={{ color: gold }}>+</span>

@@ -23,9 +23,9 @@ const inputBase = {
   width: "100%",
   padding: "14px 18px",
   borderRadius: 12,
-  background: "rgba(0,0,0,0.25)",
-  border: "1px solid rgba(255,255,255,0.07)",
-  boxShadow: "inset 0 2px 4px rgba(0,0,0,0.4)",
+  background: "var(--surface)",
+  border: "1px solid var(--border2)",
+  boxShadow: "inset 0 1px 3px rgba(0,0,0,0.08)",
   color: "var(--text)",
   fontFamily: "'Cabinet Grotesk',sans-serif",
   fontSize: 15,
@@ -87,10 +87,10 @@ export default function Contact() {
 
   const fieldStyle = (id, hasError) => ({
     ...inputBase,
-    borderColor: hasError ? "#ef4444" : focused === id ? "rgba(201,168,76,0.45)" : "rgba(255,255,255,0.07)",
+    borderColor: hasError ? "#ef4444" : focused === id ? "rgba(201,168,76,0.55)" : "var(--border2)",
     boxShadow: focused === id
-      ? "inset 0 2px 4px rgba(0,0,0,0.4), 0 0 0 3px rgba(201,168,76,0.08)"
-      : "inset 0 2px 4px rgba(0,0,0,0.4)",
+      ? "inset 0 1px 3px rgba(0,0,0,0.08), 0 0 0 3px rgba(201,168,76,0.08)"
+      : "inset 0 1px 3px rgba(0,0,0,0.08)",
   });
 
   const handleSubmit = async (e) => {

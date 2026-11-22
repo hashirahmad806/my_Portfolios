@@ -77,7 +77,7 @@ export default function Footer() {
                   onMouseEnter={e => e.currentTarget.style.color = gold}
                   onMouseLeave={e => e.currentTarget.style.color = "var(--text2)"}
                 >
-                  {l}
+                  {l.charAt(0).toUpperCase() + l.slice(1)}
                 </Link>
               ))}
             </div>
